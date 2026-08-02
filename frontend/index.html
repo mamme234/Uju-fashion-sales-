@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Uju Fashion Sales Everywhere – Premium Jeans, Jerseys, Polos, Skirts & Shorts</title>
-    <meta name="description" content="Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more at affordable prices in Nigeria." />
+    <meta name="description" content="Uju Fashion Sales Everywhere - Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more at affordable prices in Nigeria." />
+    <meta name="keywords" content="Uju Fashion Sales Everywhere, fashion, jeans, polos, skirts, shorts, Nigeria, Awka, Anambra" />
+    <meta name="author" content="Uju Fashion Sales Everywhere" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* Additional styles for Uju Fashion */
         .whatsapp-order-btn {
             display: inline-flex;
             align-items: center;
@@ -30,66 +31,19 @@
             justify-content: center;
             margin-top: 8px;
         }
-        
         .whatsapp-order-btn:hover {
             background: #128C7E;
             transform: scale(1.02);
         }
-        
-        .delivery-info-section {
-            padding: 60px 0;
-            background: var(--gray);
-        }
-        
-        .delivery-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-top: 30px;
-        }
-        
-        .delivery-item {
-            background: var(--white);
-            padding: 24px;
-            border-radius: var(--radius);
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        .delivery-item:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .delivery-item i {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-        
-        .delivery-item h4 {
-            font-size: 16px;
-            font-weight: 600;
-        }
-        
-        .delivery-item p {
-            font-size: 14px;
-            color: var(--gray-dark);
-            margin-top: 4px;
-        }
-        
-        @media (max-width: 768px) {
-            .delivery-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .delivery-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        .delivery-info-section { padding: 60px 0; background: var(--gray); }
+        .delivery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 30px; }
+        .delivery-item { background: var(--white); padding: 24px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); transition: var(--transition); }
+        .delivery-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .delivery-item i { font-size: 40px; color: var(--primary); margin-bottom: 12px; }
+        .delivery-item h4 { font-size: 16px; font-weight: 600; }
+        .delivery-item p { font-size: 14px; color: var(--gray-dark); margin-top: 4px; }
+        @media (max-width: 768px) { .delivery-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .delivery-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -99,7 +53,7 @@
             <div class="top-bar-wrapper">
                 <div class="top-bar-left">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
@@ -119,7 +73,7 @@
                 <div class="nav-left">
                     <a href="index.html" class="logo">
                         <span class="logo-icon">👗</span>
-                        Uju<span>Fashion</span>
+                        Uju<span>Fashion</span> Everywhere
                     </a>
                 </div>
                 
@@ -137,8 +91,8 @@
                 
                 <div class="nav-right">
                     <div class="search-box">
-                        <input type="text" placeholder="Search fashion..." id="searchInput" />
-                        <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+                        <input type="text" placeholder="Search Uju Fashion Sales Everywhere..." id="searchInput" />
+                        <button id="searchBtn"><i class="fas fa-search"></i></button>
                     </div>
                     <a href="pages/wishlist.html" class="nav-icon">
                         <i class="far fa-heart"></i>
@@ -148,8 +102,9 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span class="badge cart-count">0</span>
                     </a>
-                    <a href="pages/login.html" class="nav-icon" id="authLink">
-                        <i class="far fa-user"></i>
+                    <a href="#" class="nav-icon" id="authLink">
+                        <i class="far fa-user" id="authIcon"></i>
+                        <span class="badge" id="authBadge" style="display:none;"></span>
                     </a>
                 </div>
             </div>
@@ -161,9 +116,9 @@
         <div class="container">
             <div class="hero-wrapper">
                 <div class="hero-content animate-in">
-                    <span class="hero-tag">✨ Uju Fashion Sales</span>
-                    <h1>Style That <br /><span class="highlight">Speaks</span></h1>
-                    <p>Premium-quality boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more. Quality that lasts. Style that speaks.</p>
+                    <span class="hero-tag">✨ Uju Fashion Sales Everywhere</span>
+                    <h1>Style That <br /><span class="highlight">Speaks</span> Everywhere</h1>
+                    <p>Uju Fashion Sales Everywhere - Premium-quality boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more. Quality that lasts. Style that speaks everywhere.</p>
                     <div class="hero-buttons">
                         <a href="pages/shop.html" class="btn-primary">
                             <i class="fas fa-shopping-bag"></i> Shop Now
@@ -186,7 +141,7 @@
                     </div>
                 </div>
                 <div class="hero-image animate-in delay-2">
-                    <img src="images/banners/hero-fashion.jpg" alt="Uju Fashion Sales" onerror="this.src='https://via.placeholder.com/600x500/8B1A4A/ffffff?text=Uju+Fashion+Sales'" />
+                    <img src="images/banners/hero-fashion.jpg" alt="Uju Fashion Sales Everywhere" onerror="this.src='https://via.placeholder.com/600x500/8B1A4A/ffffff?text=Uju+Fashion+Sales+Everywhere'" />
                     <div class="badge-float top-right">
                         <span class="icon">👗</span>
                         <div class="text">
@@ -212,7 +167,7 @@
             <div class="section-header">
                 <div>
                     <h2>Shop by Category</h2>
-                    <span class="subtitle">Find your perfect style</span>
+                    <span class="subtitle">Uju Fashion Sales Everywhere - Find your perfect style</span>
                 </div>
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -263,7 +218,7 @@
             <div class="section-header">
                 <div>
                     <h2>New Arrivals</h2>
-                    <span class="subtitle">Fresh styles just dropped</span>
+                    <span class="subtitle">Uju Fashion Sales Everywhere - Fresh styles just dropped</span>
                 </div>
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -278,7 +233,7 @@
         <div class="container">
             <div class="flash-sale-wrapper">
                 <h2>🔥 Flash Sale</h2>
-                <p>Limited time offers up to 50% off on premium fashion</p>
+                <p>Uju Fashion Sales Everywhere - Limited time offers up to 50% off on premium fashion</p>
                 <div class="countdown" id="countdown">
                     <div>
                         <span id="hours">12</span>
@@ -306,7 +261,7 @@
             <div class="section-header">
                 <div>
                     <h2>Best Sellers</h2>
-                    <span class="subtitle">Customer favorites</span>
+                    <span class="subtitle">Uju Fashion Sales Everywhere - Customer favorites</span>
                 </div>
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -322,7 +277,7 @@
             <div class="section-header" style="justify-content:center;text-align:center;">
                 <div>
                     <h2>📦 Delivery & Payment Information</h2>
-                    <span class="subtitle">We deliver across Nigeria</span>
+                    <span class="subtitle">Uju Fashion Sales Everywhere - We deliver across Nigeria</span>
                 </div>
             </div>
             <div class="delivery-grid">
@@ -359,8 +314,8 @@
         <div class="container">
             <div class="section-header" style="justify-content:center;text-align:center;">
                 <div>
-                    <h2>Why Choose Uju Fashion?</h2>
-                    <span class="subtitle">Style That Speaks. Quality That Lasts.</span>
+                    <h2>Why Choose Uju Fashion Sales Everywhere?</h2>
+                    <span class="subtitle">Style That Speaks. Quality That Lasts. Everywhere.</span>
                 </div>
             </div>
             <div class="features-grid">
@@ -394,7 +349,7 @@
             <div class="section-header" style="justify-content:center;text-align:center;">
                 <div>
                     <h2>What Our Customers Say</h2>
-                    <span class="subtitle">Real reviews from real customers</span>
+                    <span class="subtitle">Uju Fashion Sales Everywhere - Real reviews from real customers</span>
                 </div>
             </div>
             <div class="reviews-grid" id="reviewsGrid">
@@ -405,18 +360,18 @@
                         <img src="https://ui-avatars.com/api/?name=Sarah+J&background=8B1A4A&color=fff" alt="Sarah" />
                         <div class="info">
                             <h4>Sarah Johnson</h4>
-                            <span>Verified Buyer</span>
+                            <span>Verified Buyer - Uju Fashion Sales Everywhere</span>
                         </div>
                     </div>
                 </div>
                 <div class="review-card animate-in delay-2">
                     <div class="stars">★★★★★</div>
-                    <p class="text">"Fast delivery and great customer service. The polos are premium quality. Highly recommend Uju Fashion!"</p>
+                    <p class="text">"Fast delivery and great customer service. The polos are premium quality. Highly recommend Uju Fashion Sales Everywhere!"</p>
                     <div class="reviewer">
                         <img src="https://ui-avatars.com/api/?name=Michael+C&background=8B1A4A&color=fff" alt="Michael" />
                         <div class="info">
                             <h4>Michael Chen</h4>
-                            <span>Verified Buyer</span>
+                            <span>Verified Buyer - Uju Fashion Sales Everywhere</span>
                         </div>
                     </div>
                 </div>
@@ -427,7 +382,7 @@
                         <img src="https://ui-avatars.com/api/?name=Emma+D&background=8B1A4A&color=fff" alt="Emma" />
                         <div class="info">
                             <h4>Emma Davis</h4>
-                            <span>Verified Buyer</span>
+                            <span>Verified Buyer - Uju Fashion Sales Everywhere</span>
                         </div>
                     </div>
                 </div>
@@ -439,8 +394,8 @@
     <section class="newsletter">
         <div class="container">
             <div class="newsletter-wrapper">
-                <h2>Subscribe to Our Newsletter</h2>
-                <p>Get 10% off on your first order and stay updated with latest trends</p>
+                <h2>Subscribe to Uju Fashion Sales Everywhere Newsletter</h2>
+                <p>Get 10% off on your first order and stay updated with latest trends from Uju Fashion Sales Everywhere</p>
                 <form id="newsletterForm">
                     <input type="email" placeholder="Enter your email" required />
                     <button type="submit">Subscribe</button>
@@ -456,13 +411,13 @@
                 <div class="social-card whatsapp animate-in delay-1">
                     <span class="icon"><i class="fab fa-whatsapp"></i></span>
                     <h3>Chat on WhatsApp</h3>
-                    <p>Quick support & order inquiries</p>
+                    <p>Quick support & order inquiries at Uju Fashion Sales Everywhere</p>
                     <a href="https://wa.me/2347035585774" target="_blank" class="btn-social">Chat Now</a>
                 </div>
                 <div class="social-card instagram animate-in delay-2">
                     <span class="icon"><i class="fab fa-instagram"></i></span>
                     <h3>Follow on Instagram</h3>
-                    <p>Stay updated with our latest styles</p>
+                    <p>Stay updated with Uju Fashion Sales Everywhere latest styles</p>
                     <a href="https://instagram.com" target="_blank" class="btn-social">Follow Us</a>
                 </div>
             </div>
@@ -474,9 +429,9 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Uju<span>Fashion</span></h3>
-                    <p>Style That Speaks. Quality That Lasts.</p>
-                    <p style="margin-top:10px;font-size:14px;">Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more.</p>
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
+                    <p style="margin-top:10px;font-size:14px;">Uju Fashion Sales Everywhere - Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -507,13 +462,13 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 07035585774</li>
                         <li><i class="fas fa-phone"></i> 08157241470</li>
-                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
                         <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
@@ -523,4 +478,4 @@
     <script src="js/cart.js"></script>
     <script src="js/auth.js"></script>
 </body>
-                                                  </html>
+                </html>
