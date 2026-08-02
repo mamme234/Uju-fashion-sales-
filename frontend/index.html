@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Uju Fashion Sales – Premium Jeans, Jerseys, Polos, Skirts & Shorts</title>
     <meta name="description" content="Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more at affordable prices." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
@@ -29,7 +32,7 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-wrapper">
                 <div class="nav-left">
@@ -53,7 +56,7 @@
                 
                 <div class="nav-right">
                     <div class="search-box">
-                        <input type="text" placeholder="Search products..." id="searchInput" />
+                        <input type="text" placeholder="Search fashion..." id="searchInput" />
                         <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
                     </div>
                     <a href="pages/wishlist.html" class="nav-icon">
@@ -76,12 +79,14 @@
     <section class="hero">
         <div class="container">
             <div class="hero-wrapper">
-                <div class="hero-content">
-                    <span class="hero-tag">Style That Speaks. Quality That Lasts.</span>
-                    <h1>Premium Fashion <br />For Every Style</h1>
-                    <p>Discover premium-quality boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more at affordable prices.</p>
+                <div class="hero-content animate-in">
+                    <span class="hero-tag">✨ New Collection 2026</span>
+                    <h1>Style That <br /><span class="highlight">Speaks</span></h1>
+                    <p>Premium-quality boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more. Quality that lasts.</p>
                     <div class="hero-buttons">
-                        <a href="pages/shop.html" class="btn-primary">Shop Now</a>
+                        <a href="pages/shop.html" class="btn-primary">
+                            <i class="fas fa-shopping-bag"></i> Shop Now
+                        </a>
                         <a href="pages/shop.html" class="btn-secondary">Explore Collection</a>
                     </div>
                     <div class="hero-stats">
@@ -91,7 +96,7 @@
                         </div>
                         <div>
                             <h3>500+</h3>
-                            <p>Products</p>
+                            <p>Premium Products</p>
                         </div>
                         <div>
                             <h3>4.8★</h3>
@@ -99,8 +104,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <img src="images/banners/hero-fashion.jpg" alt="Uju Fashion Sales" onerror="this.src='https://via.placeholder.com/600x500/2d1b69/ffffff?text=Uju+Fashion+Sales'" />
+                <div class="hero-image animate-in delay-2">
+                    <img src="images/banners/hero-fashion.jpg" alt="Uju Fashion Sales" onerror="this.src='https://via.placeholder.com/600x500/8B1A4A/ffffff?text=Uju+Fashion+Sales'" />
+                    <div class="badge-float top-right">
+                        <span class="icon">👗</span>
+                        <div class="text">
+                            <h4>Premium Quality</h4>
+                            <p>100% Authentic</p>
+                        </div>
+                    </div>
+                    <div class="badge-float bottom-left">
+                        <span class="icon">🏷️</span>
+                        <div class="text">
+                            <h4>Best Prices</h4>
+                            <p>Affordable Fashion</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,49 +129,60 @@
     <section class="categories">
         <div class="container">
             <div class="section-header">
-                <h2>Shop by Category</h2>
+                <div>
+                    <h2>Shop by Category</h2>
+                    <span class="subtitle">Find your perfect style</span>
+                </div>
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="categories-grid" id="categoriesGrid">
-                <div class="category-card">
-                    <div class="category-icon">👖</div>
+            <div class="categories-grid">
+                <div class="category-card animate-in delay-1" onclick="window.location.href='pages/shop.html?category=Baggy Jeans'">
+                    <span class="category-icon">👖</span>
                     <h3>Baggy Jeans</h3>
                     <p>Trendy & Comfortable</p>
+                    <span class="count">24 Products</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">👗</div>
+                <div class="category-card animate-in delay-2" onclick="window.location.href='pages/shop.html?category=Skirts'">
+                    <span class="category-icon">👗</span>
                     <h3>Skirts</h3>
                     <p>Stylish & Elegant</p>
+                    <span class="count">18 Products</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">👕</div>
+                <div class="category-card animate-in delay-3" onclick="window.location.href='pages/shop.html?category=Polo Shirts'">
+                    <span class="category-icon">👕</span>
                     <h3>Polo Shirts</h3>
                     <p>Classic & Premium</p>
+                    <span class="count">32 Products</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">⚽</div>
+                <div class="category-card animate-in delay-4" onclick="window.location.href='pages/shop.html?category=Jerseys'">
+                    <span class="category-icon">⚽</span>
                     <h3>Jerseys</h3>
                     <p>Sporty & Comfortable</p>
+                    <span class="count">15 Products</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">👖</div>
+                <div class="category-card animate-in delay-1" onclick="window.location.href='pages/shop.html?category=Straight Jeans'">
+                    <span class="category-icon">👖</span>
                     <h3>Straight Jeans</h3>
                     <p>Perfect Fit</p>
+                    <span class="count">28 Products</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">👖</div>
+                <div class="category-card animate-in delay-2" onclick="window.location.href='pages/shop.html?category=Boyfriend Jeans'">
+                    <span class="category-icon">👖</span>
                     <h3>Boyfriend Jeans</h3>
                     <p>Relaxed & Stylish</p>
+                    <span class="count">20 Products</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">🩳</div>
+                <div class="category-card animate-in delay-3" onclick="window.location.href='pages/shop.html?category=Shorts'">
+                    <span class="category-icon">🩳</span>
                     <h3>Shorts</h3>
                     <p>Casual & Cool</p>
+                    <span class="count">12 Products</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">👚</div>
+                <div class="category-card animate-in delay-4" onclick="window.location.href='pages/shop.html?category=Tops'">
+                    <span class="category-icon">👚</span>
                     <h3>Tops</h3>
                     <p>Trendy & Chic</p>
+                    <span class="count">22 Products</span>
                 </div>
             </div>
         </div>
@@ -162,7 +192,10 @@
     <section class="products-section">
         <div class="container">
             <div class="section-header">
-                <h2>New Arrivals</h2>
+                <div>
+                    <h2>New Arrivals</h2>
+                    <span class="subtitle">Fresh styles just dropped</span>
+                </div>
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="products-grid" id="newArrivals">
@@ -178,11 +211,22 @@
                 <h2>🔥 Flash Sale</h2>
                 <p>Limited time offers up to 50% off on premium fashion</p>
                 <div class="countdown" id="countdown">
-                    <div><span id="hours">12</span>h</div>
-                    <div><span id="minutes">30</span>m</div>
-                    <div><span id="seconds">45</span>s</div>
+                    <div>
+                        <span id="hours">12</span>
+                        <span class="label">Hours</span>
+                    </div>
+                    <div>
+                        <span id="minutes">30</span>
+                        <span class="label">Minutes</span>
+                    </div>
+                    <div>
+                        <span id="seconds">45</span>
+                        <span class="label">Seconds</span>
+                    </div>
                 </div>
-                <a href="pages/shop.html?filter=sale" class="btn-primary">Shop Flash Sale</a>
+                <a href="pages/shop.html?filter=sale" class="btn-gold">
+                    <i class="fas fa-bolt"></i> Shop Flash Sale
+                </a>
             </div>
         </div>
     </section>
@@ -191,7 +235,10 @@
     <section class="products-section">
         <div class="container">
             <div class="section-header">
-                <h2>Best Sellers</h2>
+                <div>
+                    <h2>Best Sellers</h2>
+                    <span class="subtitle">Customer favorites</span>
+                </div>
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="products-grid" id="bestSellers">
@@ -203,70 +250,32 @@
     <!-- Why Choose Us -->
     <section class="features">
         <div class="container">
-            <div class="section-header">
-                <h2>Why Choose Uju Fashion?</h2>
+            <div class="section-header" style="justify-content:center;text-align:center;">
+                <div>
+                    <h2>Why Choose Uju Fashion?</h2>
+                    <span class="subtitle">Style That Speaks. Quality That Lasts.</span>
+                </div>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-truck"></i>
+                <div class="feature-card animate-in delay-1">
+                    <div class="icon"><i class="fas fa-truck"></i></div>
                     <h3>Free Delivery</h3>
                     <p>On orders above ₦50,000</p>
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-undo"></i>
+                <div class="feature-card animate-in delay-2">
+                    <div class="icon"><i class="fas fa-undo"></i></div>
                     <h3>30 Days Return</h3>
                     <p>Easy returns & exchange</p>
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-shield-alt"></i>
+                <div class="feature-card animate-in delay-3">
+                    <div class="icon"><i class="fas fa-shield-alt"></i></div>
                     <h3>Secure Payment</h3>
                     <p>100% payment security</p>
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-headset"></i>
+                <div class="feature-card animate-in delay-4">
+                    <div class="icon"><i class="fas fa-headset"></i></div>
                     <h3>24/7 Support</h3>
                     <p>Dedicated customer support</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-tag"></i>
-                    <h3>Best Prices</h3>
-                    <p>Affordable premium fashion</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-check-circle"></i>
-                    <h3>Quality Guarantee</h3>
-                    <p>Premium quality assured</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Delivery Information -->
-    <section class="delivery-info">
-        <div class="container">
-            <div class="delivery-wrapper">
-                <h2>📦 Delivery Information</h2>
-                <div class="delivery-grid">
-                    <div class="delivery-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <h3>Location</h3>
-                        <p>Okpuno, Awka, Anambra State, Nigeria</p>
-                    </div>
-                    <div class="delivery-item">
-                        <i class="fas fa-clock"></i>
-                        <h3>Delivery Time</h3>
-                        <p>2-5 business days within Nigeria</p>
-                    </div>
-                    <div class="delivery-item">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <h3>Payment</h3>
-                        <p>Cash on delivery available</p>
-                    </div>
-                    <div class="delivery-item">
-                        <i class="fas fa-phone"></i>
-                        <h3>Contact</h3>
-                        <p>07035585774 | 08157241470</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -275,11 +284,46 @@
     <!-- Customer Reviews -->
     <section class="reviews">
         <div class="container">
-            <div class="section-header">
-                <h2>What Our Customers Say</h2>
+            <div class="section-header" style="justify-content:center;text-align:center;">
+                <div>
+                    <h2>What Our Customers Say</h2>
+                    <span class="subtitle">Real reviews from real customers</span>
+                </div>
             </div>
             <div class="reviews-grid" id="reviewsGrid">
-                <!-- Reviews loaded dynamically -->
+                <div class="review-card animate-in delay-1">
+                    <div class="stars">★★★★★</div>
+                    <p class="text">"Amazing quality! The jeans fit perfectly. Will definitely order again. Best fashion store in Nigeria!"</p>
+                    <div class="reviewer">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+J&background=8B1A4A&color=fff" alt="Sarah" />
+                        <div class="info">
+                            <h4>Sarah Johnson</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card animate-in delay-2">
+                    <div class="stars">★★★★★</div>
+                    <p class="text">"Fast delivery and great customer service. The polos are premium quality. Highly recommend!"</p>
+                    <div class="reviewer">
+                        <img src="https://ui-avatars.com/api/?name=Michael+C&background=8B1A4A&color=fff" alt="Michael" />
+                        <div class="info">
+                            <h4>Michael Chen</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card animate-in delay-3">
+                    <div class="stars">★★★★★</div>
+                    <p class="text">"Love the new collection. The quality is premium and prices are fair. My go-to fashion store!"</p>
+                    <div class="reviewer">
+                        <img src="https://ui-avatars.com/api/?name=Emma+D&background=8B1A4A&color=fff" alt="Emma" />
+                        <div class="info">
+                            <h4>Emma Davis</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -302,14 +346,14 @@
     <section class="social-section">
         <div class="container">
             <div class="social-wrapper">
-                <div class="social-card whatsapp">
-                    <i class="fab fa-whatsapp"></i>
+                <div class="social-card whatsapp animate-in delay-1">
+                    <span class="icon"><i class="fab fa-whatsapp"></i></span>
                     <h3>Chat on WhatsApp</h3>
                     <p>Quick support & order inquiries</p>
                     <a href="https://wa.me/2347035585774" target="_blank" class="btn-social">Chat Now</a>
                 </div>
-                <div class="social-card instagram">
-                    <i class="fab fa-instagram"></i>
+                <div class="social-card instagram animate-in delay-2">
+                    <span class="icon"><i class="fab fa-instagram"></i></span>
                     <h3>Follow on Instagram</h3>
                     <p>Stay updated with our latest styles</p>
                     <a href="https://instagram.com" target="_blank" class="btn-social">Follow Us</a>
@@ -325,7 +369,7 @@
                 <div class="footer-col">
                     <h3>Uju<span>Fashion</span></h3>
                     <p>Style That Speaks. Quality That Lasts.</p>
-                    <p style="margin-top: 10px; font-size: 14px;">Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more.</p>
+                    <p style="margin-top:10px;font-size:14px;">Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -372,4 +416,4 @@
     <script src="js/cart.js"></script>
     <script src="js/auth.js"></script>
 </body>
-                                </html>
+                </html>
