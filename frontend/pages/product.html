@@ -399,4 +399,299 @@
                         <li><a href="shipping.html">Shipping Policy</a></li>
                         <li><a href="returns.html">Return Policy</a></li>
                         <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 07035585774</li>
+                        <li><i class="fas fa-phone"></i> 08157241470</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/auth.js"></script>
+    
+    <script>
+        // ====================
+        // PRODUCT DETAILS
+        // ====================
+        
+        let currentProduct = null;
+        let selectedSize = null;
+        let selectedColor = null;
+        let quantity = 1;
+        
+        // Get product ID from URL
+        function getProductId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+        
+        // Load product
+        async function loadProduct() {
+            const productId = getProductId();
+            if (!productId) {
+                window.location.href = 'shop.html';
+                return;
+            }
+            
+            try {
+                const product = await getProductById(productId);
+                currentProduct = product;
+                renderProduct(product);
+                loadRelatedProducts(product.category, productId);
+            } catch (error) {
+                console.error('Error loading product:', error);
+                document.getElementById('productDetails').innerHTML = `
+                    <div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+                        <i class="fas fa-exclamation-circle" style="font-size:48px;color:#ddd;"></i>
+                        <h3>Product not found</h3>
+                        <p>${error.message || 'The product you\'re looking for doesn\'t exist.'}</p>
+                        <a href="shop.html" class="btn-primary" style="margin-top:16px;display:inline-block;">Browse Products</a>
+                    </div>
+                `;
+            }
+        }
+        
+        // Render product
+        function renderProduct(product) {
+            const container = document.getElementById('productDetails');
+            
+            const images = product.images || ['https://via.placeholder.com/600x500/2d1b69/ffffff?text=Uju+Fashion'];
+            const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+            const inStock = product.stock > 0;
+            
+            container.innerHTML = `
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="${images[0]}" alt="${product.name}" id="mainImage" />
+                    </div>
+                    <div class="thumbnails" id="thumbnails">
+                        ${images.map((img, i) => `
+                            <img src="${img}" alt="${product.name} ${i+1}" 
+                                 onclick="changeImage('${img}', this)" 
+                                 class="${i === 0 ? 'active' : ''}" />
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <div class="product-category">${product.category}</div>
+                    <h1 class="product-name">${product.name}</h1>
+                    
+                    <div class="product-rating">
+                        <span class="stars">${'★'.repeat(Math.round(product.rating || 0))}${'☆'.repeat(5 - Math.round(product.rating || 0))}</span>
+                        <span>${product.rating || 0} (${product.reviews?.length || 0} reviews)</span>
+                    </div>
+                    
+                    <div class="product-price">
+                        <span class="current">₦${formatNumber(product.price)}</span>
+                        ${product.originalPrice ? `
+                            <span class="original">₦${formatNumber(product.originalPrice)}</span>
+                            <span class="discount">-${discount}%</span>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="product-stock ${inStock ? 'in-stock' : 'out-of-stock'}">
+                        ${inStock ? '✅ In Stock' : '❌ Out of Stock'}
+                        ${inStock ? `(${product.stock} available)` : ''}
+                    </div>
+                    
+                    <div class="product-description">${product.description || 'No description available.'}</div>
+                    
+                    ${product.sizes && product.sizes.length > 0 ? `
+                        <div class="product-options">
+                            <div class="option-group">
+                                <label>Size</label>
+                                <div class="options" id="sizeOptions">
+                                    ${product.sizes.map(size => `
+                                        <button onclick="selectSize('${size}', this)" class="${selectedSize === size ? 'active' : ''}">${size}</button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${product.colors && product.colors.length > 0 ? `
+                        <div class="product-options">
+                            <div class="option-group">
+                                <label>Color</label>
+                                <div class="options" id="colorOptions">
+                                    ${product.colors.map(color => `
+                                        <button onclick="selectColor('${color}', this)" class="${selectedColor === color ? 'active' : ''}">${color}</button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="quantity-selector">
+                        <label>Quantity:</label>
+                        <div class="qty-control">
+                            <button onclick="changeQuantity(-1)">−</button>
+                            <span id="qtyDisplay">${quantity}</span>
+                            <button onclick="changeQuantity(1)">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="btn-primary" onclick="addToCart()" ${!inStock ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="btn-secondary" onclick="addToWishlist()">
+                            <i class="far fa-heart"></i> Wishlist
+                        </button>
+                        <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(product.name)}%20from%20Uju%20Fashion%20Sales" 
+                           target="_blank" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                        </a>
+                    </div>
+                    
+                    <div class="product-meta">
+                        <div class="meta-item"><strong>Category:</strong> ${product.category}</div>
+                        ${product.material ? `<div class="meta-item"><strong>Material:</strong> ${product.material}</div>` : ''}
+                        ${product.sizes && product.sizes.length > 0 ? `<div class="meta-item"><strong>Sizes:</strong> ${product.sizes.join(', ')}</div>` : ''}
+                        ${product.colors && product.colors.length > 0 ? `<div class="meta-item"><strong>Colors:</strong> ${product.colors.join(', ')}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Change main image
+        function changeImage(src, el) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.thumbnails img').forEach(img => img.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+        
+        // Select size
+        function selectSize(size, el) {
+            selectedSize = size;
+            document.querySelectorAll('#sizeOptions button').forEach(b => b.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+        
+        // Select color
+        function selectColor(color, el) {
+            selectedColor = color;
+            document.querySelectorAll('#colorOptions button').forEach(b => b.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+        
+        // Change quantity
+        function changeQuantity(delta) {
+            quantity = Math.max(1, Math.min(10, quantity + delta));
+            document.getElementById('qtyDisplay').textContent = quantity;
+        }
+        
+        // Add to cart
+        async function addToCart() {
+            if (!currentProduct) return;
+            if (currentProduct.stock <= 0) {
+                showToast('Product is out of stock', 'error');
+                return;
+            }
+            
+            try {
+                await addToCart(currentProduct._id, quantity, selectedSize, selectedColor);
+                showToast(`Added ${quantity} ${currentProduct.name} to cart 🛒`);
+                updateCartBadge();
+            } catch (error) {
+                if (error.message.includes('Authentication')) {
+                    window.location.href = 'login.html';
+                }
+                showToast('Please login to add to cart', 'error');
+            }
+        }
+        
+        // Add to wishlist
+        async function addToWishlist() {
+            if (!currentProduct) return;
+            try {
+                await addToWishlist(currentProduct._id);
+                showToast('Added to wishlist ❤️');
+                updateWishlistBadge();
+            } catch (error) {
+                if (error.message.includes('Authentication')) {
+                    window.location.href = 'login.html';
+                }
+                showToast('Please login to use wishlist', 'error');
+            }
+        }
+        
+        // Load related products
+        async function loadRelatedProducts(category, productId) {
+            try {
+                const products = await getProducts({ category, limit: 4 });
+                const related = products.filter(p => p._id !== productId).slice(0, 4);
+                
+                const container = document.getElementById('relatedProducts');
+                
+                if (related.length === 0) {
+                    container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;">No related products found</p>';
+                    return;
+                }
+                
+                container.innerHTML = related.map(product => `
+                    <div class="product-card" onclick="window.location.href='product.html?id=${product._id}'">
+                        <div class="product-image">
+                            <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/2d1b69/ffffff?text=Uju+Fashion'}" 
+                                 alt="${product.name}" loading="lazy" />
+                            ${product.isBestSeller ? `<span class="product-badge" style="background:#10b981;">Best Seller</span>` : ''}
+                        </div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="category">${product.category}</p>
+                            <div class="product-price">
+                                <span class="current">₦${formatNumber(product.price)}</span>
+                                ${product.originalPrice ? `<span class="original">₦${formatNumber(product.originalPrice)}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading related products:', error);
+            }
+        }
+        
+        // Format number
+        function formatNumber(num) {
+            return Number(num).toLocaleString();
+        }
+        
+        // Toast
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
+                background: ${type === 'success' ? '#2d1b69' : '#ef4444'};
+                color: white; border-radius: 12px; font-weight: 500;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
+                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
+                min-width: 280px;
+            `;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadProduct);
+    </script>
+</body>
+                                                                </html>
