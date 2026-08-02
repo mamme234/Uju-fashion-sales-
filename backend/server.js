@@ -11,11 +11,37 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://uju-fashion-sales.vercel.app', 'https://uju-fashion-sales.onrender.com'],
+    origin: ['http://localhost:3000', 'https://uju-fashion-sales.vercel.app', 'https://uju-fashion-sales.onrender.com', '*'],
     credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        message: 'Uju Fashion Sales API is running',
+        timestamp: new Date().toISOString(),
+        version: '1.0.0'
+    });
+});
+
+// Root route
+app.get('/', (req, res) => {
+    res.json({ 
+        name: 'Uju Fashion Sales API',
+        version: '1.0.0',
+        status: 'running',
+        endpoints: {
+            health: '/api/health',
+            auth: '/api/auth',
+            products: '/api/products',
+            orders: '/api/orders',
+            admin: '/api/admin'
+        }
+    });
+});
 
 // ====================
 // MODELS
@@ -224,42 +250,6 @@ app.get('/api/auth/profile', authMiddleware, async (req, res) => {
     try {
         const user = await User.findById(req.user._id).select('-password');
         res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Update Profile
-app.put('/api/auth/profile', authMiddleware, async (req, res) => {
-    try {
-        const { name, addresses } = req.body;
-        const user = await User.findById(req.user._id);
-        
-        if (name) user.name = name;
-        if (addresses) user.addresses = addresses;
-        
-        await user.save();
-        res.json({ message: 'Profile updated', user: { id: user._id, name: user.name, email: user.email } });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Change Password
-app.post('/api/auth/change-password', authMiddleware, async (req, res) => {
-    try {
-        const { currentPassword, newPassword } = req.body;
-        const user = await User.findById(req.user._id);
-        
-        const isMatch = await user.comparePassword(currentPassword);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Current password is incorrect' });
-        }
-
-        user.password = newPassword;
-        await user.save();
-        
-        res.json({ message: 'Password changed successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -484,28 +474,6 @@ app.put('/api/orders/:id/status', authMiddleware, adminMiddleware, async (req, r
     }
 });
 
-// Get order stats (Admin only)
-app.get('/api/orders/stats', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-        const totalOrders = await Order.countDocuments();
-        const totalRevenue = await Order.aggregate([
-            { $group: { _id: null, total: { $sum: '$total' } } }
-        ]);
-        
-        const statusCounts = await Order.aggregate([
-            { $group: { _id: '$orderStatus', count: { $sum: 1 } } }
-        ]);
-        
-        res.json({
-            totalOrders,
-            totalRevenue: totalRevenue[0]?.total || 0,
-            statusCounts
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
 // ====================
 // ADMIN DASHBOARD
 // ====================
@@ -527,10 +495,6 @@ app.get('/api/admin/dashboard', authMiddleware, adminMiddleware, async (req, res
             .sort({ createdAt: -1 })
             .limit(5);
 
-        const averageRating = await Product.aggregate([
-            { $group: { _id: null, avg: { $avg: '$rating' } } }
-        ]);
-
         res.json({
             totalRevenue: totalRevenue[0]?.total || 0,
             totalOrders,
@@ -539,7 +503,7 @@ app.get('/api/admin/dashboard', authMiddleware, adminMiddleware, async (req, res
             lowStockCount: lowStock.length,
             lowStock,
             recentOrders,
-            averageRating: averageRating[0]?.avg || 0
+            averageRating: 0
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -553,7 +517,6 @@ app.get('/api/admin/customers', authMiddleware, adminMiddleware, async (req, res
             .select('-password')
             .sort({ createdAt: -1 });
         
-        // Get order count and total spent for each customer
         const customersWithStats = await Promise.all(customers.map(async (customer) => {
             const orders = await Order.find({ user: customer._id });
             const totalSpent = orders.reduce((sum, order) => sum + order.total, 0);
@@ -565,40 +528,6 @@ app.get('/api/admin/customers', authMiddleware, adminMiddleware, async (req, res
         }));
         
         res.json(customersWithStats);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Block customer (Admin only)
-app.put('/api/admin/customers/:id/block', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-        const user = await User.findByIdAndUpdate(
-            req.params.id,
-            { isBlocked: true },
-            { new: true }
-        );
-        if (!user) {
-            return res.status(404).json({ message: 'Customer not found' });
-        }
-        res.json({ message: 'Customer blocked successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Unblock customer (Admin only)
-app.put('/api/admin/customers/:id/unblock', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-        const user = await User.findByIdAndUpdate(
-            req.params.id,
-            { isBlocked: false },
-            { new: true }
-        );
-        if (!user) {
-            return res.status(404).json({ message: 'Customer not found' });
-        }
-        res.json({ message: 'Customer unblocked successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -649,7 +578,7 @@ mongoose.connect(process.env.MONGODB_URI)
 // ====================
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
     console.log(`🌐 API URL: https://uju-fashion-sales.onrender.com`);
 });
