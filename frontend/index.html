@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FashionStore - Premium Fashion</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-left">
+                    <a href="index.html" class="logo">Fashion<span>Store</span></a>
+                </div>
+                
+                <div class="nav-center">
+                    <ul class="nav-menu">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="pages/shop.html">Shop</a></li>
+                        <li><a href="pages/about.html">About</a></li>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search products..." />
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <a href="pages/wishlist.html" class="nav-icon">
+                        <i class="far fa-heart"></i>
+                        <span class="badge">0</span>
+                    </a>
+                    <a href="pages/cart.html" class="nav-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge cart-count">0</span>
+                    </a>
+                    <a href="pages/login.html" class="nav-icon">
+                        <i class="far fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-wrapper">
+                <div class="hero-content">
+                    <span class="hero-tag">New Collection 2026</span>
+                    <h1>Elevate Your <br />Fashion Style</h1>
+                    <p>Discover the latest trends in fashion. Premium quality, affordable prices.</p>
+                    <div class="hero-buttons">
+                        <a href="pages/shop.html" class="btn-primary">Shop Now</a>
+                        <a href="pages/shop.html" class="btn-secondary">Explore Collection</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div>
+                            <h3>10K+</h3>
+                            <p>Happy Customers</p>
+                        </div>
+                        <div>
+                            <h3>500+</h3>
+                            <p>Products</p>
+                        </div>
+                        <div>
+                            <h3>4.8★</h3>
+                            <p>Average Rating</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/banners/hero-fashion.jpg" alt="Fashion Banner" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Shop by Category</h2>
+                <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <img src="images/categories/men.jpg" alt="Men" />
+                    <h3>Men</h3>
+                    <p>120 Products</p>
+                </div>
+                <div class="category-card">
+                    <img src="images/categories/women.jpg" alt="Women" />
+                    <h3>Women</h3>
+                    <p>150 Products</p>
+                </div>
+                <div class="category-card">
+                    <img src="images/categories/jeans.jpg" alt="Jeans" />
+                    <h3>Jeans</h3>
+                    <p>80 Products</p>
+                </div>
+                <div class="category-card">
+                    <img src="images/categories/tops.jpg" alt="Tops" />
+                    <h3>Tops</h3>
+                    <p>90 Products</p>
+                </div>
+                <div class="category-card">
+                    <img src="images/categories/skirts.jpg" alt="Skirts" />
+                    <h3>Skirts</h3>
+                    <p>45 Products</p>
+                </div>
+                <div class="category-card">
+                    <img src="images/categories/sale.jpg" alt="Sale" />
+                    <h3>Sale</h3>
+                    <p>30 Products</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>New Arrivals</h2>
+                <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-grid" id="newArrivals">
+                <!-- Products loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Flash Sale -->
+    <section class="flash-sale">
+        <div class="container">
+            <div class="flash-sale-wrapper">
+                <div class="flash-sale-content">
+                    <h2>Flash Sale</h2>
+                    <p>Limited time offers up to 50% off</p>
+                    <div class="countdown" id="countdown">
+                        <div><span id="hours">12</span>h</div>
+                        <div><span id="minutes">30</span>m</div>
+                        <div><span id="seconds">45</span>s</div>
+                    </div>
+                    <a href="pages/shop.html" class="btn-primary">Shop Flash Sale</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Best Sellers</h2>
+                <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-grid" id="bestSellers">
+                <!-- Products loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Free Delivery</h3>
+                    <p>On orders above $50</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-undo"></i>
+                    <h3>30 Days Return</h3>
+                    <p>Easy returns & exchange</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Payment</h3>
+                    <p>100% payment security</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Dedicated customer support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="reviews">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Amazing quality! The jeans fit perfectly. Will definitely order again."</p>
+                    <div class="reviewer">
+                        <img src="images/reviews/user1.jpg" alt="User" />
+                        <div>
+                            <h4>Sarah Johnson</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Fast delivery and great customer service. Highly recommend!"</p>
+                    <div class="reviewer">
+                        <img src="images/reviews/user2.jpg" alt="User" />
+                        <div>
+                            <h4>Michael Chen</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★☆</div>
+                    <p>"Love the new collection. The quality is premium and prices are fair."</p>
+                    <div class="reviewer">
+                        <img src="images/reviews/user3.jpg" alt="User" />
+                        <div>
+                            <h4>Emma Davis</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-wrapper">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get 10% off on your first order and stay updated with latest trends</p>
+                <form id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" required />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp & Instagram -->
+    <section class="social-section">
+        <div class="container">
+            <div class="social-wrapper">
+                <div class="social-card whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>Chat on WhatsApp</h3>
+                    <p>Quick support & order inquiries</p>
+                    <a href="https://wa.me/1234567890" target="_blank" class="btn-social">Chat Now</a>
+                </div>
+                <div class="social-card instagram">
+                    <i class="fab fa-instagram"></i>
+                    <h3>Follow on Instagram</h3>
+                    <p>Stay updated with our latest styles</p>
+                    <a href="https://instagram.com" target="_blank" class="btn-social">Follow Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Fashion<span>Store</span></h3>
+                    <p>Premium fashion for everyone. Quality you can trust.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="pages/shop.html">Shop</a></li>
+                        <li><a href="pages/about.html">About Us</a></li>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                        <li><a href="pages/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="pages/shipping.html">Shipping Policy</a></li>
+                        <li><a href="pages/returns.html">Return Policy</a></li>
+                        <li><a href="pages/privacy.html">Privacy Policy</a></li>
+                        <li><a href="pages/terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fas fa-envelope"></i> info@fashionstore.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion St, NY</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FashionStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+                              </html>
