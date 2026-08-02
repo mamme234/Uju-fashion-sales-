@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Profile - Uju Fashion Sales</title>
+    <title>My Profile - Uju Fashion Sales Everywhere /title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
@@ -43,10 +43,11 @@
         .profile-sidebar .avatar h3 {
             margin-top: 12px;
             font-size: 18px;
+            font-family: var(--font-primary);
         }
         
         .profile-sidebar .avatar p {
-            color: #888;
+            color: var(--gray-dark);
             font-size: 14px;
         }
         
@@ -93,6 +94,7 @@
         }
         
         .profile-content h2 {
+            font-family: var(--font-primary);
             font-size: 24px;
             margin-bottom: 20px;
         }
@@ -127,7 +129,7 @@
         
         .order-card {
             border: 1px solid #f0f0f0;
-            border-radius: var(--radius);
+            border-radius: var(--radius-sm);
             padding: 16px;
             margin-bottom: 16px;
         }
@@ -137,6 +139,8 @@
             justify-content: space-between;
             margin-bottom: 12px;
             font-weight: 600;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         
         .order-card .order-items {
@@ -153,24 +157,10 @@
             border-bottom: 1px solid #f5f5f5;
         }
         
-        .order-card .order-status {
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .order-status.pending { background: #fef3c7; color: #d97706; }
-        .order-status.accepted { background: #dbeafe; color: #2563eb; }
-        .order-status.processing { background: #e0e7ff; color: #4f46e5; }
-        .order-status.shipped { background: #d1fae5; color: #059669; }
-        .order-status.delivered { background: #d1fae5; color: #059669; }
-        .order-status.cancelled { background: #fee2e2; color: #dc2626; }
-        
         .empty-state {
             text-align: center;
             padding: 40px 20px;
-            color: #888;
+            color: var(--gray-dark);
         }
         
         .empty-state i {
@@ -245,12 +235,12 @@
     <!-- Profile -->
     <section class="profile-container">
         <div class="container">
-            <h1 style="font-size:32px;margin-bottom:30px;">My Account</h1>
+            <h1 style="font-family:var(--font-primary);font-size:32px;margin-bottom:30px;">My Account</h1>
             <div class="profile-wrapper">
                 <!-- Sidebar -->
                 <aside class="profile-sidebar">
                     <div class="avatar">
-                        <img src="https://ui-avatars.com/api/?name=User&background=2d1b69&color=fff" alt="User" />
+                        <img src="https://ui-avatars.com/api/?name=User&background=8B1A4A&color=fff" alt="User" />
                         <h3 id="userName">User</h3>
                         <p id="userEmail">user@email.com</p>
                     </div>
@@ -258,7 +248,6 @@
                         <a href="#" class="active" data-tab="profile"><i class="fas fa-user"></i> Profile</a>
                         <a href="#" data-tab="orders"><i class="fas fa-shopping-bag"></i> Orders</a>
                         <a href="#" data-tab="wishlist"><i class="fas fa-heart"></i> Wishlist</a>
-                        <a href="#" data-tab="addresses"><i class="fas fa-map-marker-alt"></i> Addresses</a>
                         <a href="#" data-tab="security"><i class="fas fa-lock"></i> Security</a>
                         <a href="#" onclick="logoutUser()" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
@@ -278,6 +267,10 @@
                                 <label>Email</label>
                                 <input type="email" id="profileEmail" disabled style="background:#f5f5f5;" />
                             </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" id="profilePhone" placeholder="Enter your phone number" />
+                            </div>
                             <button type="submit" class="btn-primary">Update Profile</button>
                         </form>
                     </div>
@@ -289,6 +282,7 @@
                             <div class="empty-state">
                                 <i class="fas fa-box"></i>
                                 <p>No orders yet. Start shopping!</p>
+                                <a href="shop.html" class="btn-primary" style="margin-top:12px;display:inline-block;">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -300,17 +294,6 @@
                             <div class="empty-state">
                                 <i class="fas fa-heart"></i>
                                 <p>Your wishlist is empty</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Addresses Tab -->
-                    <div class="tab-content" id="tab-addresses">
-                        <h2>Saved Addresses</h2>
-                        <div id="addressesList">
-                            <div class="empty-state">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>No saved addresses</p>
                             </div>
                         </div>
                     </div>
@@ -399,7 +382,6 @@
         
         let currentUser = null;
         
-        // Check auth
         async function checkAuth() {
             if (!getToken()) {
                 window.location.href = 'login.html';
@@ -411,38 +393,37 @@
                 displayUserInfo();
                 loadOrders();
                 loadWishlist();
-                loadAddresses();
             } catch (error) {
                 console.error('Error loading profile:', error);
                 window.location.href = 'login.html';
             }
         }
         
-        // Display user info
         function displayUserInfo() {
             if (!currentUser) return;
             document.getElementById('userName').textContent = currentUser.name || 'User';
             document.getElementById('userEmail').textContent = currentUser.email || '';
             document.getElementById('profileName').value = currentUser.name || '';
             document.getElementById('profileEmail').value = currentUser.email || '';
+            document.getElementById('profilePhone').value = currentUser.phone || '';
         }
         
-        // Update profile
         async function updateProfile(event) {
             event.preventDefault();
             const name = document.getElementById('profileName').value.trim();
+            const phone = document.getElementById('profilePhone').value.trim();
             
             try {
-                await updateProfile({ name });
+                await updateProfile({ name, phone });
                 currentUser.name = name;
+                currentUser.phone = phone;
                 displayUserInfo();
-                showToast('Profile updated successfully!');
+                showToast('✅ Profile updated successfully!');
             } catch (error) {
                 showToast(error.message || 'Error updating profile', 'error');
             }
         }
         
-        // Change password
         async function changePassword(event) {
             event.preventDefault();
             
@@ -462,14 +443,13 @@
             
             try {
                 await changePassword({ currentPassword, newPassword });
-                showToast('Password changed successfully!');
+                showToast('✅ Password changed successfully!');
                 document.getElementById('passwordForm').reset();
             } catch (error) {
                 showToast(error.message || 'Error changing password', 'error');
             }
         }
         
-        // Load orders
         async function loadOrders() {
             try {
                 const orders = await getOrders();
@@ -516,7 +496,6 @@
             `).join('');
         }
         
-        // Load wishlist
         async function loadWishlist() {
             try {
                 const wishlist = await getWishlist();
@@ -545,7 +524,7 @@
                     ${items.map(item => `
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/2d1b69/ffffff?text=Uju'}" 
+                                <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju'}" 
                                      alt="${item.name}" />
                                 <button class="product-wishlist" onclick="removeFromWishlist('${item._id}')" style="background:var(--secondary);color:white;">
                                     <i class="fas fa-heart"></i>
@@ -557,6 +536,10 @@
                                     <span class="current">₦${formatNumber(item.price)}</span>
                                 </div>
                                 <button class="add-to-cart-btn" onclick="addToCart('${item._id}')">Add to Cart</button>
+                                <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(item.name)}" 
+                                   target="_blank" class="whatsapp-order-btn" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#25D366;color:white;border:none;border-radius:50px;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;width:100%;justify-content:center;margin-top:6px;">
+                                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                                </a>
                             </div>
                         </div>
                     `).join('')}
@@ -564,72 +547,32 @@
             `;
         }
         
-        // Load addresses
-        async function loadAddresses() {
-            try {
-                const user = await getProfile();
-                const addresses = user.addresses || [];
-                renderAddresses(addresses);
-            } catch (error) {
-                console.error('Error loading addresses:', error);
-            }
-        }
-        
-        function renderAddresses(addresses) {
-            const container = document.getElementById('addressesList');
-            
-            if (!addresses || addresses.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>No saved addresses</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = addresses.map(addr => `
-                <div class="address-card" style="border:1px solid #f0f0f0;border-radius:8px;padding:16px;margin-bottom:12px;">
-                    <p><strong>${addr.street}</strong></p>
-                    <p>${addr.city}, ${addr.state} ${addr.zipCode}</p>
-                    <p>${addr.country || 'Nigeria'}</p>
-                    ${addr.isDefault ? '<span style="color:#10b981;font-weight:600;">✓ Default</span>' : ''}
-                </div>
-            `).join('');
-        }
-        
         // Tab switching
         document.querySelectorAll('.profile-sidebar .nav-links a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 
-                // Update active link
                 document.querySelectorAll('.profile-sidebar .nav-links a').forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
                 
-                // Show tab
                 const tab = link.dataset.tab;
                 document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
                 document.getElementById(`tab-${tab}`).classList.add('active');
                 
-                // Refresh data
                 if (tab === 'orders') loadOrders();
                 if (tab === 'wishlist') loadWishlist();
-                if (tab === 'addresses') loadAddresses();
             });
         });
         
-        // Format number
         function formatNumber(num) {
             return Number(num).toLocaleString();
         }
         
-        // Toast
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#2d1b69' : '#ef4444'};
+                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
                 color: white; border-radius: 12px; font-weight: 500;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
                 animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
@@ -643,11 +586,9 @@
             }, 3000);
         }
         
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
             
-            // Check for tab query param
             const params = new URLSearchParams(window.location.search);
             const tab = params.get('tab');
             if (tab) {
@@ -657,4 +598,4 @@
         });
     </script>
 </body>
-                          </html>
+                        </html>
