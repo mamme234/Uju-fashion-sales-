@@ -14,13 +14,14 @@
         .about-hero {
             text-align: center;
             padding: 60px 20px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--white);
             border-radius: var(--radius);
             margin-bottom: 40px;
         }
         
         .about-hero h1 {
+            font-family: var(--font-primary);
             font-size: 40px;
             margin-bottom: 16px;
         }
@@ -47,13 +48,14 @@
         }
         
         .about-card h2 {
+            font-family: var(--font-primary);
             font-size: 24px;
             margin-bottom: 12px;
             color: var(--primary);
         }
         
         .about-card p {
-            color: #555;
+            color: var(--text);
             line-height: 1.8;
         }
         
@@ -63,16 +65,20 @@
         }
         
         .about-card ul li {
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #f0f0f0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
+        .about-card ul li:last-child {
+            border-bottom: none;
+        }
+        
         .about-card ul li i {
             color: var(--secondary);
-            width: 20px;
+            width: 24px;
         }
         
         .values-grid {
@@ -108,7 +114,37 @@
         
         .value-item p {
             font-size: 14px;
-            color: #888;
+            color: var(--gray-dark);
+        }
+        
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+        
+        .mission-vision .item {
+            text-align: center;
+            padding: 30px;
+            background: var(--gray);
+            border-radius: var(--radius);
+        }
+        
+        .mission-vision .item i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .mission-vision .item h3 {
+            font-size: 20px;
+            font-family: var(--font-primary);
+        }
+        
+        .mission-vision .item p {
+            color: var(--gray-dark);
+            margin-top: 4px;
         }
         
         @media (max-width: 768px) {
@@ -116,6 +152,9 @@
                 grid-template-columns: 1fr;
             }
             .values-grid {
+                grid-template-columns: 1fr;
+            }
+            .mission-vision {
                 grid-template-columns: 1fr;
             }
             .about-hero h1 {
@@ -190,12 +229,16 @@
                     <p>
                         Uju Fashion Sales was founded with a simple mission: to bring premium-quality fashion 
                         to everyone at affordable prices. Located in Okpuno, Awka, Anambra State, we have grown 
-                        from a small local shop to a trusted fashion destination.
+                        from a small local shop to a trusted fashion destination across Nigeria.
                     </p>
                     <p style="margin-top:12px;">
                         We offer a wide range of fashion wears including boyfriend jeans, straight jeans, 
                         baggy jeans, polos, jerseys, skirts, shorts, and more. Every piece is carefully selected 
                         to ensure the highest quality and latest trends.
+                    </p>
+                    <p style="margin-top:12px;">
+                        Our goal is to help you look stylish, feel confident, and shop with confidence. 
+                        We believe that fashion should be accessible to everyone without compromising on quality.
                     </p>
                 </div>
                 
@@ -209,28 +252,29 @@
                         <li><i class="fas fa-check-circle"></i> Easy Returns & Exchange</li>
                         <li><i class="fas fa-check-circle"></i> 24/7 Customer Support</li>
                         <li><i class="fas fa-check-circle"></i> Cash on Delivery Available</li>
+                        <li><i class="fas fa-check-circle"></i> 100% Authentic Products</li>
                     </ul>
                 </div>
             </div>
             
             <div class="about-card" style="margin-bottom:40px;">
                 <h2 style="text-align:center;">Our Mission & Vision</h2>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px;">
-                    <div style="text-align:center;padding:20px;background:var(--gray);border-radius:var(--radius);">
-                        <i class="fas fa-bullseye" style="font-size:40px;color:var(--primary);margin-bottom:12px;"></i>
+                <div class="mission-vision">
+                    <div class="item">
+                        <i class="fas fa-bullseye"></i>
                         <h3>Mission</h3>
-                        <p style="color:#555;font-size:14px;">To provide premium-quality fashion that helps you look stylish, feel confident, and shop with confidence.</p>
+                        <p>To provide premium-quality fashion that helps you look stylish, feel confident, and shop with confidence.</p>
                     </div>
-                    <div style="text-align:center;padding:20px;background:var(--gray);border-radius:var(--radius);">
-                        <i class="fas fa-eye" style="font-size:40px;color:var(--primary);margin-bottom:12px;"></i>
+                    <div class="item">
+                        <i class="fas fa-eye"></i>
                         <h3>Vision</h3>
-                        <p style="color:#555;font-size:14px;">To become Nigeria's most trusted fashion brand, known for quality, affordability, and customer satisfaction.</p>
+                        <p>To become Nigeria's most trusted fashion brand, known for quality, affordability, and exceptional customer satisfaction.</p>
                     </div>
                 </div>
             </div>
             
             <div class="about-card">
-                <h2 style="text-align:center;">Our Values</h2>
+                <h2 style="text-align:center;">Our Core Values</h2>
                 <div class="values-grid">
                     <div class="value-item">
                         <i class="fas fa-gem"></i>
@@ -248,11 +292,6 @@
                         <p>Your satisfaction is our priority</p>
                     </div>
                     <div class="value-item">
-                        <i class="fas fa-leaf"></i>
-                        <h3>Sustainability</h3>
-                        <p>Eco-friendly fashion choices</p>
-                    </div>
-                    <div class="value-item">
                         <i class="fas fa-star"></i>
                         <h3>Innovation</h3>
                         <p>Keeping up with latest trends</p>
@@ -262,7 +301,19 @@
                         <h3>Community</h3>
                         <p>Building a fashion community</p>
                     </div>
+                    <div class="value-item">
+                        <i class="fas fa-tag"></i>
+                        <h3>Affordability</h3>
+                        <p>Quality fashion for everyone</p>
+                    </div>
                 </div>
+            </div>
+            
+            <div style="text-align:center;margin-top:40px;padding:30px;background:var(--gray);border-radius:var(--radius);">
+                <h3 style="margin-bottom:8px;">📍 Visit Our Store</h3>
+                <p style="color:var(--gray-dark);">Okpuno, Awka, Anambra State, Nigeria</p>
+                <p style="color:var(--gray-dark);">📞 07035585774 | 08157241470</p>
+                <a href="contact.html" class="btn-primary" style="margin-top:12px;display:inline-block;">Contact Us</a>
             </div>
         </div>
     </section>
@@ -320,4 +371,4 @@
     <script src="../js/cart.js"></script>
     <script src="../js/auth.js"></script>
 </body>
-</html>
+                            </html>
