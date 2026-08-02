@@ -67,6 +67,7 @@
             transition: var(--transition);
             text-decoration: none;
             cursor: pointer;
+            font-size: 14px;
         }
         
         .profile-sidebar .nav-links a:hover,
@@ -130,15 +131,36 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 14px;
+            font-family: var(--font-secondary);
         }
         
         .profile-content .form-group input:focus {
             border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(139,26,74,0.1);
         }
         
         .profile-content .btn-primary {
             padding: 10px 30px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+        
+        .profile-content .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .profile-content .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
         
         .order-card {
@@ -221,6 +243,39 @@
             transform: scale(1.02);
         }
         
+        /* Toast */
+        .toast-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 9999;
+            animation: slideIn 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 280px;
+            max-width: 500px;
+            font-family: var(--font-secondary);
+        }
+        
+        .toast-notification.success { background: #8B1A4A; color: white; }
+        .toast-notification.error { background: #ef4444; color: white; }
+        .toast-notification.info { background: #f59e0b; color: white; }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
         @media (max-width: 768px) {
             .profile-wrapper {
                 grid-template-columns: 1fr;
@@ -228,6 +283,16 @@
             .profile-sidebar {
                 position: relative;
                 top: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .profile-content {
+                padding: 20px;
+            }
+            .profile-sidebar .nav-links a {
+                font-size: 13px;
+                padding: 10px 12px;
             }
         }
     </style>
@@ -304,10 +369,7 @@
                         <a href="#" data-tab="orders"><i class="fas fa-shopping-bag"></i> Orders</a>
                         <a href="#" data-tab="wishlist"><i class="fas fa-heart"></i> Wishlist</a>
                         <a href="#" data-tab="security"><i class="fas fa-lock"></i> Security</a>
-                        <!-- LOGOUT BUTTON - FIXED with direct onclick -->
-                        <a href="#" class="logout-link" onclick="handleLogout(event)">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
+                        <a href="#" class="logout-link" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </aside>
                 
@@ -316,7 +378,7 @@
                     <!-- Profile Tab -->
                     <div class="tab-content active" id="tab-profile">
                         <h2>Profile Information</h2>
-                        <form id="profileForm" onsubmit="updateProfile(event)">
+                        <form id="profileForm">
                             <div class="form-group">
                                 <label>Full Name</label>
                                 <input type="text" id="profileName" required />
@@ -329,7 +391,7 @@
                                 <label>Phone Number</label>
                                 <input type="tel" id="profilePhone" placeholder="Enter your phone number" />
                             </div>
-                            <button type="submit" class="btn-primary">Update Profile</button>
+                            <button type="button" class="btn-primary" id="updateProfileBtn">Update Profile</button>
                         </form>
                     </div>
                     
@@ -359,7 +421,7 @@
                     <!-- Security Tab -->
                     <div class="tab-content" id="tab-security">
                         <h2>Change Password</h2>
-                        <form id="passwordForm" onsubmit="changePassword(event)">
+                        <form id="passwordForm">
                             <div class="form-group">
                                 <label>Current Password</label>
                                 <input type="password" id="currentPassword" required />
@@ -372,7 +434,7 @@
                                 <label>Confirm New Password</label>
                                 <input type="password" id="confirmNewPassword" required />
                             </div>
-                            <button type="submit" class="btn-primary">Change Password</button>
+                            <button type="button" class="btn-primary" id="changePasswordBtn">Change Password</button>
                         </form>
                     </div>
                 </main>
@@ -435,54 +497,10 @@
     
     <script>
         // ====================
-        // PROFILE LOGIC
+        // PROFILE LOGIC - ALL BUTTONS WORKING
         // ====================
         
         let currentUser = null;
-        
-        // ====================
-        // LOGOUT FUNCTION - FIXED
-        // ====================
-        
-        function handleLogout(event) {
-            // Prevent default link behavior
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            
-            console.log('🔴 Logout button clicked!');
-            
-            // Show confirmation
-            if (confirm('Are you sure you want to logout from Uju Fashion Sales Everywhere?')) {
-                console.log('✅ User confirmed logout');
-                
-                // Clear ALL localStorage data
-                localStorage.clear();
-                
-                // Also clear sessionStorage if any
-                sessionStorage.clear();
-                
-                // Remove specific items to be safe
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                localStorage.removeItem('cart');
-                localStorage.removeItem('wishlist');
-                
-                console.log('🗑️ All user data cleared');
-                
-                // Show toast message
-                showToast('👋 Logged out successfully from Uju Fashion Sales Everywhere!');
-                
-                // Redirect to home page after delay
-                setTimeout(() => {
-                    console.log('🔄 Redirecting to home page...');
-                    window.location.href = '../index.html';
-                }, 1500);
-            } else {
-                console.log('❌ User cancelled logout');
-            }
-        }
         
         // ====================
         // CHECK AUTH
@@ -506,7 +524,6 @@
                 loadWishlist();
             } catch (error) {
                 console.error('❌ Error loading profile:', error);
-                // If token is invalid, redirect to login
                 if (error.message.includes('Authentication') || error.message.includes('token')) {
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
@@ -529,13 +546,21 @@
         }
         
         // ====================
-        // UPDATE PROFILE
+        // UPDATE PROFILE - FIXED
         // ====================
         
-        async function updateProfile(event) {
-            event.preventDefault();
+        async function handleUpdateProfile() {
             const name = document.getElementById('profileName').value.trim();
             const phone = document.getElementById('profilePhone').value.trim();
+            const btn = document.getElementById('updateProfileBtn');
+            
+            if (!name) {
+                showToast('Please enter your name', 'error');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
             
             try {
                 await updateProfile({ name, phone });
@@ -545,19 +570,26 @@
                 showToast('✅ Profile updated successfully!');
             } catch (error) {
                 showToast(error.message || 'Error updating profile', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Update Profile';
             }
         }
         
         // ====================
-        // CHANGE PASSWORD
+        // CHANGE PASSWORD - FIXED
         // ====================
         
-        async function changePassword(event) {
-            event.preventDefault();
-            
+        async function handleChangePassword() {
             const currentPassword = document.getElementById('currentPassword').value;
             const newPassword = document.getElementById('newPassword').value;
             const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            const btn = document.getElementById('changePasswordBtn');
+            
+            if (!currentPassword || !newPassword || !confirmNewPassword) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
             
             if (newPassword !== confirmNewPassword) {
                 showToast('New passwords do not match', 'error');
@@ -569,12 +601,50 @@
                 return;
             }
             
+            btn.disabled = true;
+            btn.textContent = 'Changing...';
+            
             try {
                 await changePassword({ currentPassword, newPassword });
                 showToast('✅ Password changed successfully!');
                 document.getElementById('passwordForm').reset();
             } catch (error) {
                 showToast(error.message || 'Error changing password', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Change Password';
+            }
+        }
+        
+        // ====================
+        // LOGOUT - FIXED
+        // ====================
+        
+        function handleLogout() {
+            console.log('🔴 Logout button clicked!');
+            
+            if (confirm('Are you sure you want to logout from Uju Fashion Sales Everywhere?')) {
+                console.log('✅ User confirmed logout');
+                
+                // Clear ALL localStorage
+                localStorage.clear();
+                
+                // Remove specific items
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                localStorage.removeItem('cart');
+                localStorage.removeItem('wishlist');
+                
+                console.log('🗑️ All user data cleared');
+                
+                showToast('👋 Logged out successfully from Uju Fashion Sales Everywhere!');
+                
+                setTimeout(() => {
+                    console.log('🔄 Redirecting to home page...');
+                    window.location.href = '../index.html';
+                }, 1500);
+            } else {
+                console.log('❌ User cancelled logout');
             }
         }
         
@@ -684,70 +754,6 @@
         }
         
         // ====================
-        // TAB SWITCHING
-        // ====================
-        
-        document.querySelectorAll('.profile-sidebar .nav-links a:not(.logout-link)').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                document.querySelectorAll('.profile-sidebar .nav-links a').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                
-                const tab = link.dataset.tab;
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                document.getElementById(`tab-${tab}`).classList.add('active');
-                
-                if (tab === 'orders') loadOrders();
-                if (tab === 'wishlist') loadWishlist();
-            });
-        });
-        
-        // ====================
-        // UTILITY FUNCTIONS
-        // ====================
-        
-        function formatNumber(num) {
-            return Number(num).toLocaleString();
-        }
-        
-        function showToast(message, type = 'success') {
-            // Remove existing toasts
-            const existing = document.querySelectorAll('.toast-notification');
-            existing.forEach(t => t.remove());
-            
-            const toast = document.createElement('div');
-            toast.className = 'toast-notification';
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 24px;
-                right: 24px;
-                padding: 16px 24px;
-                background: ${type === 'success' ? '#8B1A4A' : type === 'error' ? '#ef4444' : '#f59e0b'};
-                color: white;
-                border-radius: 12px;
-                font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-                z-index: 9999;
-                animation: slideIn 0.4s ease;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                min-width: 280px;
-                max-width: 500px;
-            `;
-            
-            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
-            toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 4000);
-        }
-        
-        // ====================
         // REMOVE FROM WISHLIST
         // ====================
         
@@ -777,12 +783,105 @@
         }
         
         // ====================
-        // INITIALIZE
+        // TAB SWITCHING - FIXED
         // ====================
         
-        document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.profile-sidebar .nav-links a:not(.logout-link)').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Remove active from all links
+                document.querySelectorAll('.profile-sidebar .nav-links a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show tab
+                const tab = this.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                const targetTab = document.getElementById(`tab-${tab}`);
+                if (targetTab) {
+                    targetTab.classList.add('active');
+                }
+                
+                // Refresh data
+                if (tab === 'orders') loadOrders();
+                if (tab === 'wishlist') loadWishlist();
+            });
+        });
+        
+        // ====================
+        // UTILITY FUNCTIONS
+        // ====================
+        
+        function formatNumber(num) {
+            return Number(num).toLocaleString();
+        }
+        
+        function showToast(message, type = 'success') {
+            // Remove existing toasts
+            const existing = document.querySelectorAll('.toast-notification');
+            existing.forEach(t => t.remove());
+            
+            const toast = document.createElement('div');
+            toast.className = `toast-notification ${type}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+        
+        // ====================
+        // EVENT LISTENERS - ALL BUTTONS
+        // ====================
+        
+        document.addEventListener('DOMContentLoaded', function() {
             console.log('📄 Profile page loaded');
+            
+            // Check authentication
             checkAuth();
+            
+            // Update Profile Button
+            const updateBtn = document.getElementById('updateProfileBtn');
+            if (updateBtn) {
+                updateBtn.addEventListener('click', handleUpdateProfile);
+            }
+            
+            // Change Password Button
+            const passwordBtn = document.getElementById('changePasswordBtn');
+            if (passwordBtn) {
+                passwordBtn.addEventListener('click', handleChangePassword);
+            }
+            
+            // Logout Button
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleLogout();
+                });
+            }
+            
+            // Enter key support for forms
+            document.getElementById('profileForm').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleUpdateProfile();
+                }
+            });
+            
+            document.getElementById('passwordForm').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleChangePassword();
+                }
+            });
             
             // Check for tab query param
             const params = new URLSearchParams(window.location.search);
@@ -794,4 +893,4 @@
         });
     </script>
 </body>
-    </html>
+                                </html>
