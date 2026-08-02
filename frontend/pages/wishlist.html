@@ -12,6 +12,7 @@
         }
         
         .wishlist-container h1 {
+            font-family: var(--font-primary);
             font-size: 32px;
             margin-bottom: 30px;
         }
@@ -36,8 +37,32 @@
         }
         
         .empty-wishlist p {
-            color: #888;
+            color: var(--gray-dark);
             margin-bottom: 20px;
+        }
+        
+        .whatsapp-order-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+            margin-top: 6px;
+        }
+        
+        .whatsapp-order-btn:hover {
+            background: #128C7E;
+            transform: scale(1.02);
         }
     </style>
 </head>
@@ -182,7 +207,7 @@
                 container.innerHTML = wishlist.map(item => `
                     <div class="product-card" data-id="${item._id}">
                         <div class="product-image">
-                            <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/2d1b69/ffffff?text=Uju'}" 
+                            <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju'}" 
                                  alt="${item.name}" loading="lazy" />
                             <button class="product-wishlist" onclick="removeFromWishlist('${item._id}')" 
                                     style="background:var(--secondary);color:white;">
@@ -198,6 +223,10 @@
                                 ${item.originalPrice ? `<span class="original">₦${formatNumber(item.originalPrice)}</span>` : ''}
                             </div>
                             <button class="add-to-cart-btn" onclick="addToCart('${item._id}')">Add to Cart</button>
+                            <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(item.name)}%20from%20Uju%20Fashion%20Sales%20-%20Price%3A%20₦${formatNumber(item.price)}" 
+                               target="_blank" class="whatsapp-order-btn">
+                                <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                            </a>
                         </div>
                     </div>
                 `).join('');
@@ -219,7 +248,6 @@
             }
         }
         
-        // Remove from wishlist
         async function removeFromWishlist(productId) {
             try {
                 await removeFromWishlist(productId);
@@ -232,7 +260,6 @@
             }
         }
         
-        // Add to cart
         async function addToCart(productId) {
             try {
                 await addToCart(productId);
@@ -246,17 +273,15 @@
             }
         }
         
-        // Format number
         function formatNumber(num) {
             return Number(num).toLocaleString();
         }
         
-        // Toast
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#2d1b69' : '#ef4444'};
+                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
                 color: white; border-radius: 12px; font-weight: 500;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
                 animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
@@ -270,8 +295,7 @@
             }, 3000);
         }
         
-        // Initialize
         document.addEventListener('DOMContentLoaded', loadWishlist);
     </script>
 </body>
-                                          </html>
+    </html>
