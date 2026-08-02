@@ -175,6 +175,7 @@
             border: 1px solid #ddd;
             color: #666;
             transition: var(--transition);
+            text-decoration: none;
         }
         
         .auth-card .social-login .social-btns a:hover {
@@ -223,6 +224,38 @@
         </div>
     </div>
 
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-left">
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                </div>
+                <div class="nav-center">
+                    <ul class="nav-menu">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="wishlist.html" class="nav-icon">
+                        <i class="far fa-heart"></i>
+                        <span class="badge wishlist-count">0</span>
+                    </a>
+                    <a href="cart.html" class="nav-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge cart-count">0</span>
+                    </a>
+                    <a href="login.html" class="nav-icon" id="authLink">
+                        <i class="far fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <!-- Login -->
     <div class="auth-container">
         <div class="auth-card">
@@ -234,10 +267,11 @@
             
             <div id="alertContainer"></div>
             
-            <form id="loginForm" onsubmit="handleLogin(event)">
+            <!-- FIX: Use onclick instead of onsubmit, and properly handle the event -->
+            <form id="loginForm">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="email" required placeholder="Enter your email" />
+                    <input type="email" id="email" required placeholder="Enter your email" value="muhammadthe3rdd@gmail.com" />
                 </div>
                 
                 <div class="form-group">
@@ -252,7 +286,8 @@
                     <a href="forgot-password.html">Forgot Password?</a>
                 </div>
                 
-                <button type="submit" class="auth-btn" id="loginBtn">Login</button>
+                <!-- FIX: Use onclick with a properly bound function -->
+                <button type="button" class="auth-btn" id="loginBtn" onclick="handleLoginClick()">Login</button>
             </form>
             
             <div class="social-login">
@@ -325,17 +360,20 @@
     
     <script>
         // ====================
-        // LOGIN LOGIC
+        // FIXED LOGIN LOGIC
         // ====================
         
-        // Handle login
-        async function handleLogin(event) {
-            event.preventDefault();
+        // Use a standalone function that handles the login
+        async function handleLoginClick() {
+            console.log('Login button clicked');
             
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
             const btn = document.getElementById('loginBtn');
+            const alertContainer = document.getElementById('alertContainer');
+            
+            // Clear previous alerts
+            alertContainer.innerHTML = '';
             
             // Validate
             if (!email || !password) {
@@ -347,7 +385,11 @@
             btn.textContent = 'Logging in...';
             
             try {
+                console.log('Attempting login for:', email);
+                
                 const result = await loginUser({ email, password });
+                
+                console.log('Login result:', result);
                 
                 if (result.token) {
                     showAlert('Login successful! Redirecting...', 'success');
@@ -357,13 +399,14 @@
                     }, 1500);
                 }
             } catch (error) {
+                console.error('Login error:', error);
                 showAlert(error.message || 'Login failed. Please try again.', 'error');
                 btn.disabled = false;
                 btn.textContent = 'Login';
             }
         }
         
-        // Show alert
+        // Show alert function
         function showAlert(message, type = 'error') {
             const container = document.getElementById('alertContainer');
             container.innerHTML = `<div class="alert ${type}">${message}</div>`;
@@ -372,8 +415,29 @@
             }, 5000);
         }
         
-        // Check if already logged in
-        document.addEventListener('DOMContentLoaded', () => {
+        // Enter key support
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleLoginClick();
+                    }
+                });
+            }
+            
+            const emailInput = document.getElementById('email');
+            if (emailInput) {
+                emailInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleLoginClick();
+                    }
+                });
+            }
+            
+            // Check if already logged in
             if (getToken()) {
                 const redirect = new URLSearchParams(window.location.search).get('redirect');
                 window.location.href = redirect || '../index.html';
@@ -381,4 +445,4 @@
         });
     </script>
 </body>
-  </html>
+                    </html>
