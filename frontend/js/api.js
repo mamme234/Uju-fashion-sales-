@@ -6,6 +6,9 @@ const API_BASE_URL = 'https://uju-fashion-sales.onrender.com/api';
 
 // API Endpoints
 const API = {
+    // ====================
+    // AUTH ENDPOINTS
+    // ====================
     auth: {
         register: `${API_BASE_URL}/auth/register`,
         login: `${API_BASE_URL}/auth/login`,
@@ -15,6 +18,10 @@ const API = {
         updateProfile: `${API_BASE_URL}/auth/profile`,
         changePassword: `${API_BASE_URL}/auth/change-password`,
     },
+    
+    // ====================
+    // PRODUCT ENDPOINTS
+    // ====================
     products: {
         getAll: `${API_BASE_URL}/products`,
         getById: (id) => `${API_BASE_URL}/products/${id}`,
@@ -29,6 +36,10 @@ const API = {
         getCategories: `${API_BASE_URL}/products/categories`,
         uploadImage: `${API_BASE_URL}/products/upload`,
     },
+    
+    // ====================
+    // ORDER ENDPOINTS
+    // ====================
     orders: {
         create: `${API_BASE_URL}/orders`,
         getAll: `${API_BASE_URL}/orders`,
@@ -36,6 +47,10 @@ const API = {
         updateStatus: (id) => `${API_BASE_URL}/orders/${id}/status`,
         getStats: `${API_BASE_URL}/orders/stats`,
     },
+    
+    // ====================
+    // CART ENDPOINTS
+    // ====================
     cart: {
         add: `${API_BASE_URL}/cart/add`,
         remove: `${API_BASE_URL}/cart/remove`,
@@ -43,12 +58,20 @@ const API = {
         get: `${API_BASE_URL}/cart`,
         clear: `${API_BASE_URL}/cart/clear`,
     },
+    
+    // ====================
+    // WISHLIST ENDPOINTS
+    // ====================
     wishlist: {
         add: `${API_BASE_URL}/wishlist/add`,
         remove: `${API_BASE_URL}/wishlist/remove`,
         get: `${API_BASE_URL}/wishlist`,
         check: (id) => `${API_BASE_URL}/wishlist/check/${id}`,
     },
+    
+    // ====================
+    // REVIEW ENDPOINTS
+    // ====================
     reviews: {
         create: `${API_BASE_URL}/reviews`,
         getByProduct: (id) => `${API_BASE_URL}/reviews/product/${id}`,
@@ -56,12 +79,20 @@ const API = {
         delete: (id) => `${API_BASE_URL}/reviews/${id}`,
         approve: (id) => `${API_BASE_URL}/reviews/${id}/approve`,
     },
+    
+    // ====================
+    // BANNER ENDPOINTS
+    // ====================
     banners: {
         getAll: `${API_BASE_URL}/banners`,
         create: `${API_BASE_URL}/banners`,
         update: (id) => `${API_BASE_URL}/banners/${id}`,
         delete: (id) => `${API_BASE_URL}/banners/${id}`,
     },
+    
+    // ====================
+    // COUPON ENDPOINTS
+    // ====================
     coupons: {
         getAll: `${API_BASE_URL}/coupons`,
         create: `${API_BASE_URL}/coupons`,
@@ -69,6 +100,10 @@ const API = {
         delete: (id) => `${API_BASE_URL}/coupons/${id}`,
         validate: `${API_BASE_URL}/coupons/validate`,
     },
+    
+    // ====================
+    // ADMIN ENDPOINTS
+    // ====================
     admin: {
         dashboard: `${API_BASE_URL}/admin/dashboard`,
         customers: `${API_BASE_URL}/admin/customers`,
@@ -77,6 +112,10 @@ const API = {
         reports: `${API_BASE_URL}/admin/reports`,
         salesReport: `${API_BASE_URL}/admin/reports/sales`,
     },
+    
+    // ====================
+    // CONTACT ENDPOINTS
+    // ====================
     contact: {
         send: `${API_BASE_URL}/contact/send`,
     }
@@ -129,7 +168,7 @@ async function apiRequest(url, options = {}) {
             if (response.status === 401) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
-                if (!window.location.pathname.includes('login')) {
+                if (!window.location.pathname.includes('login') && !window.location.pathname.includes('register')) {
                     window.location.href = '/pages/login.html';
                 }
             }
@@ -147,6 +186,7 @@ async function apiRequest(url, options = {}) {
 // AUTH API CALLS
 // ====================
 
+// Register new user
 async function registerUser(userData) {
     return await apiRequest(API.auth.register, {
         method: 'POST',
@@ -154,6 +194,7 @@ async function registerUser(userData) {
     });
 }
 
+// Login user
 async function loginUser(credentials) {
     const data = await apiRequest(API.auth.login, {
         method: 'POST',
@@ -168,18 +209,21 @@ async function loginUser(credentials) {
     return data;
 }
 
-async function logoutUser() {
+// Logout user
+function logoutUser() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     window.location.href = '/index.html';
 }
 
+// Get user profile
 async function getProfile() {
     return await apiRequest(API.auth.profile, {
         method: 'GET',
     });
 }
 
+// Update user profile
 async function updateProfile(userData) {
     return await apiRequest(API.auth.updateProfile, {
         method: 'PUT',
@@ -187,6 +231,7 @@ async function updateProfile(userData) {
     });
 }
 
+// Change password
 async function changePassword(passwordData) {
     return await apiRequest(API.auth.changePassword, {
         method: 'POST',
@@ -194,6 +239,7 @@ async function changePassword(passwordData) {
     });
 }
 
+// Forgot password
 async function forgotPassword(email) {
     return await apiRequest(API.auth.forgotPassword, {
         method: 'POST',
@@ -201,6 +247,7 @@ async function forgotPassword(email) {
     });
 }
 
+// Reset password
 async function resetPassword(data) {
     return await apiRequest(API.auth.resetPassword, {
         method: 'POST',
@@ -212,6 +259,7 @@ async function resetPassword(data) {
 // PRODUCT API CALLS
 // ====================
 
+// Get all products with filters
 async function getProducts(params = {}) {
     const queryString = new URLSearchParams(params).toString();
     const url = queryString ? `${API.products.getAll}?${queryString}` : API.products.getAll;
@@ -220,12 +268,14 @@ async function getProducts(params = {}) {
     });
 }
 
+// Get single product by ID
 async function getProductById(id) {
     return await apiRequest(API.products.getById(id), {
         method: 'GET',
     });
 }
 
+// Create product (Admin only)
 async function createProduct(productData) {
     return await apiRequest(API.products.create, {
         method: 'POST',
@@ -233,6 +283,7 @@ async function createProduct(productData) {
     });
 }
 
+// Update product (Admin only)
 async function updateProduct(id, productData) {
     return await apiRequest(API.products.update(id), {
         method: 'PUT',
@@ -240,36 +291,42 @@ async function updateProduct(id, productData) {
     });
 }
 
+// Delete product (Admin only)
 async function deleteProduct(id) {
     return await apiRequest(API.products.delete(id), {
         method: 'DELETE',
     });
 }
 
+// Get featured products
 async function getFeaturedProducts() {
     return await apiRequest(API.products.getFeatured, {
         method: 'GET',
     });
 }
 
+// Get best sellers
 async function getBestSellers() {
     return await apiRequest(API.products.getBestSellers, {
         method: 'GET',
     });
 }
 
+// Get new arrivals
 async function getNewArrivals() {
     return await apiRequest(API.products.getNewArrivals, {
         method: 'GET',
     });
 }
 
+// Search products
 async function searchProducts(query) {
     return await apiRequest(`${API.products.search}?q=${encodeURIComponent(query)}`, {
         method: 'GET',
     });
 }
 
+// Filter products
 async function filterProducts(filters) {
     const queryString = new URLSearchParams(filters).toString();
     return await apiRequest(`${API.products.filter}?${queryString}`, {
@@ -277,12 +334,14 @@ async function filterProducts(filters) {
     });
 }
 
+// Get all categories
 async function getCategories() {
     return await apiRequest(API.products.getCategories, {
         method: 'GET',
     });
 }
 
+// Upload product image
 async function uploadProductImage(formData) {
     return await apiRequest(API.products.uploadImage, {
         method: 'POST',
@@ -297,6 +356,7 @@ async function uploadProductImage(formData) {
 // ORDER API CALLS
 // ====================
 
+// Create order
 async function createOrder(orderData) {
     return await apiRequest(API.orders.create, {
         method: 'POST',
@@ -304,18 +364,21 @@ async function createOrder(orderData) {
     });
 }
 
+// Get all orders (Admin: all, User: own)
 async function getOrders() {
     return await apiRequest(API.orders.getAll, {
         method: 'GET',
     });
 }
 
+// Get order by ID
 async function getOrderById(id) {
     return await apiRequest(API.orders.getById(id), {
         method: 'GET',
     });
 }
 
+// Update order status (Admin only)
 async function updateOrderStatus(id, status) {
     return await apiRequest(API.orders.updateStatus(id), {
         method: 'PUT',
@@ -323,6 +386,7 @@ async function updateOrderStatus(id, status) {
     });
 }
 
+// Get order stats (Admin only)
 async function getOrderStats() {
     return await apiRequest(API.orders.getStats, {
         method: 'GET',
@@ -333,12 +397,14 @@ async function getOrderStats() {
 // CART API CALLS
 // ====================
 
+// Get cart
 async function getCart() {
     return await apiRequest(API.cart.get, {
         method: 'GET',
     });
 }
 
+// Add to cart
 async function addToCart(productId, quantity = 1, size = null, color = null) {
     return await apiRequest(API.cart.add, {
         method: 'POST',
@@ -346,6 +412,7 @@ async function addToCart(productId, quantity = 1, size = null, color = null) {
     });
 }
 
+// Remove from cart
 async function removeFromCart(productId) {
     return await apiRequest(API.cart.remove, {
         method: 'DELETE',
@@ -353,6 +420,7 @@ async function removeFromCart(productId) {
     });
 }
 
+// Update cart item quantity
 async function updateCartItem(productId, quantity) {
     return await apiRequest(API.cart.update, {
         method: 'PUT',
@@ -360,6 +428,7 @@ async function updateCartItem(productId, quantity) {
     });
 }
 
+// Clear cart
 async function clearCart() {
     return await apiRequest(API.cart.clear, {
         method: 'DELETE',
@@ -370,12 +439,14 @@ async function clearCart() {
 // WISHLIST API CALLS
 // ====================
 
+// Get wishlist
 async function getWishlist() {
     return await apiRequest(API.wishlist.get, {
         method: 'GET',
     });
 }
 
+// Add to wishlist
 async function addToWishlist(productId) {
     return await apiRequest(API.wishlist.add, {
         method: 'POST',
@@ -383,6 +454,7 @@ async function addToWishlist(productId) {
     });
 }
 
+// Remove from wishlist
 async function removeFromWishlist(productId) {
     return await apiRequest(API.wishlist.remove, {
         method: 'DELETE',
@@ -390,6 +462,7 @@ async function removeFromWishlist(productId) {
     });
 }
 
+// Check if product is in wishlist
 async function checkWishlist(productId) {
     return await apiRequest(API.wishlist.check(productId), {
         method: 'GET',
@@ -397,9 +470,10 @@ async function checkWishlist(productId) {
 }
 
 // ====================
-// REVIEWS API CALLS
+// REVIEW API CALLS
 // ====================
 
+// Create review
 async function createReview(reviewData) {
     return await apiRequest(API.reviews.create, {
         method: 'POST',
@@ -407,24 +481,28 @@ async function createReview(reviewData) {
     });
 }
 
+// Get product reviews
 async function getProductReviews(productId) {
     return await apiRequest(API.reviews.getByProduct(productId), {
         method: 'GET',
     });
 }
 
+// Get all reviews (Admin only)
 async function getAllReviews() {
     return await apiRequest(API.reviews.getAll, {
         method: 'GET',
     });
 }
 
+// Delete review (Admin only)
 async function deleteReview(id) {
     return await apiRequest(API.reviews.delete(id), {
         method: 'DELETE',
     });
 }
 
+// Approve review (Admin only)
 async function approveReview(id) {
     return await apiRequest(API.reviews.approve(id), {
         method: 'PUT',
@@ -432,15 +510,17 @@ async function approveReview(id) {
 }
 
 // ====================
-// BANNERS API CALLS
+// BANNER API CALLS
 // ====================
 
+// Get all banners
 async function getBanners() {
     return await apiRequest(API.banners.getAll, {
         method: 'GET',
     });
 }
 
+// Create banner (Admin only)
 async function createBanner(bannerData) {
     return await apiRequest(API.banners.create, {
         method: 'POST',
@@ -448,6 +528,7 @@ async function createBanner(bannerData) {
     });
 }
 
+// Update banner (Admin only)
 async function updateBanner(id, bannerData) {
     return await apiRequest(API.banners.update(id), {
         method: 'PUT',
@@ -455,6 +536,7 @@ async function updateBanner(id, bannerData) {
     });
 }
 
+// Delete banner (Admin only)
 async function deleteBanner(id) {
     return await apiRequest(API.banners.delete(id), {
         method: 'DELETE',
@@ -462,15 +544,17 @@ async function deleteBanner(id) {
 }
 
 // ====================
-// COUPONS API CALLS
+// COUPON API CALLS
 // ====================
 
+// Get all coupons (Admin only)
 async function getCoupons() {
     return await apiRequest(API.coupons.getAll, {
         method: 'GET',
     });
 }
 
+// Create coupon (Admin only)
 async function createCoupon(couponData) {
     return await apiRequest(API.coupons.create, {
         method: 'POST',
@@ -478,6 +562,7 @@ async function createCoupon(couponData) {
     });
 }
 
+// Update coupon (Admin only)
 async function updateCoupon(id, couponData) {
     return await apiRequest(API.coupons.update(id), {
         method: 'PUT',
@@ -485,12 +570,14 @@ async function updateCoupon(id, couponData) {
     });
 }
 
+// Delete coupon (Admin only)
 async function deleteCoupon(id) {
     return await apiRequest(API.coupons.delete(id), {
         method: 'DELETE',
     });
 }
 
+// Validate coupon
 async function validateCoupon(code, orderTotal) {
     return await apiRequest(`${API.coupons.validate}?code=${code}&total=${orderTotal}`, {
         method: 'GET',
@@ -501,30 +588,35 @@ async function validateCoupon(code, orderTotal) {
 // ADMIN API CALLS
 // ====================
 
+// Get dashboard stats (Admin only)
 async function getDashboardStats() {
     return await apiRequest(API.admin.dashboard, {
         method: 'GET',
     });
 }
 
+// Get all customers (Admin only)
 async function getCustomers() {
     return await apiRequest(API.admin.customers, {
         method: 'GET',
     });
 }
 
+// Block customer (Admin only)
 async function blockCustomer(id) {
     return await apiRequest(API.admin.blockCustomer(id), {
         method: 'PUT',
     });
 }
 
+// Unblock customer (Admin only)
 async function unblockCustomer(id) {
     return await apiRequest(API.admin.unblockCustomer(id), {
         method: 'PUT',
     });
 }
 
+// Get sales report (Admin only)
 async function getSalesReport(startDate, endDate) {
     return await apiRequest(`${API.admin.salesReport}?start=${startDate}&end=${endDate}`, {
         method: 'GET',
@@ -535,9 +627,149 @@ async function getSalesReport(startDate, endDate) {
 // CONTACT API CALLS
 // ====================
 
+// Send contact message
 async function sendContactMessage(messageData) {
     return await apiRequest(API.contact.send, {
         method: 'POST',
         body: JSON.stringify(messageData),
     });
-      }
+}
+
+// ====================
+// UTILITY FUNCTIONS
+// ====================
+
+// Format currency
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(amount);
+}
+
+// Format number with commas
+function formatNumber(num) {
+    if (!num) return '0';
+    return Number(num).toLocaleString();
+}
+
+// Show toast notification
+function showToast(message, type = 'success') {
+    // Remove existing toasts
+    const existing = document.querySelectorAll('.toast-notification');
+    existing.forEach(t => t.remove());
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        padding: 16px 24px;
+        background: ${type === 'success' ? '#8B1A4A' : type === 'error' ? '#ef4444' : '#f59e0b'};
+        color: white;
+        border-radius: 12px;
+        font-weight: 500;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        z-index: 9999;
+        animation: slideIn 0.4s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 280px;
+        max-width: 500px;
+        font-family: 'Inter', sans-serif;
+    `;
+    
+    const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+    toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.4s ease forwards';
+        setTimeout(() => toast.remove(), 400);
+    }, 4000);
+}
+
+// ====================
+// EXPORT FUNCTIONS
+// ====================
+
+// Make functions available globally
+window.getToken = getToken;
+window.getCurrentUser = getCurrentUser;
+window.isAdmin = isAdmin;
+window.apiRequest = apiRequest;
+
+window.registerUser = registerUser;
+window.loginUser = loginUser;
+window.logoutUser = logoutUser;
+window.getProfile = getProfile;
+window.updateProfile = updateProfile;
+window.changePassword = changePassword;
+window.forgotPassword = forgotPassword;
+window.resetPassword = resetPassword;
+
+window.getProducts = getProducts;
+window.getProductById = getProductById;
+window.createProduct = createProduct;
+window.updateProduct = updateProduct;
+window.deleteProduct = deleteProduct;
+window.getFeaturedProducts = getFeaturedProducts;
+window.getBestSellers = getBestSellers;
+window.getNewArrivals = getNewArrivals;
+window.searchProducts = searchProducts;
+window.filterProducts = filterProducts;
+window.getCategories = getCategories;
+window.uploadProductImage = uploadProductImage;
+
+window.createOrder = createOrder;
+window.getOrders = getOrders;
+window.getOrderById = getOrderById;
+window.updateOrderStatus = updateOrderStatus;
+window.getOrderStats = getOrderStats;
+
+window.getCart = getCart;
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.updateCartItem = updateCartItem;
+window.clearCart = clearCart;
+
+window.getWishlist = getWishlist;
+window.addToWishlist = addToWishlist;
+window.removeFromWishlist = removeFromWishlist;
+window.checkWishlist = checkWishlist;
+
+window.createReview = createReview;
+window.getProductReviews = getProductReviews;
+window.getAllReviews = getAllReviews;
+window.deleteReview = deleteReview;
+window.approveReview = approveReview;
+
+window.getBanners = getBanners;
+window.createBanner = createBanner;
+window.updateBanner = updateBanner;
+window.deleteBanner = deleteBanner;
+
+window.getCoupons = getCoupons;
+window.createCoupon = createCoupon;
+window.updateCoupon = updateCoupon;
+window.deleteCoupon = deleteCoupon;
+window.validateCoupon = validateCoupon;
+
+window.getDashboardStats = getDashboardStats;
+window.getCustomers = getCustomers;
+window.blockCustomer = blockCustomer;
+window.unblockCustomer = unblockCustomer;
+window.getSalesReport = getSalesReport;
+
+window.sendContactMessage = sendContactMessage;
+
+window.formatCurrency = formatCurrency;
+window.formatNumber = formatNumber;
+window.showToast = showToast;
+
+console.log('✅ API Loaded - Uju Fashion Sales');
+console.log('📡 API Base URL:', API_BASE_URL);
