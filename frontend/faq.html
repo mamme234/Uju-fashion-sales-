@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ - Uju Fashion Sales</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .faq-container {
+            padding: 40px 0;
+        }
+        
+        .faq-container h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        
+        .faq-item .faq-question {
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .faq-item .faq-question:hover {
+            background: var(--gray);
+        }
+        
+        .faq-item .faq-question h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .faq-item .faq-question i {
+            transition: var(--transition);
+            font-size: 18px;
+            color: var(--primary);
+        }
+        
+        .faq-item .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 24px;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 24px 20px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-item .faq-answer p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .faq-item .faq-answer ul {
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .faq-category {
+            margin-bottom: 40px;
+        }
+        
+        .faq-category h2 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gray);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-wrapper">
+                <div class="top-bar-left">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                </div>
+                <div class="top-bar-right">
+                    <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
+                    <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
+                    <a href="https://wa.me/2347035585774" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-left">
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                </div>
+                <div class="nav-center">
+                    <ul class="nav-menu">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="wishlist.html" class="nav-icon">
+                        <i class="far fa-heart"></i>
+                        <span class="badge wishlist-count">0</span>
+                    </a>
+                    <a href="cart.html" class="nav-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge cart-count">0</span>
+                    </a>
+                    <a href="login.html" class="nav-icon" id="authLink">
+                        <i class="far fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FAQ -->
+    <section class="faq-container">
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
+            <p style="text-align:center;color:#888;margin-bottom:40px;">
+                Find answers to common questions about shopping at Uju Fashion Sales
+            </p>
+            
+            <div class="faq-grid">
+                <!-- Shopping -->
+                <div class="faq-category">
+                    <h2>🛍️ Shopping</h2>
+                    
+                    <div class="faq-item active">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>How do I place an order?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can place an order by:</p>
+                            <ul>
+                                <li>Browsing our shop and adding items to your cart</li>
+                                <li>Proceeding to checkout and filling in your details</li>
+                                <li>Choosing your preferred payment method (Cash on Delivery or Bank Transfer)</li>
+                                <li>Confirming your order</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Can I order via WhatsApp?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! You can order directly via WhatsApp by clicking the WhatsApp button on our website or calling 07035585774. Just send us the product name, size, and color you want.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Do you have a physical store?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We are located at Okpuno, Awka, Anambra State, Nigeria. Feel free to visit us during business hours (Monday - Friday: 8:00 AM - 8:00 PM, Saturday: 9:00 AM - 6:00 PM).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Payments & Delivery -->
+                <div class="faq-category">
+                    <h2>💳 Payments & Delivery</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>What payment methods do you accept?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept:</p>
+                            <ul>
+                                <li><strong>Cash on Delivery</strong> - Pay when you receive your items</li>
+                                <li><strong>Bank Transfer</strong> - Transfer to our bank account</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>How long does delivery take?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Delivery within Nigeria typically takes 2-5 business days. You'll receive a tracking number once your order is shipped.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>How much is delivery?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Delivery is FREE for orders above ₦50,000. For orders below ₦50,000, delivery fees may apply based on your location.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Returns & Exchanges -->
+                <div class="faq-category">
+                    <h2>🔄 Returns & Exchanges</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>What is your return policy?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer a 30-day return policy. Items must be unused, unworn, and in their original packaging. Please contact us before returning any items.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Can I exchange an item?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We offer free size exchanges within 7 days of delivery. Contact us to arrange an exchange.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products -->
+                <div class="faq-category">
+                    <h2>👕 Products</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>What sizes do you offer?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer sizes from S to XXL. Please check the size guide on each product page for detailed measurements.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Are your products authentic?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! All our products are sourced from premium suppliers and are 100% authentic. We pride ourselves on delivering quality fashion that lasts.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Account -->
+                <div class="faq-category">
+                    <h2>👤 Account</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>How do I create an account?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Click on the user icon in the top right corner and select "Create Account". Fill in your details and you're all set!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>I forgot my password. What do I do?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Click on "Forgot Password" on the login page. Enter your email address and we'll send you a link to reset your password.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align:center;margin-top:40px;padding:30px;background:var(--gray);border-radius:var(--radius);">
+                <h3 style="margin-bottom:8px;">Still have questions?</h3>
+                <p style="color:#888;">Contact us and we'll be happy to help you!</p>
+                <a href="contact.html" class="btn-primary" style="margin-top:12px;display:inline-block;">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Uju<span>Fashion</span></h3>
+                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="shipping.html">Shipping Policy</a></li>
+                        <li><a href="returns.html">Return Policy</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 07035585774</li>
+                        <li><i class="fas fa-phone"></i> 08157241470</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ====================
+        // FAQ LOGIC
+        // ====================
+        
+        function toggleFAQ(element) {
+            const item = element.closest('.faq-item');
+            item.classList.toggle('active');
+        }
+    </script>
+    
+    <script src="../js/api.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+                              </html>
