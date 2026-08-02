@@ -207,6 +207,61 @@
             color: #059669;
             border: 1px solid #a7f3d0;
         }
+
+        /* FIX: Auth buttons container */
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .auth-buttons .btn-primary {
+            width: 100%;
+        }
+        
+        .auth-buttons .btn-secondary {
+            width: 100%;
+            text-align: center;
+            padding: 14px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: block;
+        }
+        
+        .auth-buttons .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+        
+        .auth-divider span {
+            color: var(--gray-dark);
+            font-size: 13px;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -216,7 +271,7 @@
             <div class="top-bar-wrapper">
                 <div class="top-bar-left">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
@@ -234,7 +289,7 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="nav-left">
-                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span> Everywhere</a>
                 </div>
                 <div class="nav-center">
                     <ul class="nav-menu">
@@ -265,7 +320,7 @@
     <div class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
-                <div class="logo">Uju<span>Fashion</span></div>
+                <div class="logo">Uju<span>Fashion</span> Everywhere</div>
                 <h2>Welcome Back</h2>
                 <p>Login to your account</p>
             </div>
@@ -290,7 +345,20 @@
                     <a href="forgot-password.html">Forgot Password?</a>
                 </div>
                 
-                <button type="button" class="auth-btn" id="loginBtn" onclick="handleLogin()">Login</button>
+                <!-- FIXED: Buttons stacked properly -->
+                <div class="auth-buttons">
+                    <button type="button" class="btn-primary" id="loginBtn" onclick="handleLogin()">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>Don't have an account?</span>
+                    </div>
+                    
+                    <a href="register.html" class="btn-secondary">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </a>
+                </div>
             </form>
             
             <div class="social-login">
@@ -301,10 +369,6 @@
                     <a href="#"><i class="fab fa-apple"></i></a>
                 </div>
             </div>
-            
-            <div class="auth-footer">
-                Don't have an account? <a href="register.html">Create Account</a>
-            </div>
         </div>
     </div>
 
@@ -313,8 +377,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Uju<span>Fashion</span></h3>
-                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -345,13 +409,13 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 07035585774</li>
                         <li><i class="fas fa-phone"></i> 08157241470</li>
-                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
                         <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
@@ -382,23 +446,31 @@
             }
             
             btn.disabled = true;
-            btn.textContent = 'Logging in...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
             
             try {
                 const result = await loginUser({ email, password });
                 
                 if (result.token) {
                     showAlert('✅ Login successful! Redirecting...', 'success');
-                    setTimeout(() => {
-                        const redirect = new URLSearchParams(window.location.search).get('redirect');
-                        window.location.href = redirect || '../index.html';
-                    }, 1500);
+                    
+                    // Check if user is admin
+                    if (result.user?.role === 'admin') {
+                        setTimeout(() => {
+                            window.location.href = '../pages/admin/index.html';
+                        }, 1500);
+                    } else {
+                        setTimeout(() => {
+                            const redirect = new URLSearchParams(window.location.search).get('redirect');
+                            window.location.href = redirect || '../index.html';
+                        }, 1500);
+                    }
                 }
             } catch (error) {
                 console.error('Login error:', error);
                 showAlert(error.message || 'Login failed. Please try again.', 'error');
                 btn.disabled = false;
-                btn.textContent = 'Login';
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
             }
         }
         
@@ -423,7 +495,14 @@
                     handleLogin();
                 }
             });
+            
+            document.getElementById('email').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleLogin();
+                }
+            });
         });
     </script>
 </body>
-                    </html>
+                        </html>
