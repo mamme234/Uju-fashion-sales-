@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register - Uju Fashion Sales</title>
+    <title>Register - Uju Fashion Sales Everywhere</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
@@ -30,6 +30,7 @@
         }
         
         .auth-card .auth-header .logo {
+            font-family: var(--font-primary);
             font-size: 28px;
             font-weight: 800;
             color: var(--dark);
@@ -40,12 +41,13 @@
         }
         
         .auth-card .auth-header h2 {
+            font-family: var(--font-primary);
             font-size: 24px;
             margin-top: 16px;
         }
         
         .auth-card .auth-header p {
-            color: #888;
+            color: var(--gray-dark);
             font-size: 14px;
         }
         
@@ -72,7 +74,7 @@
         .auth-card .form-group input:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(45, 27, 105, 0.1);
+            box-shadow: 0 0 0 3px rgba(139,26,74,0.1);
         }
         
         .auth-card .auth-btn {
@@ -89,7 +91,7 @@
         }
         
         .auth-card .auth-btn:hover {
-            background: var(--primary-light);
+            background: var(--primary-dark);
             transform: translateY(-2px);
         }
         
@@ -103,7 +105,7 @@
             text-align: center;
             margin-top: 20px;
             font-size: 14px;
-            color: #888;
+            color: var(--gray-dark);
         }
         
         .auth-card .auth-footer a {
@@ -118,7 +120,7 @@
         
         .auth-card .terms {
             font-size: 13px;
-            color: #888;
+            color: var(--gray-dark);
             text-align: center;
             margin-top: 12px;
             line-height: 1.6;
@@ -175,7 +177,7 @@
         
         .password-hint {
             font-size: 12px;
-            color: #888;
+            color: var(--gray-dark);
             margin-top: 4px;
         }
     </style>
@@ -243,7 +245,6 @@
             
             <div id="alertContainer"></div>
             
-            <!-- SIMPLE FORM - NO onsubmit -->
             <form id="registerForm">
                 <div class="form-group">
                     <label>Full Name</label>
@@ -281,7 +282,6 @@
                     </label>
                 </div>
                 
-                <!-- BUTTON with onclick -->
                 <button type="button" class="auth-btn" id="registerBtn" onclick="handleRegister()">Create Account</button>
             </form>
             
@@ -343,21 +343,19 @@
         </div>
     </footer>
 
+    <script src="../js/api.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/auth.js"></script>
+    
     <script>
-        // ============================================
-        // API CONFIGURATION
-        // ============================================
+        // ====================
+        // REGISTER LOGIC
+        // ====================
         
         const API_BASE_URL = 'https://uju-fashion-sales.onrender.com/api';
         
-        // ============================================
-        // REGISTER FUNCTION - SIMPLE AND CLEAN
-        // ============================================
-        
         async function handleRegister() {
-            console.log('📝 Register button clicked');
-            
-            // Get values
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
@@ -365,31 +363,18 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
             const termsCheck = document.getElementById('termsCheck');
             const btn = document.getElementById('registerBtn');
-            
-            // Clear previous alerts
             const alertContainer = document.getElementById('alertContainer');
+            
             alertContainer.innerHTML = '';
             
-            // Validate
-            if (!name) {
-                showAlert('Please enter your full name', 'error');
+            if (!name || !email || !password || !confirmPassword) {
+                showAlert('Please fill in all required fields', 'error');
                 return;
             }
             
-            if (!email) {
-                showAlert('Please enter your email address', 'error');
-                return;
-            }
-            
-            // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 showAlert('Please enter a valid email address', 'error');
-                return;
-            }
-            
-            if (!password) {
-                showAlert('Please create a password', 'error');
                 return;
             }
             
@@ -408,63 +393,25 @@
                 return;
             }
             
-            // Disable button
             btn.disabled = true;
             btn.textContent = 'Creating account...';
             
             try {
-                console.log('📧 Registering:', email);
+                const result = await registerUser({ name, email, password, phone });
                 
-                // Make API call
-                const response = await fetch(`${API_BASE_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        name, 
-                        email, 
-                        password,
-                        phone: phone || undefined
-                    })
-                });
-                
-                const data = await response.json();
-                console.log('📥 Response:', data);
-                
-                if (!response.ok) {
-                    throw new Error(data.message || 'Registration failed');
-                }
-                
-                // Save token and user
-                if (data.token) {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    
+                if (result.token) {
                     showAlert('✅ Account created successfully! Redirecting...', 'success');
-                    
                     setTimeout(() => {
                         window.location.href = '../index.html';
                     }, 2000);
-                } else {
-                    // Auto-login after registration
-                    showAlert('✅ Registration successful! Please login.', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 2000);
                 }
-                
             } catch (error) {
-                console.error('❌ Registration error:', error);
+                console.error('Registration error:', error);
                 showAlert(error.message || 'Registration failed. Please try again.', 'error');
                 btn.disabled = false;
                 btn.textContent = 'Create Account';
             }
         }
-        
-        // ============================================
-        // PASSWORD STRENGTH CHECKER
-        // ============================================
         
         function checkPasswordStrength(password) {
             const bar = document.getElementById('strengthBar');
@@ -477,18 +424,13 @@
             }
             
             let strength = 0;
-            
-            // Length check
             if (password.length >= 6) strength += 1;
             if (password.length >= 10) strength += 1;
-            
-            // Character type checks
             if (/[a-z]/.test(password)) strength += 1;
             if (/[A-Z]/.test(password)) strength += 1;
             if (/[0-9]/.test(password)) strength += 1;
             if (/[^a-zA-Z0-9]/.test(password)) strength += 1;
             
-            // Determine strength
             let level, text;
             if (strength <= 2) {
                 level = 'weak';
@@ -505,47 +447,29 @@
             hint.textContent = text;
         }
         
-        // ============================================
-        // SHOW ALERT FUNCTION
-        // ============================================
-        
         function showAlert(message, type = 'error') {
             const container = document.getElementById('alertContainer');
             container.innerHTML = `<div class="alert ${type}">${message}</div>`;
-            
-            // Auto hide after 5 seconds
             setTimeout(() => {
                 container.innerHTML = '';
             }, 5000);
         }
         
-        // ============================================
-        // ENTER KEY SUPPORT
-        // ============================================
-        
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 Register page loaded');
-            
-            // Enter key on all form fields
-            const fields = ['name', 'email', 'phone', 'password', 'confirmPassword'];
-            fields.forEach(id => {
-                const input = document.getElementById(id);
-                if (input) {
-                    input.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                            handleRegister();
-                        }
-                    });
-                }
-            });
-            
-            // Check if already logged in
-            const token = localStorage.getItem('token');
-            if (token) {
+            if (getToken()) {
                 window.location.href = '../index.html';
             }
+            
+            // Enter key support
+            document.querySelectorAll('#registerForm input').forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleRegister();
+                    }
+                });
+            });
         });
     </script>
 </body>
-    </html>
+                                                  </html>
