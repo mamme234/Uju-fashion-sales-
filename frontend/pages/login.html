@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Uju Fashion Sales</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .auth-container {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .auth-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-hover);
+            max-width: 420px;
+            width: 100%;
+        }
+        
+        .auth-card .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-card .auth-header .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        
+        .auth-card .auth-header .logo span {
+            color: var(--primary);
+        }
+        
+        .auth-card .auth-header h2 {
+            font-size: 24px;
+            margin-top: 16px;
+        }
+        
+        .auth-card .auth-header p {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .auth-card .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .auth-card .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .auth-card .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .auth-card .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 27, 105, 0.1);
+        }
+        
+        .auth-card .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        .auth-card .form-options a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-card .form-options a:hover {
+            text-decoration: underline;
+        }
+        
+        .auth-card .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .auth-card .auth-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .auth-card .auth-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .auth-card .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .auth-card .auth-footer a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .auth-card .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .auth-card .social-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .auth-card .social-login p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        
+        .auth-card .social-login p::before,
+        .auth-card .social-login p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .auth-card .social-login p::before { left: 0; }
+        .auth-card .social-login p::after { right: 0; }
+        
+        .auth-card .social-login .social-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .auth-card .social-login .social-btns a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            color: #666;
+            transition: var(--transition);
+        }
+        
+        .auth-card .social-login .social-btns a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        
+        .alert.error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .alert.success {
+            background: #d1fae5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-wrapper">
+                <div class="top-bar-left">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                </div>
+                <div class="top-bar-right">
+                    <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
+                    <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
+                    <a href="https://wa.me/2347035585774" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">Uju<span>Fashion</span></div>
+                <h2>Welcome Back</h2>
+                <p>Login to your account</p>
+            </div>
+            
+            <div id="alertContainer"></div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" required placeholder="Enter your email" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password" />
+                </div>
+                
+                <div class="form-options">
+                    <label style="display:flex;align-items:center;gap:6px;font-weight:400;">
+                        <input type="checkbox" id="remember" /> Remember me
+                    </label>
+                    <a href="forgot-password.html">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="auth-btn" id="loginBtn">Login</button>
+            </form>
+            
+            <div class="social-login">
+                <p>or continue with</p>
+                <div class="social-btns">
+                    <a href="#"><i class="fab fa-google"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-apple"></i></a>
+                </div>
+            </div>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="register.html">Create Account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Uju<span>Fashion</span></h3>
+                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="shipping.html">Shipping Policy</a></li>
+                        <li><a href="returns.html">Return Policy</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 07035585774</li>
+                        <li><i class="fas fa-phone"></i> 08157241470</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/auth.js"></script>
+    
+    <script>
+        // ====================
+        // LOGIN LOGIC
+        // ====================
+        
+        // Handle login
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            const btn = document.getElementById('loginBtn');
+            
+            // Validate
+            if (!email || !password) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Logging in...';
+            
+            try {
+                const result = await loginUser({ email, password });
+                
+                if (result.token) {
+                    showAlert('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        const redirect = new URLSearchParams(window.location.search).get('redirect');
+                        window.location.href = redirect || '../index.html';
+                    }, 1500);
+                }
+            } catch (error) {
+                showAlert(error.message || 'Login failed. Please try again.', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Login';
+            }
+        }
+        
+        // Show alert
+        function showAlert(message, type = 'error') {
+            const container = document.getElementById('alertContainer');
+            container.innerHTML = `<div class="alert ${type}">${message}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+        
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            if (getToken()) {
+                const redirect = new URLSearchParams(window.location.search).get('redirect');
+                window.location.href = redirect || '../index.html';
+            }
+        });
+    </script>
+</body>
+  </html>
