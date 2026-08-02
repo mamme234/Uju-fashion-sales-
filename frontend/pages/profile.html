@@ -65,6 +65,8 @@
             border-radius: 8px;
             color: var(--text);
             transition: var(--transition);
+            text-decoration: none;
+            cursor: pointer;
         }
         
         .profile-sidebar .nav-links a:hover,
@@ -76,6 +78,18 @@
         .profile-sidebar .nav-links a i {
             width: 20px;
             text-align: center;
+        }
+        
+        .profile-sidebar .nav-links .logout-link {
+            color: #ef4444;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 12px;
+            padding-top: 16px;
+        }
+        
+        .profile-sidebar .nav-links .logout-link:hover {
+            background: #fee2e2;
+            color: #dc2626;
         }
         
         .profile-content {
@@ -127,6 +141,22 @@
             padding: 10px 30px;
         }
         
+        .profile-content .btn-danger {
+            padding: 10px 30px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .profile-content .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+        
         .order-card {
             border: 1px solid #f0f0f0;
             border-radius: var(--radius-sm);
@@ -157,6 +187,20 @@
             border-bottom: 1px solid #f5f5f5;
         }
         
+        .order-status {
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .order-status.pending { background: #fef3c7; color: #d97706; }
+        .order-status.accepted { background: #dbeafe; color: #2563eb; }
+        .order-status.processing { background: #e0e7ff; color: #4f46e5; }
+        .order-status.shipped { background: #d1fae5; color: #059669; }
+        .order-status.delivered { background: #d1fae5; color: #059669; }
+        .order-status.cancelled { background: #fee2e2; color: #dc2626; }
+        
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -167,6 +211,30 @@
             font-size: 48px;
             color: #ddd;
             margin-bottom: 16px;
+        }
+        
+        .whatsapp-order-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+            margin-top: 6px;
+        }
+        
+        .whatsapp-order-btn:hover {
+            background: #128C7E;
+            transform: scale(1.02);
         }
         
         @media (max-width: 768px) {
@@ -187,7 +255,7 @@
             <div class="top-bar-wrapper">
                 <div class="top-bar-left">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
@@ -205,7 +273,10 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="nav-left">
-                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                    <a href="../index.html" class="logo">
+                        <span class="logo-icon">👗</span>
+                        Uju<span>Fashion</span> Everywhere
+                    </a>
                 </div>
                 <div class="nav-center">
                     <ul class="nav-menu">
@@ -249,7 +320,10 @@
                         <a href="#" data-tab="orders"><i class="fas fa-shopping-bag"></i> Orders</a>
                         <a href="#" data-tab="wishlist"><i class="fas fa-heart"></i> Wishlist</a>
                         <a href="#" data-tab="security"><i class="fas fa-lock"></i> Security</a>
-                        <a href="#" onclick="logoutUser()" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <!-- LOGOUT BUTTON - FIXED -->
+                        <a href="#" class="logout-link" onclick="handleLogout(event)">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
                     </div>
                 </aside>
                 
@@ -281,7 +355,7 @@
                         <div id="ordersList">
                             <div class="empty-state">
                                 <i class="fas fa-box"></i>
-                                <p>No orders yet. Start shopping!</p>
+                                <p>No orders yet. Start shopping at Uju Fashion Sales Everywhere!</p>
                                 <a href="shop.html" class="btn-primary" style="margin-top:12px;display:inline-block;">Shop Now</a>
                             </div>
                         </div>
@@ -327,8 +401,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Uju<span>Fashion</span></h3>
-                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -359,13 +433,13 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 07035585774</li>
                         <li><i class="fas fa-phone"></i> 08157241470</li>
-                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
                         <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
@@ -382,8 +456,38 @@
         
         let currentUser = null;
         
+        // ====================
+        // LOGOUT FUNCTION - FIXED
+        // ====================
+        
+        function handleLogout(event) {
+            event.preventDefault();
+            
+            // Show confirmation
+            if (confirm('Are you sure you want to logout from Uju Fashion Sales Everywhere?')) {
+                // Clear all user data
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                localStorage.removeItem('cart');
+                localStorage.removeItem('wishlist');
+                
+                // Show toast message
+                showToast('👋 Logged out successfully from Uju Fashion Sales Everywhere!');
+                
+                // Redirect to home page
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 1000);
+            }
+        }
+        
+        // ====================
+        // CHECK AUTH
+        // ====================
+        
         async function checkAuth() {
-            if (!getToken()) {
+            const token = localStorage.getItem('token');
+            if (!token) {
                 window.location.href = 'login.html';
                 return;
             }
@@ -395,9 +499,18 @@
                 loadWishlist();
             } catch (error) {
                 console.error('Error loading profile:', error);
-                window.location.href = 'login.html';
+                // If token is invalid, redirect to login
+                if (error.message.includes('Authentication') || error.message.includes('token')) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                }
             }
         }
+        
+        // ====================
+        // DISPLAY USER INFO
+        // ====================
         
         function displayUserInfo() {
             if (!currentUser) return;
@@ -407,6 +520,10 @@
             document.getElementById('profileEmail').value = currentUser.email || '';
             document.getElementById('profilePhone').value = currentUser.phone || '';
         }
+        
+        // ====================
+        // UPDATE PROFILE
+        // ====================
         
         async function updateProfile(event) {
             event.preventDefault();
@@ -423,6 +540,10 @@
                 showToast(error.message || 'Error updating profile', 'error');
             }
         }
+        
+        // ====================
+        // CHANGE PASSWORD
+        // ====================
         
         async function changePassword(event) {
             event.preventDefault();
@@ -450,6 +571,10 @@
             }
         }
         
+        // ====================
+        // LOAD ORDERS
+        // ====================
+        
         async function loadOrders() {
             try {
                 const orders = await getOrders();
@@ -466,7 +591,7 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-box"></i>
-                        <p>No orders yet. Start shopping!</p>
+                        <p>No orders yet. Start shopping at Uju Fashion Sales Everywhere!</p>
                         <a href="shop.html" class="btn-primary" style="margin-top:12px;display:inline-block;">Shop Now</a>
                     </div>
                 `;
@@ -496,6 +621,10 @@
             `).join('');
         }
         
+        // ====================
+        // LOAD WISHLIST
+        // ====================
+        
         async function loadWishlist() {
             try {
                 const wishlist = await getWishlist();
@@ -524,7 +653,7 @@
                     ${items.map(item => `
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju'}" 
+                                <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion+Everywhere'}" 
                                      alt="${item.name}" />
                                 <button class="product-wishlist" onclick="removeFromWishlist('${item._id}')" style="background:var(--secondary);color:white;">
                                     <i class="fas fa-heart"></i>
@@ -536,8 +665,8 @@
                                     <span class="current">₦${formatNumber(item.price)}</span>
                                 </div>
                                 <button class="add-to-cart-btn" onclick="addToCart('${item._id}')">Add to Cart</button>
-                                <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(item.name)}" 
-                                   target="_blank" class="whatsapp-order-btn" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#25D366;color:white;border:none;border-radius:50px;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;width:100%;justify-content:center;margin-top:6px;">
+                                <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(item.name)}%20from%20Uju%20Fashion%20Sales%20Everywhere" 
+                                   target="_blank" class="whatsapp-order-btn">
                                     <i class="fab fa-whatsapp"></i> Order on WhatsApp
                                 </a>
                             </div>
@@ -547,8 +676,11 @@
             `;
         }
         
-        // Tab switching
-        document.querySelectorAll('.profile-sidebar .nav-links a').forEach(link => {
+        // ====================
+        // TAB SWITCHING
+        // ====================
+        
+        document.querySelectorAll('.profile-sidebar .nav-links a:not(.logout-link)').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 
@@ -564,31 +696,87 @@
             });
         });
         
+        // ====================
+        // UTILITY FUNCTIONS
+        // ====================
+        
         function formatNumber(num) {
             return Number(num).toLocaleString();
         }
         
         function showToast(message, type = 'success') {
+            // Remove existing toasts
+            const existing = document.querySelectorAll('.toast-notification');
+            existing.forEach(t => t.remove());
+            
             const toast = document.createElement('div');
+            toast.className = 'toast-notification';
             toast.style.cssText = `
-                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
-                color: white; border-radius: 12px; font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
-                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
+                position: fixed;
+                bottom: 24px;
+                right: 24px;
+                padding: 16px 24px;
+                background: ${type === 'success' ? '#8B1A4A' : type === 'error' ? '#ef4444' : '#f59e0b'};
+                color: white;
+                border-radius: 12px;
+                font-weight: 500;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                z-index: 9999;
+                animation: slideIn 0.4s ease;
+                display: flex;
+                align-items: center;
+                gap: 12px;
                 min-width: 280px;
+                max-width: 500px;
             `;
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
             document.body.appendChild(toast);
+            
             setTimeout(() => {
                 toast.style.animation = 'slideOut 0.4s ease forwards';
                 setTimeout(() => toast.remove(), 400);
-            }, 3000);
+            }, 4000);
         }
+        
+        // ====================
+        // REMOVE FROM WISHLIST
+        // ====================
+        
+        async function removeFromWishlist(productId) {
+            try {
+                await removeFromWishlist(productId);
+                showToast('Removed from wishlist');
+                loadWishlist();
+                updateWishlistBadge();
+            } catch (error) {
+                showToast('Error removing from wishlist', 'error');
+            }
+        }
+        
+        // ====================
+        // ADD TO CART
+        // ====================
+        
+        async function addToCart(productId) {
+            try {
+                await addToCart(productId);
+                showToast('Added to cart 🛒');
+                updateCartBadge();
+            } catch (error) {
+                showToast('Please login to add to cart', 'error');
+            }
+        }
+        
+        // ====================
+        // INITIALIZE
+        // ====================
         
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
             
+            // Check for tab query param
             const params = new URLSearchParams(window.location.search);
             const tab = params.get('tab');
             if (tab) {
@@ -598,4 +786,4 @@
         });
     </script>
 </body>
-                        </html>
+                    </html>
