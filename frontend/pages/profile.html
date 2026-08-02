@@ -141,22 +141,6 @@
             padding: 10px 30px;
         }
         
-        .profile-content .btn-danger {
-            padding: 10px 30px;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .profile-content .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-        }
-        
         .order-card {
             border: 1px solid #f0f0f0;
             border-radius: var(--radius-sm);
@@ -320,7 +304,7 @@
                         <a href="#" data-tab="orders"><i class="fas fa-shopping-bag"></i> Orders</a>
                         <a href="#" data-tab="wishlist"><i class="fas fa-heart"></i> Wishlist</a>
                         <a href="#" data-tab="security"><i class="fas fa-lock"></i> Security</a>
-                        <!-- LOGOUT BUTTON - FIXED -->
+                        <!-- LOGOUT BUTTON - FIXED with direct onclick -->
                         <a href="#" class="logout-link" onclick="handleLogout(event)">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
@@ -461,23 +445,42 @@
         // ====================
         
         function handleLogout(event) {
-            event.preventDefault();
+            // Prevent default link behavior
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            console.log('🔴 Logout button clicked!');
             
             // Show confirmation
             if (confirm('Are you sure you want to logout from Uju Fashion Sales Everywhere?')) {
-                // Clear all user data
+                console.log('✅ User confirmed logout');
+                
+                // Clear ALL localStorage data
+                localStorage.clear();
+                
+                // Also clear sessionStorage if any
+                sessionStorage.clear();
+                
+                // Remove specific items to be safe
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
                 localStorage.removeItem('cart');
                 localStorage.removeItem('wishlist');
                 
+                console.log('🗑️ All user data cleared');
+                
                 // Show toast message
                 showToast('👋 Logged out successfully from Uju Fashion Sales Everywhere!');
                 
-                // Redirect to home page
+                // Redirect to home page after delay
                 setTimeout(() => {
+                    console.log('🔄 Redirecting to home page...');
                     window.location.href = '../index.html';
-                }, 1000);
+                }, 1500);
+            } else {
+                console.log('❌ User cancelled logout');
             }
         }
         
@@ -487,18 +490,22 @@
         
         async function checkAuth() {
             const token = localStorage.getItem('token');
+            console.log('🔑 Token found:', !!token);
+            
             if (!token) {
+                console.log('❌ No token found, redirecting to login');
                 window.location.href = 'login.html';
                 return;
             }
             
             try {
                 currentUser = await getProfile();
+                console.log('✅ User loaded:', currentUser?.name);
                 displayUserInfo();
                 loadOrders();
                 loadWishlist();
             } catch (error) {
-                console.error('Error loading profile:', error);
+                console.error('❌ Error loading profile:', error);
                 // If token is invalid, redirect to login
                 if (error.message.includes('Authentication') || error.message.includes('token')) {
                     localStorage.removeItem('token');
@@ -774,6 +781,7 @@
         // ====================
         
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 Profile page loaded');
             checkAuth();
             
             // Check for tab query param
@@ -786,4 +794,4 @@
         });
     </script>
 </body>
-                    </html>
+    </html>
