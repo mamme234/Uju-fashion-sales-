@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout - Uju Fashion Sales</title>
+    <title>Checkout - Uju Fashion Sales Everywhere</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
@@ -12,6 +12,7 @@
         }
         
         .checkout-container h1 {
+            font-family: var(--font-primary);
             font-size: 32px;
             margin-bottom: 30px;
         }
@@ -30,6 +31,7 @@
         }
         
         .checkout-form h3 {
+            font-family: var(--font-primary);
             font-size: 20px;
             margin-bottom: 20px;
         }
@@ -61,7 +63,7 @@
         .checkout-form .form-group textarea:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(45, 27, 105, 0.1);
+            box-shadow: 0 0 0 3px rgba(139,26,74,0.1);
         }
         
         .checkout-form .form-row {
@@ -81,6 +83,7 @@
         }
         
         .order-summary h3 {
+            font-family: var(--font-primary);
             font-size: 20px;
             margin-bottom: 20px;
         }
@@ -110,7 +113,7 @@
         
         .order-summary .order-item .item-details p {
             font-size: 13px;
-            color: #888;
+            color: var(--gray-dark);
         }
         
         .order-summary .order-item .item-price {
@@ -138,7 +141,7 @@
             width: 100%;
             padding: 16px;
             background: var(--secondary);
-            color: var(--white);
+            color: var(--dark);
             border: none;
             border-radius: 50px;
             font-weight: 600;
@@ -149,7 +152,7 @@
         }
         
         .order-summary .place-order-btn:hover {
-            background: #ff4d7a;
+            background: var(--secondary-light);
             transform: translateY(-2px);
         }
         
@@ -163,6 +166,7 @@
             display: flex;
             gap: 12px;
             margin-top: 8px;
+            flex-wrap: wrap;
         }
         
         .payment-methods label {
@@ -191,7 +195,25 @@
         
         .payment-methods label:has(input:checked) {
             border-color: var(--primary);
-            background: rgba(45, 27, 105, 0.05);
+            background: rgba(139,26,74,0.05);
+        }
+        
+        .delivery-info-box {
+            background: var(--gray);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            margin-top: 12px;
+        }
+        
+        .delivery-info-box h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .delivery-info-box p {
+            font-size: 13px;
+            color: var(--gray-dark);
         }
         
         @media (max-width: 768px) {
@@ -330,6 +352,13 @@
                         </div>
                     </div>
                     
+                    <div class="delivery-info-box">
+                        <h4>📦 Delivery Information</h4>
+                        <p>Delivery within 2-5 business days across Nigeria</p>
+                        <p>Free delivery on orders above ₦50,000</p>
+                        <p>Cash on Delivery available</p>
+                    </div>
+                    
                     <button type="submit" class="place-order-btn">Place Order</button>
                 </form>
                 
@@ -408,7 +437,6 @@
         let cartItems = [];
         let subtotal = 0;
         
-        // Load cart for checkout
         async function loadCheckout() {
             try {
                 const cart = await getCart();
@@ -421,7 +449,6 @@
                 
                 renderOrderSummary();
                 
-                // Auto-fill user info
                 const user = getCurrentUser();
                 if (user) {
                     document.getElementById('fullName').value = user.name || '';
@@ -435,18 +462,17 @@
             }
         }
         
-        // Render order summary
         function renderOrderSummary() {
             const itemsContainer = document.getElementById('orderItems');
             const totalsContainer = document.getElementById('orderTotals');
             
             subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = 0;
+            const shipping = subtotal > 50000 ? 0 : 2500;
             const total = subtotal + shipping;
             
             itemsContainer.innerHTML = cartItems.map(item => `
                 <div class="order-item">
-                    <img src="${item.image || item.product?.images?.[0] || 'https://via.placeholder.com/60/2d1b69/ffffff?text=Uju'}" 
+                    <img src="${item.image || item.product?.images?.[0] || 'https://via.placeholder.com/60/8B1A4A/ffffff?text=Uju'}" 
                          alt="${item.name || item.product?.name}" />
                     <div class="item-details">
                         <h4>${item.name || item.product?.name}</h4>
@@ -463,16 +489,18 @@
                 </div>
                 <div class="summary-row">
                     <span>Shipping</span>
-                    <span>₦${formatNumber(shipping)}</span>
+                    <span>${shipping === 0 ? 'FREE' : `₦${formatNumber(shipping)}`}</span>
                 </div>
                 <div class="summary-row total">
                     <span>Total</span>
                     <span>₦${formatNumber(total)}</span>
                 </div>
+                <div style="text-align:center;margin-top:8px;font-size:12px;color:var(--gray-dark);">
+                    ${shipping === 0 ? '✅ Free delivery applied' : '📦 Delivery fee applies'}
+                </div>
             `;
         }
         
-        // Place order
         async function placeOrder(event) {
             event.preventDefault();
             
@@ -501,10 +529,10 @@
                     },
                     paymentMethod: document.querySelector('input[name="payment"]:checked').value,
                     subtotal: subtotal,
-                    shippingCost: 0,
+                    shippingCost: subtotal > 50000 ? 0 : 2500,
                     tax: 0,
                     discount: 0,
-                    total: subtotal,
+                    total: subtotal + (subtotal > 50000 ? 0 : 2500),
                     notes: document.getElementById('notes').value
                 };
                 
@@ -523,17 +551,15 @@
             }
         }
         
-        // Format number
         function formatNumber(num) {
             return Number(num).toLocaleString();
         }
         
-        // Toast
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#2d1b69' : '#ef4444'};
+                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
                 color: white; border-radius: 12px; font-weight: 500;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
                 animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
@@ -547,8 +573,7 @@
             }, 3000);
         }
         
-        // Initialize
         document.addEventListener('DOMContentLoaded', loadCheckout);
     </script>
 </body>
-  </html>
+                        </html>
