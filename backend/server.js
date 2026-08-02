@@ -11,25 +11,34 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://uju-fashion-sales.vercel.app', 'https://uju-fashion-sales.onrender.com', '*'],
+    origin: ['https://uju-fashion-sales.vercel.app', 'https://uju-fashion-sales.onrender.com', '*'],
     credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health check endpoint
+// ====================
+// HEALTH CHECK
+// ====================
 app.get('/api/health', (req, res) => {
-    res.json({ 
-        status: 'OK', 
+    const dbState = mongoose.connection.readyState;
+    const states = {
+        0: 'disconnected',
+        1: 'connected',
+        2: 'connecting',
+        3: 'disconnecting'
+    };
+    res.json({
+        status: 'OK',
         message: 'Uju Fashion Sales API is running',
         timestamp: new Date().toISOString(),
+        database: states[dbState] || 'unknown',
         version: '1.0.0'
     });
 });
 
-// Root route
 app.get('/', (req, res) => {
-    res.json({ 
+    res.json({
         name: 'Uju Fashion Sales API',
         version: '1.0.0',
         status: 'running',
@@ -54,6 +63,7 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     isBlocked: { type: Boolean, default: false },
+    phone: { type: String },
     addresses: [{
         street: String,
         city: String,
@@ -130,8 +140,8 @@ const OrderSchema = new mongoose.Schema({
     },
     paymentMethod: { type: String, enum: ['cash', 'card', 'transfer'], default: 'cash' },
     paymentStatus: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
-    orderStatus: { 
-        type: String, 
+    orderStatus: {
+        type: String,
         enum: ['pending', 'accepted', 'processing', 'packed', 'shipped', 'delivered', 'cancelled'],
         default: 'pending'
     },
@@ -162,11 +172,11 @@ const authMiddleware = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.id);
-        
+
         if (!user) {
             return res.status(401).json({ message: 'User not found' });
         }
-        
+
         if (user.isBlocked) {
             return res.status(403).json({ message: 'Account has been blocked' });
         }
@@ -192,25 +202,39 @@ const adminMiddleware = (req, res, next) => {
 // Register
 app.post('/api/auth/register', async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-        
+        const { name, email, password, phone } = req.body;
+
+        // Check if user exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'Email already registered' });
         }
 
-        const user = new User({ name, email, password });
+        // Create user
+        const user = new User({ name, email, password, phone });
         await user.save();
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        // Generate token
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
 
         res.status(201).json({
             message: 'Registration successful',
             token,
-            user: { id: user._id, name: user.name, email: user.email, role: user.role }
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                phone: user.phone
+            }
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Registration error:', error);
+        res.status(500).json({ message: error.message || 'Registration failed' });
     }
 });
 
@@ -218,7 +242,7 @@ app.post('/api/auth/register', async (req, res) => {
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(401).json({ message: 'Invalid email or password' });
@@ -233,15 +257,26 @@ app.post('/api/auth/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
 
         res.json({
             message: 'Login successful',
             token,
-            user: { id: user._id, name: user.name, email: user.email, role: user.role }
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                phone: user.phone
+            }
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Login error:', error);
+        res.status(500).json({ message: error.message || 'Login failed' });
     }
 });
 
@@ -264,7 +299,7 @@ app.get('/api/products', async (req, res) => {
     try {
         const { category, search, featured, bestSeller, limit } = req.query;
         let query = {};
-        
+
         if (category) query.category = category;
         if (featured === 'true') query.isFeatured = true;
         if (bestSeller === 'true') query.isBestSeller = true;
@@ -277,65 +312,8 @@ app.get('/api/products', async (req, res) => {
 
         let products = Product.find(query);
         if (limit) products = products.limit(parseInt(limit));
-        
+
         products = await products.sort({ createdAt: -1 });
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Get featured products
-app.get('/api/products/featured', async (req, res) => {
-    try {
-        const products = await Product.find({ isFeatured: true }).limit(8);
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Get best sellers
-app.get('/api/products/best-sellers', async (req, res) => {
-    try {
-        const products = await Product.find({ isBestSeller: true }).limit(8);
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Get new arrivals
-app.get('/api/products/new-arrivals', async (req, res) => {
-    try {
-        const products = await Product.find().sort({ createdAt: -1 }).limit(8);
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Get categories
-app.get('/api/products/categories', async (req, res) => {
-    try {
-        const categories = await Product.distinct('category');
-        res.json(categories);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Search products
-app.get('/api/products/search', async (req, res) => {
-    try {
-        const { q } = req.query;
-        const products = await Product.find({
-            $or: [
-                { name: { $regex: q, $options: 'i' } },
-                { description: { $regex: q, $options: 'i' } },
-                { category: { $regex: q, $options: 'i' } }
-            ]
-        });
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -355,47 +333,6 @@ app.get('/api/products/:id', async (req, res) => {
     }
 });
 
-// Create product (Admin only)
-app.post('/api/products', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-        const product = new Product(req.body);
-        await product.save();
-        res.status(201).json(product);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Update product (Admin only)
-app.put('/api/products/:id', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-        const product = await Product.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        );
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Delete product (Admin only)
-app.delete('/api/products/:id', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-        const product = await Product.findByIdAndDelete(req.params.id);
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
-        res.json({ message: 'Product deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
 // ====================
 // ORDER ROUTES
 // ====================
@@ -407,68 +344,28 @@ app.post('/api/orders', authMiddleware, async (req, res) => {
             ...req.body,
             user: req.user._id
         };
-        
+
         const order = new Order(orderData);
         await order.save();
-        
+
         res.status(201).json({ message: 'Order placed successfully', order });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Get all orders (Admin: all, User: own)
+// Get orders
 app.get('/api/orders', authMiddleware, async (req, res) => {
     try {
         let query = {};
         if (req.user.role !== 'admin') {
             query.user = req.user._id;
         }
-        
+
         const orders = await Order.find(query)
             .populate('user', 'name email')
             .sort({ createdAt: -1 });
         res.json(orders);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Get order by ID
-app.get('/api/orders/:id', authMiddleware, async (req, res) => {
-    try {
-        const order = await Order.findById(req.params.id)
-            .populate('user', 'name email addresses');
-        
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-        
-        if (req.user.role !== 'admin' && order.user._id.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
-        
-        res.json(order);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Update order status (Admin only)
-app.put('/api/orders/:id/status', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
-        const { status } = req.body;
-        const order = await Order.findByIdAndUpdate(
-            req.params.id,
-            { orderStatus: status },
-            { new: true }
-        );
-        
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-        
-        res.json({ message: 'Order status updated', order });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -516,7 +413,7 @@ app.get('/api/admin/customers', authMiddleware, adminMiddleware, async (req, res
         const customers = await User.find({ role: 'user' })
             .select('-password')
             .sort({ createdAt: -1 });
-        
+
         const customersWithStats = await Promise.all(customers.map(async (customer) => {
             const orders = await Order.find({ user: customer._id });
             const totalSpent = orders.reduce((sum, order) => sum + order.total, 0);
@@ -526,7 +423,7 @@ app.get('/api/admin/customers', authMiddleware, adminMiddleware, async (req, res
                 totalSpent
             };
         }));
-        
+
         res.json(customersWithStats);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -541,7 +438,7 @@ async function createAdminUser() {
     try {
         const adminEmail = process.env.ADMIN_EMAIL || 'admin@ujufashion.com';
         const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-        
+
         const existingAdmin = await User.findOne({ email: adminEmail });
         if (!existingAdmin) {
             const admin = new User({
@@ -563,15 +460,34 @@ async function createAdminUser() {
 }
 
 // ====================
-// DATABASE CONNECTION
+// DATABASE CONNECTION (FIXED)
 // ====================
 
-mongoose.connect(process.env.MONGODB_URI)
+console.log('🔄 Connecting to MongoDB...');
+
+mongoose.connect(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
+})
     .then(async () => {
-        console.log('✅ Connected to MongoDB');
+        console.log('✅ Connected to MongoDB Atlas');
         await createAdminUser();
     })
-    .catch(err => console.error('❌ MongoDB connection error:', err));
+    .catch(err => {
+        console.error('❌ MongoDB connection error:', err);
+        console.log('⚠️ Please check your MONGODB_URI in .env file');
+        console.log('⚠️ Make sure your IP is whitelisted in MongoDB Atlas');
+    });
+
+// Handle connection errors after initial connection
+mongoose.connection.on('error', (err) => {
+    console.error('❌ MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('⚠️ MongoDB disconnected. Attempting to reconnect...');
+});
 
 // ====================
 // START SERVER
@@ -581,4 +497,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
     console.log(`🌐 API URL: https://uju-fashion-sales.onrender.com`);
+    console.log(`📊 Health check: https://uju-fashion-sales.onrender.com/api/health`);
 });
