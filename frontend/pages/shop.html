@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shop - Uju Fashion Sales</title>
+    <title>Shop - Uju Fashion Sales Everywhere</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
@@ -29,6 +29,7 @@
             margin-bottom: 16px;
             padding-bottom: 12px;
             border-bottom: 2px solid var(--gray);
+            font-family: var(--font-primary);
         }
         
         .filter-group {
@@ -95,11 +96,6 @@
             display: none;
         }
         
-        .filter-options input:checked + span {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
         .filter-options label:has(input:checked) {
             background: var(--primary);
             color: var(--white);
@@ -116,6 +112,7 @@
         
         .shop-header h1 {
             font-size: 28px;
+            font-family: var(--font-primary);
         }
         
         .shop-header .sort-options {
@@ -132,20 +129,46 @@
         }
         
         .shop-header .results-count {
-            color: #888;
+            color: var(--gray-dark);
             font-size: 14px;
         }
         
         .no-products {
             text-align: center;
             padding: 60px 20px;
-            color: #888;
+            color: var(--gray-dark);
+            grid-column: 1/-1;
         }
         
         .no-products i {
             font-size: 64px;
             color: #ddd;
             margin-bottom: 16px;
+        }
+        
+        /* WhatsApp Order Button */
+        .whatsapp-order-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+            margin-top: 6px;
+        }
+        
+        .whatsapp-order-btn:hover {
+            background: #128C7E;
+            transform: scale(1.02);
         }
         
         @media (max-width: 768px) {
@@ -227,25 +250,21 @@
                         <label>Category</label>
                         <select id="categoryFilter" onchange="applyFilters()">
                             <option value="">All Categories</option>
-                            <option value="Men">Men</option>
-                            <option value="Women">Women</option>
-                            <option value="Baggy Jeans">Baggy Jeans</option>
-                            <option value="Boyfriend Jeans">Boyfriend Jeans</option>
-                            <option value="Straight Jeans">Straight Jeans</option>
-                            <option value="Polo Shirts">Polo Shirts</option>
-                            <option value="Jerseys">Jerseys</option>
-                            <option value="Shorts">Shorts</option>
+                            <option value="Men's Wear">Men's Wear</option>
+                            <option value="Women's Wear">Women's Wear</option>
+                            <option value="Jeans">Jeans</option>
+                            <option value="Polos">Polos</option>
                             <option value="Skirts">Skirts</option>
-                            <option value="Tops">Tops</option>
+                            <option value="Shorts">Shorts</option>
                         </select>
                     </div>
                     
                     <div class="filter-group">
-                        <label>Price Range</label>
+                        <label>Price Range (₦)</label>
                         <div class="price-range">
                             <input type="range" id="priceRange" min="0" max="200000" value="200000" oninput="updatePriceDisplay()" />
                         </div>
-                        <div style="display:flex;justify-content:space-between;font-size:13px;color:#888;">
+                        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--gray-dark);">
                             <span>₦0</span>
                             <span id="priceDisplay">₦200,000</span>
                         </div>
@@ -359,22 +378,22 @@
     
     <script>
         // ====================
-        // SHOP LOGIC
+        // SHOP LOGIC WITH WHATSAPP BUTTON
         // ====================
         
-        let currentProducts = [];
+        let allProducts = [];
         let filteredProducts = [];
         
         // Load products
         async function loadShopProducts() {
             try {
                 const products = await getProducts();
-                currentProducts = products;
+                allProducts = products;
                 applyFilters();
             } catch (error) {
                 console.error('Error loading products:', error);
                 document.getElementById('shopProducts').innerHTML = `
-                    <div class="no-products" style="grid-column:1/-1;">
+                    <div class="no-products">
                         <i class="fas fa-exclamation-circle"></i>
                         <h3>Error loading products</h3>
                         <p>Please try again later</p>
@@ -389,36 +408,24 @@
             const maxPrice = parseInt(document.getElementById('priceRange').value);
             const sortBy = document.getElementById('sortBy').value;
             
-            // Get selected sizes
             const sizeCheckboxes = document.querySelectorAll('#sizeFilter input:checked');
             const selectedSizes = Array.from(sizeCheckboxes).map(cb => cb.value);
             
-            // Get selected colors
             const colorCheckboxes = document.querySelectorAll('#colorFilter input:checked');
             const selectedColors = Array.from(colorCheckboxes).map(cb => cb.value);
             
-            // Filter
-            filteredProducts = currentProducts.filter(product => {
-                // Category filter
+            filteredProducts = allProducts.filter(product => {
                 if (category && product.category !== category) return false;
-                
-                // Price filter
                 if (product.price > maxPrice) return false;
-                
-                // Size filter
                 if (selectedSizes.length > 0) {
                     if (!product.sizes || !product.sizes.some(s => selectedSizes.includes(s))) return false;
                 }
-                
-                // Color filter
                 if (selectedColors.length > 0) {
                     if (!product.colors || !product.colors.some(c => selectedColors.includes(c))) return false;
                 }
-                
                 return true;
             });
             
-            // Sort
             switch(sortBy) {
                 case 'newest':
                     filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -437,7 +444,7 @@
             renderShopProducts();
         }
         
-        // Render products
+        // Render products with WhatsApp button
         function renderShopProducts() {
             const container = document.getElementById('shopProducts');
             const countEl = document.getElementById('resultsCount');
@@ -448,7 +455,7 @@
             
             if (filteredProducts.length === 0) {
                 container.innerHTML = `
-                    <div class="no-products" style="grid-column:1/-1;">
+                    <div class="no-products">
                         <i class="fas fa-search"></i>
                         <h3>No products found</h3>
                         <p>Try adjusting your filters</p>
@@ -461,10 +468,10 @@
             container.innerHTML = filteredProducts.map(product => `
                 <div class="product-card" data-id="${product._id}">
                     <div class="product-image">
-                        <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/2d1b69/ffffff?text=Uju+Fashion'}" 
+                        <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion'}" 
                              alt="${product.name}" loading="lazy" />
-                        ${product.discount ? `<span class="product-badge">-${product.discount}%</span>` : ''}
-                        ${product.isBestSeller ? `<span class="product-badge" style="background:#10b981;">Best Seller</span>` : ''}
+                        ${product.discount ? `<span class="product-badge sale">-${product.discount}%</span>` : ''}
+                        ${product.isBestSeller ? `<span class="product-badge best">Best Seller</span>` : ''}
                         <button class="product-wishlist" onclick="toggleWishlist('${product._id}')">
                             <i class="far fa-heart"></i>
                         </button>
@@ -481,6 +488,11 @@
                             ${product.stock <= 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
                             ${product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
                         </button>
+                        <!-- WhatsApp Order Button -->
+                        <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(product.name)}%20from%20Uju%20Fashion%20Sales%20-%20Price%3A%20₦${formatNumber(product.price)}" 
+                           target="_blank" class="whatsapp-order-btn">
+                            <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                        </a>
                     </div>
                 </div>
             `).join('');
@@ -497,31 +509,28 @@
             applyFilters();
         }
         
-        // Update price display
         function updatePriceDisplay() {
             const val = document.getElementById('priceRange').value;
             document.getElementById('priceDisplay').textContent = `₦${formatNumber(parseInt(val))}`;
         }
         
-        // Format number
         function formatNumber(num) {
             return Number(num).toLocaleString();
         }
         
-        // Search products
+        // Search
         function searchProducts() {
             const query = document.getElementById('searchInput').value.trim();
             if (!query) {
                 loadShopProducts();
                 return;
             }
-            
-            currentProducts = currentProducts.filter(p => 
+            const filtered = allProducts.filter(p => 
                 p.name.toLowerCase().includes(query.toLowerCase()) ||
-                p.description?.toLowerCase().includes(query.toLowerCase()) ||
                 p.category.toLowerCase().includes(query.toLowerCase())
             );
-            applyFilters();
+            filteredProducts = filtered;
+            renderShopProducts();
         }
         
         // Enter key for search
@@ -535,12 +544,11 @@
             loadShopProducts();
         });
         
-        // Wishlist toggle
+        // Wishlist
         async function toggleWishlist(productId) {
             try {
                 const wishlist = await getWishlist();
                 const exists = wishlist.some(item => item._id === productId);
-                
                 if (exists) {
                     await removeFromWishlist(productId);
                     showToast('Removed from wishlist');
@@ -571,12 +579,11 @@
             }
         }
         
-        // Toast notification
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#2d1b69' : '#ef4444'};
+                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
                 color: white; border-radius: 12px; font-weight: 500;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
                 animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
@@ -591,4 +598,4 @@
         }
     </script>
 </body>
-                      </html>
+                                                               </html>
