@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - Uju Fashion Sales</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .cart-container {
+            padding: 40px 0;
+        }
+        
+        .cart-container h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        
+        .cart-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .cart-items {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .cart-header {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+            padding: 16px 20px;
+            background: var(--gray);
+            font-weight: 600;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .cart-item {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+            padding: 16px 20px;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item .item-product {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .cart-item .item-product img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .cart-item .item-product .item-info h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .cart-item .item-product .item-info p {
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .cart-item .item-price {
+            font-weight: 600;
+        }
+        
+        .cart-item .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cart-item .item-quantity button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .cart-item .item-quantity button:hover {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        
+        .cart-item .item-quantity span {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .cart-item .item-total {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .cart-item .item-remove {
+            color: #ef4444;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 18px;
+        }
+        
+        .cart-item .item-remove:hover {
+            transform: scale(1.2);
+        }
+        
+        .cart-summary {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .cart-summary h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--gray);
+        }
+        
+        .cart-summary .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 15px;
+        }
+        
+        .cart-summary .summary-row.total {
+            border-top: 2px solid var(--gray);
+            margin-top: 12px;
+            padding-top: 16px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .cart-summary .coupon-input {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .cart-summary .coupon-input input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .cart-summary .coupon-input button {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cart-summary .coupon-input button:hover {
+            background: var(--primary-light);
+        }
+        
+        .cart-summary .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 16px;
+        }
+        
+        .cart-summary .checkout-btn:hover {
+            background: #ff4d7a;
+            transform: translateY(-2px);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            grid-column: 1/-1;
+        }
+        
+        .empty-cart i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+        
+        .empty-cart h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .empty-cart p {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .cart-header {
+                display: none;
+            }
+            .cart-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 16px;
+            }
+            .cart-item .item-product {
+                flex-direction: column;
+                text-align: center;
+            }
+            .cart-item .item-product img {
+                width: 120px;
+                height: 120px;
+            }
+            .cart-item .item-quantity {
+                justify-content: center;
+            }
+            .cart-item .item-total {
+                text-align: center;
+            }
+            .cart-item .item-remove {
+                text-align: center;
+            }
+            .cart-summary {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-wrapper">
+                <div class="top-bar-left">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                </div>
+                <div class="top-bar-right">
+                    <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
+                    <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
+                    <a href="https://wa.me/2347035585774" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-left">
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                </div>
+                <div class="nav-center">
+                    <ul class="nav-menu">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="wishlist.html" class="nav-icon">
+                        <i class="far fa-heart"></i>
+                        <span class="badge wishlist-count">0</span>
+                    </a>
+                    <a href="cart.html" class="nav-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge cart-count">0</span>
+                    </a>
+                    <a href="login.html" class="nav-icon" id="authLink">
+                        <i class="far fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart -->
+    <section class="cart-container">
+        <div class="container">
+            <h1><i class="fas fa-shopping-bag"></i> Shopping Cart</h1>
+            <div class="cart-wrapper" id="cartWrapper">
+                <!-- Cart loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Uju<span>Fashion</span></h3>
+                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="shipping.html">Shipping Policy</a></li>
+                        <li><a href="returns.html">Return Policy</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 07035585774</li>
+                        <li><i class="fas fa-phone"></i> 08157241470</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/auth.js"></script>
+    
+    <script>
+        // ====================
+        // CART PAGE
+        // ====================
+        
+        let cartItems = [];
+        let couponDiscount = 0;
+        let couponCode = '';
+        
+        // Load cart
+        async function loadCart() {
+            try {
+                const cart = await getCart();
+                cartItems = cart.items || [];
+                renderCart();
+            } catch (error) {
+                console.error('Error loading cart:', error);
+                if (error.message.includes('Authentication')) {
+                    showEmptyCart('Please login to view your cart', 'login.html');
+                } else {
+                    showEmptyCart('Error loading cart. Please try again.');
+                }
+            }
+        }
+        
+        // Render cart
+        function renderCart() {
+            const container = document.getElementById('cartWrapper');
+            
+            if (!cartItems || cartItems.length === 0) {
+                showEmptyCart('Your cart is empty', 'shop.html');
+                return;
+            }
+            
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal - couponDiscount;
+            
+            container.innerHTML = `
+                <div class="cart-items">
+                    <div class="cart-header">
+                        <span>Product</span>
+                        <span>Price</span>
+                        <span>Quantity</span>
+                        <span>Total</span>
+                        <span></span>
+                    </div>
+                    ${cartItems.map(item => `
+                        <div class="cart-item" data-id="${item.product._id || item.id}">
+                            <div class="item-product">
+                                <img src="${item.image || item.product?.images?.[0] || 'https://via.placeholder.com/80/2d1b69/ffffff?text=Uju'}" 
+                                     alt="${item.name || item.product?.name}" />
+                                <div class="item-info">
+                                    <h4>${item.name || item.product?.name}</h4>
+                                    <p>${item.size ? `Size: ${item.size}` : ''} ${item.color ? `| Color: ${item.color}` : ''}</p>
+                                </div>
+                            </div>
+                            <div class="item-price">₦${formatNumber(item.price)}</div>
+                            <div class="item-quantity">
+                                <button onclick="updateQty('${item.product?._id || item.id}', -1)">−</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateQty('${item.product?._id || item.id}', 1)">+</button>
+                            </div>
+                            <div class="item-total">₦${formatNumber(item.price * item.quantity)}</div>
+                            <div class="item-remove" onclick="removeItem('${item.product?._id || item.id}')">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₦${formatNumber(subtotal)}</span>
+                    </div>
+                    
+                    ${couponDiscount > 0 ? `
+                        <div class="summary-row" style="color:#10b981;">
+                            <span>Coupon Discount (${couponCode})</span>
+                            <span>-₦${formatNumber(couponDiscount)}</span>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>₦0</span>
+                    </div>
+                    
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>₦${formatNumber(total)}</span>
+                    </div>
+                    
+                    <div class="coupon-input">
+                        <input type="text" id="couponInput" placeholder="Enter coupon code" />
+                        <button onclick="applyCoupon()">Apply</button>
+                    </div>
+                    
+                    <button class="checkout-btn" onclick="proceedToCheckout()">
+                        <i class="fas fa-lock"></i> Proceed to Checkout
+                    </button>
+                </div>
+            `;
+            
+            updateCartBadge();
+        }
+        
+        // Show empty cart
+        function showEmptyCart(message, link = null) {
+            const container = document.getElementById('cartWrapper');
+            container.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>${message}</h3>
+                    <p>Browse our collection and add items you love</p>
+                    <a href="${link || 'shop.html'}" class="btn-primary">Start Shopping</a>
+                </div>
+            `;
+        }
+        
+        // Update quantity
+        async function updateQty(productId, delta) {
+            try {
+                const item = cartItems.find(i => (i.product?._id || i.id) === productId);
+                if (!item) return;
+                
+                const newQty = item.quantity + delta;
+                if (newQty < 1) {
+                    await removeFromCart(productId);
+                } else {
+                    await updateCartItem(productId, newQty);
+                }
+                await loadCart();
+            } catch (error) {
+                console.error('Error updating quantity:', error);
+                showToast('Error updating cart', 'error');
+            }
+        }
+        
+        // Remove item
+        async function removeItem(productId) {
+            try {
+                await removeFromCart(productId);
+                await loadCart();
+                showToast('Item removed from cart');
+            } catch (error) {
+                console.error('Error removing item:', error);
+                showToast('Error removing item', 'error');
+            }
+        }
+        
+        // Apply coupon
+        async function applyCoupon() {
+            const code = document.getElementById('couponInput').value.trim();
+            if (!code) {
+                showToast('Please enter a coupon code', 'error');
+                return;
+            }
+            
+            try {
+                const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const result = await validateCoupon(code, subtotal);
+                
+                if (result.valid) {
+                    couponDiscount = result.discount;
+                    couponCode = code;
+                    showToast(`Coupon applied! You saved ₦${formatNumber(result.discount)}`);
+                    renderCart();
+                } else {
+                    showToast(result.message || 'Invalid coupon code', 'error');
+                }
+            } catch (error) {
+                console.error('Error applying coupon:', error);
+                showToast('Error applying coupon', 'error');
+            }
+        }
+        
+        // Proceed to checkout
+        function proceedToCheckout() {
+            if (!getToken()) {
+                window.location.href = 'login.html?redirect=checkout.html';
+                return;
+            }
+            window.location.href = 'checkout.html';
+        }
+        
+        // Format number
+        function formatNumber(num) {
+            return Number(num).toLocaleString();
+        }
+        
+        // Toast
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
+                background: ${type === 'success' ? '#2d1b69' : '#ef4444'};
+                color: white; border-radius: 12px; font-weight: 500;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
+                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
+                min-width: 280px;
+            `;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+      </html>
