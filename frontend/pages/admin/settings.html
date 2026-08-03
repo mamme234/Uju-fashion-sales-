@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Admin | Uju Fashion Sales Everywhere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <style>
+        .admin-container { display: flex; min-height: 100vh; background: #f8f5f6; }
+        .admin-sidebar {
+            width: 280px; background: linear-gradient(180deg, #1A0A0E 0%, #2D151E 100%);
+            color: rgba(255,255,255,0.8); padding: 30px 20px; position: fixed;
+            height: 100vh; overflow-y: auto; z-index: 1000; transition: all 0.3s ease;
+        }
+        .admin-sidebar::-webkit-scrollbar { width: 4px; }
+        .admin-sidebar::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; }
+        .admin-sidebar .logo {
+            font-family: var(--font-primary); font-size: 26px; font-weight: 800;
+            margin-bottom: 30px; display: block; color: var(--white); text-align: center;
+        }
+        .admin-sidebar .logo span { color: var(--secondary); }
+        .admin-sidebar .admin-profile {
+            text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px;
+        }
+        .admin-sidebar .admin-profile img {
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--secondary);
+            margin-bottom: 10px; object-fit: cover;
+        }
+        .admin-sidebar .admin-profile h4 { color: var(--white); font-size: 16px; }
+        .admin-sidebar .admin-profile p { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .admin-sidebar .menu-label {
+            font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.3);
+            margin: 20px 0 10px; letter-spacing: 1.5px; font-weight: 600; padding-left: 12px;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+            color: rgba(255,255,255,0.6); border-radius: 10px; transition: all 0.3s ease;
+            margin-bottom: 2px; text-decoration: none; font-size: 14px; font-weight: 500;
+        }
+        .admin-sidebar a:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+        .admin-sidebar a.active { background: rgba(232,200,122,0.12); color: var(--secondary); }
+        .admin-sidebar a i { width: 22px; text-align: center; font-size: 18px; }
+        .admin-sidebar .logout-btn { margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px; }
+        .admin-sidebar .logout-btn a { color: #ef4444; }
+        .admin-sidebar .logout-btn a:hover { background: rgba(239,68,68,0.1); }
+        
+        .admin-main { margin-left: 280px; flex: 1; padding: 30px; }
+        .admin-header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--white); padding: 20px 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow); margin-bottom: 30px;
+        }
+        .admin-header h1 { font-size: 24px; font-weight: 700; font-family: var(--font-primary); }
+        .admin-header .admin-user { display: flex; align-items: center; gap: 12px; }
+        .admin-header .admin-user img {
+            width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+        }
+        .admin-header .admin-user span { font-weight: 600; }
+
+        .settings-container {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+        }
+        .settings-card {
+            background: var(--white); padding: 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .settings-card h2 {
+            font-family: var(--font-primary); font-size: 20px; margin-bottom: 20px;
+            padding-bottom: 12px; border-bottom: 2px solid var(--gray);
+        }
+        .settings-card .form-group { margin-bottom: 16px; }
+        .settings-card .form-group label {
+            display: block; font-weight: 600; margin-bottom: 4px; font-size: 14px;
+        }
+        .settings-card .form-group input, .settings-card .form-group select, .settings-card .form-group textarea {
+            width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;
+        }
+        .settings-card .form-group input:focus, .settings-card .form-group select:focus, .settings-card .form-group textarea:focus {
+            border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(139,26,74,0.1);
+        }
+        .settings-card .form-group textarea { min-height: 80px; resize: vertical; }
+        .settings-card .btn-primary { padding: 10px 30px; }
+        .settings-card .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .settings-card .color-input { display: flex; align-items: center; gap: 12px; }
+        .settings-card .color-input input[type="color"] { width: 50px; height: 50px; padding: 4px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer; }
+
+        .menu-toggle {
+            display: none; position: fixed; top: 20px; left: 20px; z-index: 999;
+            background: var(--primary); color: white; border: none; padding: 12px;
+            border-radius: 8px; font-size: 20px; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar { width: 220px; transform: translateX(-100%); }
+            .admin-sidebar.open { transform: translateX(0); }
+            .admin-main { margin-left: 0; padding: 20px; }
+            .settings-container { grid-template-columns: 1fr; }
+            .settings-card .form-row { grid-template-columns: 1fr; }
+            .menu-toggle { display: block; }
+        }
+        @media (max-width: 480px) { .admin-sidebar { width: 100%; transform: translateX(-100%); } }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    
+    <div class="admin-container">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <a href="/pages/admin/index.html" class="logo">Uju<span>Fashion</span></a>
+            <div class="admin-profile">
+                <img src="/images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
+                <h4 id="adminName">Admin</h4>
+                <p>Administrator</p>
+            </div>
+            <div class="menu-label">Main Menu</div>
+            <a href="/pages/admin/index.html"><i class="fas fa-chart-pie"></i> Dashboard</a>
+            <a href="/pages/admin/products.html"><i class="fas fa-box"></i> Products</a>
+            <a href="/pages/admin/orders.html"><i class="fas fa-shopping-cart"></i> Orders</a>
+            <a href="/pages/admin/customers.html"><i class="fas fa-users"></i> Customers</a>
+            <a href="/pages/admin/categories.html"><i class="fas fa-tags"></i> Categories</a>
+            <a href="/pages/admin/reviews.html"><i class="fas fa-star"></i> Reviews</a>
+            <div class="menu-label">Marketing</div>
+            <a href="/pages/admin/coupons.html"><i class="fas fa-ticket"></i> Coupons</a>
+            <a href="/pages/admin/banners.html"><i class="fas fa-image"></i> Banners</a>
+            <div class="menu-label">Content</div>
+            <a href="/pages/admin/blog.html"><i class="fas fa-blog"></i> Blog Manager</a>
+            <a href="/pages/admin/reports.html"><i class="fas fa-chart-bar"></i> Reports</a>
+            <div class="menu-label">System</div>
+            <a href="/pages/admin/settings.html" class="active"><i class="fas fa-cog"></i> Settings</a>
+            <div class="logout-btn">
+                <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+        
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>⚙️ Settings</h1>
+                <div class="admin-user">
+                    <span id="adminNameHeader">Admin</span>
+                    <img src="/images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
+                </div>
+            </div>
+
+            <div class="settings-container">
+                <!-- General Settings -->
+                <div class="settings-card">
+                    <h2>General Settings</h2>
+                    <form onsubmit="saveSettings(event)">
+                        <div class="form-group">
+                            <label>Store Name</label>
+                            <input type="text" value="Uju Fashion Sales Everywhere" />
+                        </div>
+                        <div class="form-group">
+                            <label>Store Tagline</label>
+                            <input type="text" value="Style That Speaks. Quality That Lasts. Everywhere." />
+                        </div>
+                        <div class="form-group">
+                            <label>Store Email</label>
+                            <input type="email" value="info@ujufashioneverywhere.com" />
+                        </div>
+                        <div class="form-group">
+                            <label>Store Phone</label>
+                            <input type="text" value="07035585774" />
+                        </div>
+                        <div class="form-group">
+                            <label>Store Address</label>
+                            <textarea rows="2">Okpuno, Awka, Anambra State, Nigeria</textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Save General Settings</button>
+                    </form>
+                </div>
+
+                <!-- Brand Colors -->
+                <div class="settings-card">
+                    <h2>Brand Colors</h2>
+                    <form onsubmit="saveSettings(event)">
+                        <div class="form-group">
+                            <label>Primary Color</label>
+                            <div class="color-input">
+                                <input type="color" value="#8B1A4A" />
+                                <span>#8B1A4A</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Secondary Color (Gold)</label>
+                            <div class="color-input">
+                                <input type="color" value="#E8C87A" />
+                                <span>#E8C87A</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Accent Color</label>
+                            <div class="color-input">
+                                <input type="color" value="#FF6B8A" />
+                                <span>#FF6B8A</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Dark Color</label>
+                            <div class="color-input">
+                                <input type="color" value="#1A0A0E" />
+                                <span>#1A0A0E</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Save Colors</button>
+                    </form>
+                </div>
+
+                <!-- Social Media -->
+                <div class="settings-card">
+                    <h2>Social Media</h2>
+                    <form onsubmit="saveSettings(event)">
+                        <div class="form-group">
+                            <label><i class="fab fa-facebook"></i> Facebook</label>
+                            <input type="url" value="https://facebook.com/ujufashion" placeholder="https://facebook.com/..." />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fab fa-instagram"></i> Instagram</label>
+                            <input type="url" value="https://instagram.com/ujufashioneverywhere" placeholder="https://instagram.com/..." />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fab fa-twitter"></i> Twitter</label>
+                            <input type="url" value="https://twitter.com/ujufashion" placeholder="https://twitter.com/..." />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fab fa-youtube"></i> YouTube</label>
+                            <input type="url" value="" placeholder="https://youtube.com/..." />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fab fa-whatsapp"></i> WhatsApp</label>
+                            <input type="url" value="https://wa.me/2347035585774" placeholder="https://wa.me/..." />
+                        </div>
+                        <button type="submit" class="btn-primary">Save Social Links</button>
+                    </form>
+                </div>
+
+                <!-- Delivery & Payment -->
+                <div class="settings-card">
+                    <h2>Delivery & Payment</h2>
+                    <form onsubmit="saveSettings(event)">
+                        <div class="form-group">
+                            <label>Free Delivery Threshold (₦)</label>
+                            <input type="number" value="50000" placeholder="50000" />
+                        </div>
+                        <div class="form-group">
+                            <label>Standard Delivery Fee (₦)</label>
+                            <input type="number" value="2000" placeholder="2000" />
+                        </div>
+                        <div class="form-group">
+                            <label>Express Delivery Fee (₦)</label>
+                            <input type="number" value="5000" placeholder="5000" />
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Methods</label>
+                            <select multiple style="height:80px;">
+                                <option selected>Cash on Delivery</option>
+                                <option selected>Bank Transfer</option>
+                                <option>Card Payment</option>
+                                <option>USSD</option>
+                            </select>
+                            <p style="font-size:12px;color:var(--gray-dark);margin-top:4px;">Hold Ctrl/Cmd to select multiple</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Return Policy Days</label>
+                            <input type="number" value="30" />
+                        </div>
+                        <button type="submit" class="btn-primary">Save Delivery Settings</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('open');
+        }
+
+        function logoutUser() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '/pages/login.html';
+            }
+        }
+
+        function saveSettings(event) {
+            event.preventDefault();
+            alert('✅ Settings saved successfully!');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (!token) { window.location.href = '/pages/login.html'; return; }
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.role !== 'admin') { window.location.href = '/index.html'; return; }
+            document.getElementById('adminName').textContent = user.name || 'Admin';
+            document.getElementById('adminNameHeader').textContent = user.name || 'Admin';
+        });
+    </script>
+</body>
+</html>
