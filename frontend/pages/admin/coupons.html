@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coupons - Admin | Uju Fashion Sales Everywhere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <style>
+        /* Same admin styles as categories.html */
+        .admin-container { display: flex; min-height: 100vh; background: #f8f5f6; }
+        .admin-sidebar {
+            width: 280px; background: linear-gradient(180deg, #1A0A0E 0%, #2D151E 100%);
+            color: rgba(255,255,255,0.8); padding: 30px 20px; position: fixed;
+            height: 100vh; overflow-y: auto; z-index: 1000; transition: all 0.3s ease;
+        }
+        .admin-sidebar::-webkit-scrollbar { width: 4px; }
+        .admin-sidebar::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; }
+        .admin-sidebar .logo {
+            font-family: var(--font-primary); font-size: 26px; font-weight: 800;
+            margin-bottom: 30px; display: block; color: var(--white); text-align: center;
+        }
+        .admin-sidebar .logo span { color: var(--secondary); }
+        .admin-sidebar .admin-profile {
+            text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px;
+        }
+        .admin-sidebar .admin-profile img {
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--secondary);
+            margin-bottom: 10px; object-fit: cover;
+        }
+        .admin-sidebar .admin-profile h4 { color: var(--white); font-size: 16px; }
+        .admin-sidebar .admin-profile p { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .admin-sidebar .menu-label {
+            font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.3);
+            margin: 20px 0 10px; letter-spacing: 1.5px; font-weight: 600; padding-left: 12px;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+            color: rgba(255,255,255,0.6); border-radius: 10px; transition: all 0.3s ease;
+            margin-bottom: 2px; text-decoration: none; font-size: 14px; font-weight: 500;
+        }
+        .admin-sidebar a:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+        .admin-sidebar a.active { background: rgba(232,200,122,0.12); color: var(--secondary); }
+        .admin-sidebar a i { width: 22px; text-align: center; font-size: 18px; }
+        .admin-sidebar .logout-btn { margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px; }
+        .admin-sidebar .logout-btn a { color: #ef4444; }
+        .admin-sidebar .logout-btn a:hover { background: rgba(239,68,68,0.1); }
+        
+        .admin-main { margin-left: 280px; flex: 1; padding: 30px; }
+        .admin-header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--white); padding: 20px 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow); margin-bottom: 30px;
+        }
+        .admin-header h1 { font-size: 24px; font-weight: 700; font-family: var(--font-primary); }
+        .admin-header .admin-user { display: flex; align-items: center; gap: 12px; }
+        .admin-header .admin-user img {
+            width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+        }
+        .admin-header .admin-user span { font-weight: 600; }
+
+        .table-container { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+        .table-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 24px; border-bottom: 1px solid #f0f0f0; flex-wrap: wrap; gap: 12px;
+        }
+        .table-header .btn-primary { padding: 10px 24px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 14px 20px; background: #f8f5f6; font-weight: 600; font-size: 13px; color: var(--gray-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 14px 20px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+        tr:hover { background: #fafafa; }
+        .status-badge {
+            padding: 4px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
+        }
+        .status-badge.active { background: #d1fae5; color: #059669; }
+        .status-badge.inactive { background: #fee2e2; color: #dc2626; }
+        .status-badge.expired { background: #fef3c7; color: #d97706; }
+
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--white); padding: 40px; border-radius: var(--radius);
+            max-width: 500px; width: 95%; max-height: 90vh; overflow-y: auto; position: relative;
+        }
+        .modal-content .close {
+            position: absolute; top: 16px; right: 20px; font-size: 24px; cursor: pointer; color: #888;
+        }
+        .modal-content .close:hover { color: #333; }
+        .modal-content h2 { margin-bottom: 24px; font-family: var(--font-primary); }
+        .modal-content .form-group { margin-bottom: 16px; }
+        .modal-content .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 14px; }
+        .modal-content .form-group input, .modal-content .form-group select {
+            width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;
+        }
+        .modal-content .form-group input:focus, .modal-content .form-group select:focus {
+            border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(139,26,74,0.1);
+        }
+        .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+        .modal-actions .btn-secondary { padding: 10px 24px; }
+        .modal-actions .btn-primary { padding: 10px 24px; }
+
+        .menu-toggle {
+            display: none; position: fixed; top: 20px; left: 20px; z-index: 999;
+            background: var(--primary); color: white; border: none; padding: 12px;
+            border-radius: 8px; font-size: 20px; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar { width: 220px; transform: translateX(-100%); }
+            .admin-sidebar.open { transform: translateX(0); }
+            .admin-main { margin-left: 0; padding: 20px; }
+            .table-header { flex-direction: column; align-items: stretch; }
+            .menu-toggle { display: block; }
+            .modal-content { padding: 24px; }
+        }
+        @media (max-width: 480px) { .admin-sidebar { width: 100%; transform: translateX(-100%); } }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    
+    <div class="admin-container">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <a href="/pages/admin/index.html" class="logo">Uju<span>Fashion</span></a>
+            <div class="admin-profile">
+                <img src="/images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
+                <h4 id="adminName">Admin</h4>
+                <p>Administrator</p>
+            </div>
+            <div class="menu-label">Main Menu</div>
+            <a href="/pages/admin/index.html"><i class="fas fa-chart-pie"></i> Dashboard</a>
+            <a href="/pages/admin/products.html"><i class="fas fa-box"></i> Products</a>
+            <a href="/pages/admin/orders.html"><i class="fas fa-shopping-cart"></i> Orders</a>
+            <a href="/pages/admin/customers.html"><i class="fas fa-users"></i> Customers</a>
+            <a href="/pages/admin/categories.html"><i class="fas fa-tags"></i> Categories</a>
+            <a href="/pages/admin/reviews.html"><i class="fas fa-star"></i> Reviews</a>
+            <div class="menu-label">Marketing</div>
+            <a href="/pages/admin/coupons.html" class="active"><i class="fas fa-ticket"></i> Coupons</a>
+            <a href="/pages/admin/banners.html"><i class="fas fa-image"></i> Banners</a>
+            <div class="menu-label">Content</div>
+            <a href="/pages/admin/blog.html"><i class="fas fa-blog"></i> Blog Manager</a>
+            <a href="/pages/admin/reports.html"><i class="fas fa-chart-bar"></i> Reports</a>
+            <div class="menu-label">System</div>
+            <a href="/pages/admin/settings.html"><i class="fas fa-cog"></i> Settings</a>
+            <div class="logout-btn">
+                <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+        
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>🎫 Coupons</h1>
+                <div class="admin-user">
+                    <span id="adminNameHeader">Admin</span>
+                    <img src="/images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>All Coupons</h3>
+                    <button class="btn-primary" onclick="openAddCouponModal()">
+                        <i class="fas fa-plus"></i> Create Coupon
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Discount</th>
+                            <th>Type</th>
+                            <th>Min Order</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="couponTable">
+                        <tr>
+                            <td><strong>SAVE10</strong></td>
+                            <td>10%</td>
+                            <td>Percentage</td>
+                            <td>₦5,000</td>
+                            <td>Dec 31, 2026</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>FREESHIP</strong></td>
+                            <td>₦2,000</td>
+                            <td>Fixed</td>
+                            <td>₦10,000</td>
+                            <td>Nov 15, 2026</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>WELCOME20</strong></td>
+                            <td>20%</td>
+                            <td>Percentage</td>
+                            <td>₦0</td>
+                            <td>Oct 1, 2026</td>
+                            <td><span class="status-badge expired">Expired</span></td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Coupon Modal -->
+    <div class="modal" id="couponModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('couponModal')">&times;</span>
+            <h2 id="modalTitle">Create Coupon</h2>
+            <form id="couponForm" onsubmit="saveCoupon(event)">
+                <input type="hidden" id="couponId" />
+                <div class="form-group">
+                    <label>Coupon Code</label>
+                    <input type="text" id="couponCode" required placeholder="e.g., SAVE10" />
+                </div>
+                <div class="form-group">
+                    <label>Discount Type</label>
+                    <select id="discountType" required>
+                        <option value="percentage">Percentage (%)</option>
+                        <option value="fixed">Fixed Amount (₦)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Discount Value</label>
+                    <input type="number" id="discountValue" required placeholder="10" min="0" />
+                </div>
+                <div class="form-group">
+                    <label>Minimum Order Amount (₦)</label>
+                    <input type="number" id="minOrder" placeholder="0" min="0" />
+                </div>
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="date" id="expiryDate" required />
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="couponStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('couponModal')">Cancel</button>
+                    <button type="submit" class="btn-primary" id="save
