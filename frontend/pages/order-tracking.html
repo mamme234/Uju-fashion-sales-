@@ -194,4 +194,38 @@
                 { title: 'Order Placed', date: '2026-08-01 10:30 AM', description: 'Your order has been confirmed', status: 'completed' },
                 { title: 'Processing', date: '2026-08-02 2:15 PM', description: 'Your order is being prepared', status: randomStatus === 'pending' ? 'active' : 'completed' },
                 { title: 'Shipped', date: randomStatus === 'shipped' || randomStatus === 'delivered' ? '2026-08-03 9:00 AM' : 'Pending', description: 'Your order has been shipped', status: randomStatus === 'shipped' || randomStatus === 'delivered' ? 'completed' : randomStatus === 'processing' ? 'active' : 'pending' },
-                { title: 'Delivered', date: randomStatus === 'delivered' ? '2026-08-04 4:30 PM' : 'Pending', description: 'Your order has been delivered', status: randomStatus === 'delivered'
+                { title: 'Delivered', date: randomStatus === 'delivered' ? '2026-08-04 4:30 PM' : 'Pending', description: 'Your order has been delivered', status: randomStatus === 'delivered' ? 'completed' : 'pending' }
+            ];
+            
+            resultContainer.innerHTML = `
+                <div class="order-summary-card">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                        <h3 style="font-family:var(--font-primary);">Order #${orderNumber}</h3>
+                        <span class="status-badge ${statusColors[randomStatus]}">${statusLabels[randomStatus]}</span>
+                    </div>
+                    <div class="row"><span class="label">Order Date</span><span class="value">August 1, 2026</span></div>
+                    <div class="row"><span class="label">Total</span><span class="value">₦${formatNumber(12500)}</span></div>
+                    <div class="row"><span class="label">Delivery</span><span class="value">Lagos, Nigeria</span></div>
+                </div>
+                
+                <h3 style="font-family:var(--font-primary);margin-bottom:16px;">Tracking Timeline</h3>
+                <div class="timeline">
+                    ${timelineItems.map(item => `
+                        <div class="timeline-item ${item.status}">
+                            <div class="title">${item.title}</div>
+                            <div class="date">${item.date}</div>
+                            <div class="description">${item.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function formatNumber(num) { return Number(num).toLocaleString(); }
+        
+        document.getElementById('orderNumber').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); trackOrder(); }
+        });
+    </script>
+</body>
+</html>
