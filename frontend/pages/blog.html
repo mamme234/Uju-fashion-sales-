@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Uju Fashion Sales Everywhere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+        .blog-container { padding: 40px 0; }
+        .blog-container h1 { font-family: var(--font-primary); font-size: 32px; margin-bottom: 8px; text-align: center; }
+        .blog-container .subtitle { text-align: center; color: var(--gray-dark); margin-bottom: 40px; }
+        .blog-categories {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;
+        }
+        .blog-categories button {
+            padding: 8px 20px; border: 2px solid #ddd; border-radius: 50px;
+            background: var(--white); cursor: pointer; transition: var(--transition);
+            font-family: var(--font-secondary); font-weight: 500; font-size: 14px;
+        }
+        .blog-categories button:hover,
+        .blog-categories button.active {
+            border-color: var(--primary); background: var(--primary); color: var(--white);
+        }
+        .blog-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .blog-card {
+            background: var(--white); border-radius: var(--radius); overflow: hidden;
+            box-shadow: var(--shadow); transition: var(--transition);
+        }
+        .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .blog-card img {
+            width: 100%; height: 200px; object-fit: cover;
+        }
+        .blog-card .blog-content { padding: 20px; }
+        .blog-card .blog-content .category {
+            display: inline-block; padding: 4px 12px; border-radius: 50px;
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            background: var(--primary); color: var(--white);
+        }
+        .blog-card .blog-content .date {
+            font-size: 12px; color: var(--gray-dark); margin: 8px 0;
+        }
+        .blog-card .blog-content h3 {
+            font-family: var(--font-primary); font-size: 18px; margin-bottom: 8px;
+        }
+        .blog-card .blog-content p {
+            color: var(--gray-dark); font-size: 14px; line-height: 1.6;
+        }
+        .blog-card .blog-content .read-more {
+            color: var(--primary); font-weight: 600; display: inline-flex;
+            align-items: center; gap: 6px; margin-top: 12px;
+        }
+        .blog-card .blog-content .read-more:hover { gap: 12px; }
+        @media (max-width: 768px) {
+            .blog-grid { grid-template-columns: 1fr 1fr; }
+            .blog-categories { gap: 8px; }
+            .blog-categories button { font-size: 12px; padding: 6px 14px; }
+        }
+        @media (max-width: 480px) { .blog-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-wrapper">
+                <div class="top-bar-left">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
+                </div>
+                <div class="top-bar-right">
+                    <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
+                    <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
+                    <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-left">
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span> Everywhere</a>
+                </div>
+                <div class="nav-center">
+                    <ul class="nav-menu">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="blog.html" class="active">Blog</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="wishlist.html" class="nav-icon"><i class="far fa-heart"></i><span class="badge wishlist-count">0</span></a>
+                    <a href="cart.html" class="nav-icon"><i class="fas fa-shopping-bag"></i><span class="badge cart-count">0</span></a>
+                    <a href="login.html" class="nav-icon"><i class="far fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog -->
+    <section class="blog-container">
+        <div class="container">
+            <h1><i class="fas fa-blog"></i> Fashion Blog</h1>
+            <p class="subtitle">Style tips, trends & news from Uju Fashion Sales Everywhere</p>
+            
+            <div class="blog-categories">
+                <button class="active" onclick="filterBlog('all')">All</button>
+                <button onclick="filterBlog('fashion-tips')">Fashion Tips</button>
+                <button onclick="filterBlog('news')">News</button>
+                <button onclick="filterBlog('promotions')">Promotions</button>
+                <button onclick="filterBlog('new-arrivals')">New Arrivals</button>
+            </div>
+            
+            <div class="blog-grid" id="blogGrid">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="shipping.html">Shipping Policy</a></li>
+                        <li><a href="returns.html">Return Policy</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 07035585774</li>
+                        <li><i class="fas fa-phone"></i> 08157241470</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        const blogPosts = [
+            {
+                id: 1,
+                title: "5 Fashion Trends to Watch in 2026",
+                category: "fashion-tips",
+                date: "August 1, 2026",
+                image: "https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Uju+Fashion+Blog",
+                excerpt: "Discover the hottest fashion trends that will dominate 2026. From oversized silhouettes to bold colors, we've got you covered.",
+                author: "Uju Fashion Team"
+            },
+            {
+                id: 2,
+                title: "New Arrivals: Premium Jeans Collection",
+                category: "new-arrivals",
+                date: "July 28, 2026",
+                image: "https://via.placeholder.com/400x200/8B1A4A/ffffff?text=New+Jeans+Collection",
+                excerpt: "Explore our latest premium jeans collection including boyfriend, straight, and baggy styles. Perfect fit guaranteed.",
+                author: "Uju Fashion Team"
+            },
+            {
+                id: 3,
+                title: "Summer Sale: Up to 50% Off",
+                category: "promotions",
+                date: "July 20, 2026",
+                image: "https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Summer+Sale",
+                excerpt: "Don't miss our biggest summer sale with up to 50% off on selected items. Limited time only!",
+                author: "Uju Fashion Team"
+            },
+            {
+                id: 4,
+                title: "Uju Fashion Expands to New Locations",
+                category: "news",
+                date: "July 15, 2026",
+                image: "https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Expansion+News",
+                excerpt: "We're excited to announce the expansion of Uju Fashion Sales Everywhere to new locations across Nigeria.",
+                author: "Uju Fashion Team"
+            },
+            {
+                id: 5,
+                title: "How to Style Baggy Jeans",
+                category: "fashion-tips",
+                date: "July 10, 2026",
+                image: "https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Baggy+Jeans+Style",
+                excerpt: "Learn how to style baggy jeans for different occasions. From casual to chic, we've got you covered.",
+                author: "Uju Fashion Team"
+            },
+            {
+                id: 6,
+                title: "New Polos Collection Now Available",
+                category: "new-arrivals",
+                date: "July 5, 2026",
+                image: "https://via.placeholder.com/400x200/8B1A4A/ffffff?text=New+Polos",
+                excerpt: "Discover our new premium polo shirts collection. Classic, comfortable, and perfect for any occasion.",
+                author: "Uju Fashion Team"
+            }
+        ];
+
+        function renderBlogPosts(category = 'all') {
+            const container = document.getElementById('blogGrid');
+            const filtered = category === 'all' ? blogPosts : blogPosts.filter(p => p.category === category);
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--gray-dark);">
+                    <i class="fas fa-search" style="font-size:48px;color:#ddd;margin-bottom:16px;"></i>
+                    <h3>No posts found</h3>
+                    <p>Check back later for new content</p>
+                </div>`;
+                return;
+            }
+            
+            container.innerHTML = filtered.map(post => `
+                <div class="blog-card" onclick="window.location.href='blog-post.html?id=${post.id}'">
+                    <img src="${post.image}" alt="${post.title}" />
+                    <div class="blog-content">
+                        <span class="category">${post.category.replace('-', ' ')}</span>
+                        <div class="date"><i class="far fa-calendar"></i> ${post.date}</div>
+                        <h3>${post.title}</h3>
+                        <p>${post.excerpt}</p>
+                        <a href="blog-post.html?id=${post.id}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterBlog(category) {
+            document.querySelectorAll('.blog-categories button').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === category || (category === 'all' && btn.textContent === 'All'));
+            });
+            renderBlogPosts(category);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => renderBlogPosts('all'));
+    </script>
+</body>
+                  </html>
