@@ -4,162 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us - Uju Fashion Sales Everywhere</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <style>
-        .about-container {
-            padding: 40px 0;
-        }
-        
+        .about-container { padding: 40px 0; }
         .about-hero {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white);
-            border-radius: var(--radius);
-            margin-bottom: 40px;
+            text-align: center; padding: 60px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white); border-radius: var(--radius); margin-bottom: 40px;
         }
-        
-        .about-hero h1 {
-            font-family: var(--font-primary);
-            font-size: 40px;
-            margin-bottom: 16px;
-        }
-        
-        .about-hero p {
-            font-size: 18px;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .about-card {
-            background: var(--white);
-            padding: 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-        
-        .about-card h2 {
-            font-family: var(--font-primary);
-            font-size: 24px;
-            margin-bottom: 12px;
-            color: var(--primary);
-        }
-        
-        .about-card p {
-            color: var(--text);
-            line-height: 1.8;
-        }
-        
-        .about-card ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .about-card ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .about-card ul li:last-child {
-            border-bottom: none;
-        }
-        
-        .about-card ul li i {
-            color: var(--secondary);
-            width: 24px;
-        }
-        
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 20px;
-        }
-        
-        .value-item {
-            text-align: center;
-            padding: 24px;
-            background: var(--gray);
-            border-radius: var(--radius);
-            transition: var(--transition);
-        }
-        
-        .value-item:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-        }
-        
-        .value-item i {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-        
-        .value-item h3 {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-        
-        .value-item p {
-            font-size: 14px;
-            color: var(--gray-dark);
-        }
-        
-        .mission-vision {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 20px;
-        }
-        
-        .mission-vision .item {
-            text-align: center;
-            padding: 30px;
-            background: var(--gray);
-            border-radius: var(--radius);
-        }
-        
-        .mission-vision .item i {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-        
-        .mission-vision .item h3 {
-            font-size: 20px;
-            font-family: var(--font-primary);
-        }
-        
-        .mission-vision .item p {
-            color: var(--gray-dark);
-            margin-top: 4px;
-        }
-        
+        .about-hero h1 { font-family: var(--font-primary); font-size: 40px; margin-bottom: 16px; }
+        .about-hero p { font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .about-card { background: var(--white); padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .about-card h2 { font-family: var(--font-primary); font-size: 24px; margin-bottom: 12px; color: var(--primary); }
+        .about-card p { color: var(--text); line-height: 1.8; }
+        .about-card ul { list-style: none; padding: 0; }
+        .about-card ul li { padding: 10px 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 10px; }
+        .about-card ul li:last-child { border-bottom: none; }
+        .about-card ul li i { color: var(--secondary); width: 24px; }
+        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 20px; }
+        .value-item { text-align: center; padding: 24px; background: var(--gray); border-radius: var(--radius); transition: var(--transition); }
+        .value-item:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+        .value-item i { font-size: 40px; color: var(--primary); margin-bottom: 12px; }
+        .value-item h3 { font-size: 18px; margin-bottom: 4px; }
+        .value-item p { font-size: 14px; color: var(--gray-dark); }
+        .mission-vision { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+        .mission-vision .item { text-align: center; padding: 30px; background: var(--gray); border-radius: var(--radius); }
+        .mission-vision .item i { font-size: 40px; color: var(--primary); margin-bottom: 12px; }
+        .mission-vision .item h3 { font-size: 20px; font-family: var(--font-primary); }
+        .mission-vision .item p { color: var(--gray-dark); margin-top: 4px; }
         @media (max-width: 768px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-            .mission-vision {
-                grid-template-columns: 1fr;
-            }
-            .about-hero h1 {
-                font-size: 28px;
-            }
+            .about-grid { grid-template-columns: 1fr; }
+            .values-grid { grid-template-columns: 1fr; }
+            .mission-vision { grid-template-columns: 1fr; }
+            .about-hero h1 { font-size: 28px; }
         }
     </style>
 </head>
@@ -170,14 +51,12 @@
             <div class="top-bar-wrapper">
                 <div class="top-bar-left">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
                     <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
-                    <a href="https://wa.me/2347035585774" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
+                    <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -188,12 +67,13 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="nav-left">
-                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span> Everywhere</a>
                 </div>
                 <div class="nav-center">
                     <ul class="nav-menu">
                         <li><a href="../index.html">Home</a></li>
                         <li><a href="shop.html">Shop</a></li>
+                        <li><a href="blog.html">Blog</a></li>
                         <li><a href="about.html" class="active">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
@@ -207,9 +87,7 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span class="badge cart-count">0</span>
                     </a>
-                    <a href="login.html" class="nav-icon" id="authLink">
-                        <i class="far fa-user"></i>
-                    </a>
+                    <a href="login.html" class="nav-icon"><i class="far fa-user"></i></a>
                 </div>
             </div>
         </div>
@@ -219,29 +97,17 @@
     <section class="about-container">
         <div class="container">
             <div class="about-hero">
-                <h1>About Uju Fashion Sales</h1>
-                <p>Style That Speaks. Quality That Lasts.</p>
+                <h1>About Uju Fashion Sales Everywhere</h1>
+                <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
             
             <div class="about-grid">
                 <div class="about-card">
                     <h2>Our Story</h2>
-                    <p>
-                        Uju Fashion Sales was founded with a simple mission: to bring premium-quality fashion 
-                        to everyone at affordable prices. Located in Okpuno, Awka, Anambra State, we have grown 
-                        from a small local shop to a trusted fashion destination across Nigeria.
-                    </p>
-                    <p style="margin-top:12px;">
-                        We offer a wide range of fashion wears including boyfriend jeans, straight jeans, 
-                        baggy jeans, polos, jerseys, skirts, shorts, and more. Every piece is carefully selected 
-                        to ensure the highest quality and latest trends.
-                    </p>
-                    <p style="margin-top:12px;">
-                        Our goal is to help you look stylish, feel confident, and shop with confidence. 
-                        We believe that fashion should be accessible to everyone without compromising on quality.
-                    </p>
+                    <p>Uju Fashion Sales Everywhere was founded with a simple mission: to bring premium-quality fashion to everyone at affordable prices. Located in Okpuno, Awka, Anambra State, we have grown from a small local shop to a trusted fashion destination across Nigeria.</p>
+                    <p style="margin-top:12px;">We offer a wide range of fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more. Every piece is carefully selected to ensure the highest quality and latest trends.</p>
+                    <p style="margin-top:12px;">Our goal is to help you look stylish, feel confident, and shop with confidence. We believe that fashion should be accessible to everyone without compromising on quality.</p>
                 </div>
-                
                 <div class="about-card">
                     <h2>Why Choose Us</h2>
                     <ul>
@@ -276,36 +142,12 @@
             <div class="about-card">
                 <h2 style="text-align:center;">Our Core Values</h2>
                 <div class="values-grid">
-                    <div class="value-item">
-                        <i class="fas fa-gem"></i>
-                        <h3>Quality</h3>
-                        <p>Premium materials and craftsmanship</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="fas fa-hand-holding-heart"></i>
-                        <h3>Integrity</h3>
-                        <p>Honest and transparent business</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="fas fa-users"></i>
-                        <h3>Customer First</h3>
-                        <p>Your satisfaction is our priority</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="fas fa-star"></i>
-                        <h3>Innovation</h3>
-                        <p>Keeping up with latest trends</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="fas fa-heart"></i>
-                        <h3>Community</h3>
-                        <p>Building a fashion community</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="fas fa-tag"></i>
-                        <h3>Affordability</h3>
-                        <p>Quality fashion for everyone</p>
-                    </div>
+                    <div class="value-item"><i class="fas fa-gem"></i><h3>Quality</h3><p>Premium materials and craftsmanship</p></div>
+                    <div class="value-item"><i class="fas fa-hand-holding-heart"></i><h3>Integrity</h3><p>Honest and transparent business</p></div>
+                    <div class="value-item"><i class="fas fa-users"></i><h3>Customer First</h3><p>Your satisfaction is our priority</p></div>
+                    <div class="value-item"><i class="fas fa-star"></i><h3>Innovation</h3><p>Keeping up with latest trends</p></div>
+                    <div class="value-item"><i class="fas fa-heart"></i><h3>Community</h3><p>Building a fashion community</p></div>
+                    <div class="value-item"><i class="fas fa-tag"></i><h3>Affordability</h3><p>Quality fashion for everyone</p></div>
                 </div>
             </div>
             
@@ -323,8 +165,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Uju<span>Fashion</span></h3>
-                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -336,9 +178,9 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="shop.html">Shop</a></li>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -355,13 +197,13 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 07035585774</li>
                         <li><i class="fas fa-phone"></i> 08157241470</li>
-                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
                         <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
@@ -371,4 +213,4 @@
     <script src="../js/cart.js"></script>
     <script src="../js/auth.js"></script>
 </body>
-                            </html>
+                                            </html>
