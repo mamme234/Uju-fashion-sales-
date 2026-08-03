@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Details - Uju Fashion Sales Everywhere</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <style>
         .product-details-wrapper {
             display: grid;
@@ -13,33 +16,27 @@
             gap: 50px;
             padding: 40px 0;
         }
-        
-        .product-gallery {
-            position: sticky;
-            top: 100px;
-        }
-        
+        .product-gallery { position: sticky; top: 100px; }
         .product-gallery .main-image {
             width: 100%;
             height: 500px;
             border-radius: var(--radius);
             overflow: hidden;
             background: var(--gray);
+            position: relative;
         }
-        
         .product-gallery .main-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            cursor: zoom-in;
         }
-        
         .product-gallery .thumbnails {
             display: flex;
             gap: 12px;
             margin-top: 16px;
             flex-wrap: wrap;
         }
-        
         .product-gallery .thumbnails img {
             width: 80px;
             height: 80px;
@@ -49,63 +46,46 @@
             border: 2px solid transparent;
             transition: var(--transition);
         }
-        
         .product-gallery .thumbnails img:hover,
-        .product-gallery .thumbnails img.active {
-            border-color: var(--primary);
-        }
-        
+        .product-gallery .thumbnails img.active { border-color: var(--primary); }
         .product-info .product-name {
+            font-family: var(--font-primary);
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 8px;
         }
-        
-        .product-info .product-category {
-            color: #888;
-            margin-bottom: 12px;
-        }
-        
+        .product-info .product-category { color: var(--gray-dark); margin-bottom: 12px; }
         .product-info .product-rating {
             display: flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 16px;
         }
-        
-        .product-info .product-rating .stars {
-            color: var(--accent);
-            font-size: 18px;
-        }
-        
+        .product-info .product-rating .stars { color: #F59E0B; font-size: 18px; }
         .product-info .product-price {
             display: flex;
             align-items: center;
             gap: 16px;
             margin-bottom: 16px;
         }
-        
         .product-info .product-price .current {
             font-size: 32px;
             font-weight: 800;
             color: var(--primary);
         }
-        
         .product-info .product-price .original {
             font-size: 20px;
-            color: #aaa;
+            color: var(--gray-dark);
             text-decoration: line-through;
         }
-        
         .product-info .product-price .discount {
-            background: var(--secondary);
+            background: var(--accent);
             color: var(--white);
             padding: 4px 12px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: 600;
         }
-        
         .product-info .product-stock {
             display: inline-block;
             padding: 4px 12px;
@@ -114,48 +94,31 @@
             font-weight: 600;
             margin-bottom: 16px;
         }
-        
-        .product-info .product-stock.in-stock {
-            background: #d1fae5;
-            color: #059669;
-        }
-        
-        .product-info .product-stock.out-of-stock {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-        
+        .product-info .product-stock.in-stock { background: #d1fae5; color: #059669; }
+        .product-info .product-stock.out-of-stock { background: #fee2e2; color: #dc2626; }
         .product-info .product-description {
-            color: #555;
+            color: var(--text);
             line-height: 1.8;
             margin-bottom: 20px;
         }
-        
         .product-options {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 20px;
         }
-        
-        .product-options .option-group {
-            flex: 1;
-            min-width: 120px;
-        }
-        
+        .product-options .option-group { flex: 1; min-width: 120px; }
         .product-options .option-group label {
             display: block;
             font-weight: 600;
             margin-bottom: 6px;
             font-size: 14px;
         }
-        
         .product-options .option-group .options {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
-        
         .product-options .option-group .options button {
             padding: 6px 16px;
             border: 2px solid #ddd;
@@ -165,28 +128,19 @@
             transition: var(--transition);
             font-size: 14px;
         }
-        
-        .product-options .option-group .options button:hover {
-            border-color: var(--primary);
-        }
-        
+        .product-options .option-group .options button:hover { border-color: var(--primary); }
         .product-options .option-group .options button.active {
             border-color: var(--primary);
             background: var(--primary);
             color: var(--white);
         }
-        
         .quantity-selector {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 20px;
         }
-        
-        .quantity-selector label {
-            font-weight: 600;
-        }
-        
+        .quantity-selector label { font-weight: 600; }
         .quantity-selector .qty-control {
             display: flex;
             align-items: center;
@@ -194,7 +148,6 @@
             border-radius: 8px;
             overflow: hidden;
         }
-        
         .quantity-selector .qty-control button {
             padding: 8px 16px;
             border: none;
@@ -204,35 +157,26 @@
             font-weight: 600;
             transition: var(--transition);
         }
-        
         .quantity-selector .qty-control button:hover {
             background: var(--primary);
             color: var(--white);
         }
-        
         .quantity-selector .qty-control span {
             padding: 8px 20px;
             min-width: 40px;
             text-align: center;
             font-weight: 600;
         }
-        
         .product-actions {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
             margin-bottom: 20px;
         }
-        
         .product-actions .btn-primary,
-        .product-actions .btn-secondary {
-            flex: 1;
-            min-width: 150px;
-            text-align: center;
-        }
-        
+        .product-actions .btn-secondary { flex: 1; min-width: 150px; text-align: center; }
         .product-actions .btn-whatsapp {
-            background: #25d366;
+            background: #25D366;
             color: var(--white);
             border: none;
             padding: 14px 24px;
@@ -246,13 +190,12 @@
             justify-content: center;
             flex: 1;
             min-width: 150px;
+            text-decoration: none;
         }
-        
         .product-actions .btn-whatsapp:hover {
-            background: #128c7e;
+            background: #128C7E;
             transform: translateY(-2px);
         }
-        
         .product-meta {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -261,39 +204,46 @@
             border-top: 1px solid #f0f0f0;
             margin-top: 20px;
         }
-        
         .product-meta .meta-item {
             display: flex;
             gap: 8px;
             font-size: 14px;
-            color: #666;
+            color: var(--gray-dark);
         }
-        
-        .product-meta .meta-item strong {
-            color: var(--dark);
-        }
-        
-        .related-products {
+        .product-meta .meta-item strong { color: var(--dark); }
+        .related-products { padding: 40px 0; }
+        .reviews-section {
             padding: 40px 0;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 40px;
         }
-        
+        .reviews-section .review-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .reviews-section .review-item:last-child { border-bottom: none; }
+        .reviews-section .review-item .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .reviews-section .review-item .review-header .reviewer-name { font-weight: 600; }
+        .reviews-section .review-item .review-header .review-date {
+            font-size: 13px;
+            color: var(--gray-dark);
+        }
+        .reviews-section .review-item .review-stars { color: #F59E0B; font-size: 14px; }
+        .reviews-section .review-item .review-text {
+            color: var(--text);
+            margin-top: 4px;
+        }
         @media (max-width: 768px) {
-            .product-details-wrapper {
-                grid-template-columns: 1fr;
-            }
-            .product-gallery {
-                position: relative;
-                top: 0;
-            }
-            .product-gallery .main-image {
-                height: 300px;
-            }
-            .product-actions {
-                flex-direction: column;
-            }
-            .product-meta {
-                grid-template-columns: 1fr;
-            }
+            .product-details-wrapper { grid-template-columns: 1fr; }
+            .product-gallery { position: relative; top: 0; }
+            .product-gallery .main-image { height: 300px; }
+            .product-actions { flex-direction: column; }
+            .product-meta { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -304,14 +254,12 @@
             <div class="top-bar-wrapper">
                 <div class="top-bar-left">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
                     <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
-                    <a href="https://wa.me/2347035585774" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
+                    <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -322,12 +270,13 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="nav-left">
-                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span> Everywhere</a>
                 </div>
                 <div class="nav-center">
                     <ul class="nav-menu">
                         <li><a href="../index.html">Home</a></li>
                         <li><a href="shop.html">Shop</a></li>
+                        <li><a href="blog.html">Blog</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
@@ -341,9 +290,7 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span class="badge cart-count">0</span>
                     </a>
-                    <a href="login.html" class="nav-icon" id="authLink">
-                        <i class="far fa-user"></i>
-                    </a>
+                    <a href="login.html" class="nav-icon"><i class="far fa-user"></i></a>
                 </div>
             </div>
         </div>
@@ -358,11 +305,24 @@
         </div>
     </section>
 
+    <!-- Reviews -->
+    <section class="reviews-section">
+        <div class="container">
+            <h2 style="font-family:var(--font-primary);margin-bottom:20px;">Customer Reviews</h2>
+            <div id="productReviews">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
     <!-- Related Products -->
     <section class="related-products">
         <div class="container">
             <div class="section-header">
-                <h2>Related Products</h2>
+                <div>
+                    <h2>Related Products</h2>
+                    <span class="subtitle">You might also like</span>
+                </div>
             </div>
             <div class="products-grid" id="relatedProducts">
                 <!-- Loaded dynamically -->
@@ -375,8 +335,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Uju<span>Fashion</span></h3>
-                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -388,9 +348,9 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="shop.html">Shop</a></li>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -407,13 +367,13 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 07035585774</li>
                         <li><i class="fas fa-phone"></i> 08157241470</li>
-                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
                         <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
@@ -422,36 +382,27 @@
     <script src="../js/app.js"></script>
     <script src="../js/cart.js"></script>
     <script src="../js/auth.js"></script>
-    
     <script>
-        // ====================
-        // PRODUCT DETAILS
-        // ====================
-        
+        // Product Details JavaScript
         let currentProduct = null;
         let selectedSize = null;
         let selectedColor = null;
         let quantity = 1;
         
-        // Get product ID from URL
         function getProductId() {
             const params = new URLSearchParams(window.location.search);
             return params.get('id');
         }
         
-        // Load product
         async function loadProduct() {
             const productId = getProductId();
-            if (!productId) {
-                window.location.href = 'shop.html';
-                return;
-            }
-            
+            if (!productId) { window.location.href = 'shop.html'; return; }
             try {
                 const product = await getProductById(productId);
                 currentProduct = product;
                 renderProduct(product);
                 loadRelatedProducts(product.category, productId);
+                loadReviews(productId);
             } catch (error) {
                 console.error('Error loading product:', error);
                 document.getElementById('productDetails').innerHTML = `
@@ -465,78 +416,41 @@
             }
         }
         
-        // Render product
         function renderProduct(product) {
             const container = document.getElementById('productDetails');
-            
-            const images = product.images || ['https://via.placeholder.com/600x500/2d1b69/ffffff?text=Uju+Fashion'];
+            const images = product.images || ['https://via.placeholder.com/600x500/8B1A4A/ffffff?text=Uju+Fashion'];
             const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
             const inStock = product.stock > 0;
             
             container.innerHTML = `
                 <div class="product-gallery">
-                    <div class="main-image">
-                        <img src="${images[0]}" alt="${product.name}" id="mainImage" />
-                    </div>
+                    <div class="main-image"><img src="${images[0]}" alt="${product.name}" id="mainImage" onclick="zoomImage()" /></div>
                     <div class="thumbnails" id="thumbnails">
-                        ${images.map((img, i) => `
-                            <img src="${img}" alt="${product.name} ${i+1}" 
-                                 onclick="changeImage('${img}', this)" 
-                                 class="${i === 0 ? 'active' : ''}" />
-                        `).join('')}
+                        ${images.map((img, i) => `<img src="${img}" alt="${product.name} ${i+1}" onclick="changeImage('${img}', this)" class="${i === 0 ? 'active' : ''}" />`).join('')}
+                        ${product.video ? `<div class="video-thumb" onclick="playVideo()"><i class="fas fa-play-circle" style="font-size:40px;color:var(--primary);"></i></div>` : ''}
                     </div>
                 </div>
-                
                 <div class="product-info">
                     <div class="product-category">${product.category}</div>
                     <h1 class="product-name">${product.name}</h1>
-                    
                     <div class="product-rating">
                         <span class="stars">${'★'.repeat(Math.round(product.rating || 0))}${'☆'.repeat(5 - Math.round(product.rating || 0))}</span>
                         <span>${product.rating || 0} (${product.reviews?.length || 0} reviews)</span>
                     </div>
-                    
                     <div class="product-price">
                         <span class="current">₦${formatNumber(product.price)}</span>
-                        ${product.originalPrice ? `
-                            <span class="original">₦${formatNumber(product.originalPrice)}</span>
-                            <span class="discount">-${discount}%</span>
-                        ` : ''}
+                        ${product.originalPrice ? `<span class="original">₦${formatNumber(product.originalPrice)}</span><span class="discount">-${discount}%</span>` : ''}
                     </div>
-                    
                     <div class="product-stock ${inStock ? 'in-stock' : 'out-of-stock'}">
-                        ${inStock ? '✅ In Stock' : '❌ Out of Stock'}
-                        ${inStock ? `(${product.stock} available)` : ''}
+                        ${inStock ? '✅ In Stock' : '❌ Out of Stock'} ${inStock ? `(${product.stock} available)` : ''}
                     </div>
-                    
                     <div class="product-description">${product.description || 'No description available.'}</div>
-                    
-                    ${product.sizes && product.sizes.length > 0 ? `
-                        <div class="product-options">
-                            <div class="option-group">
-                                <label>Size</label>
-                                <div class="options" id="sizeOptions">
-                                    ${product.sizes.map(size => `
-                                        <button onclick="selectSize('${size}', this)" class="${selectedSize === size ? 'active' : ''}">${size}</button>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
+                    ${product.sizes?.length > 0 ? `
+                        <div class="product-options"><div class="option-group"><label>Size</label><div class="options" id="sizeOptions">${product.sizes.map(size => `<button onclick="selectSize('${size}', this)">${size}</button>`).join('')}</div></div></div>
                     ` : ''}
-                    
-                    ${product.colors && product.colors.length > 0 ? `
-                        <div class="product-options">
-                            <div class="option-group">
-                                <label>Color</label>
-                                <div class="options" id="colorOptions">
-                                    ${product.colors.map(color => `
-                                        <button onclick="selectColor('${color}', this)" class="${selectedColor === color ? 'active' : ''}">${color}</button>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
+                    ${product.colors?.length > 0 ? `
+                        <div class="product-options"><div class="option-group"><label>Color</label><div class="options" id="colorOptions">${product.colors.map(color => `<button onclick="selectColor('${color}', this)">${color}</button>`).join('')}</div></div></div>
                     ` : ''}
-                    
                     <div class="quantity-selector">
                         <label>Quantity:</label>
                         <div class="qty-control">
@@ -545,78 +459,64 @@
                             <button onclick="changeQuantity(1)">+</button>
                         </div>
                     </div>
-                    
                     <div class="product-actions">
-                        <button class="btn-primary" onclick="addToCart()" ${!inStock ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                        <button class="btn-secondary" onclick="addToWishlist()">
-                            <i class="far fa-heart"></i> Wishlist
-                        </button>
-                        <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(product.name)}%20from%20Uju%20Fashion%20Sales" 
-                           target="_blank" class="btn-whatsapp">
-                            <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                        </a>
+                        <button class="btn-primary" onclick="addToCart()" ${!inStock ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                        <button class="btn-secondary" onclick="addToWishlist()"><i class="far fa-heart"></i> Wishlist</button>
+                        <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(product.name)}%20from%20Uju%20Fashion%20Sales%20Everywhere" target="_blank" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
                     </div>
-                    
                     <div class="product-meta">
                         <div class="meta-item"><strong>Category:</strong> ${product.category}</div>
                         ${product.material ? `<div class="meta-item"><strong>Material:</strong> ${product.material}</div>` : ''}
-                        ${product.sizes && product.sizes.length > 0 ? `<div class="meta-item"><strong>Sizes:</strong> ${product.sizes.join(', ')}</div>` : ''}
-                        ${product.colors && product.colors.length > 0 ? `<div class="meta-item"><strong>Colors:</strong> ${product.colors.join(', ')}</div>` : ''}
+                        ${product.sizes?.length > 0 ? `<div class="meta-item"><strong>Sizes:</strong> ${product.sizes.join(', ')}</div>` : ''}
+                        ${product.colors?.length > 0 ? `<div class="meta-item"><strong>Colors:</strong> ${product.colors.join(', ')}</div>` : ''}
                     </div>
                 </div>
             `;
         }
         
-        // Change main image
         function changeImage(src, el) {
             document.getElementById('mainImage').src = src;
             document.querySelectorAll('.thumbnails img').forEach(img => img.classList.remove('active'));
             if (el) el.classList.add('active');
         }
         
-        // Select size
+        function zoomImage() {
+            alert('🔍 Zoom feature: Click to zoom in on the product image.');
+        }
+        
+        function playVideo() {
+            alert('🎬 Video: Product video would play here.');
+        }
+        
         function selectSize(size, el) {
             selectedSize = size;
             document.querySelectorAll('#sizeOptions button').forEach(b => b.classList.remove('active'));
             if (el) el.classList.add('active');
         }
         
-        // Select color
         function selectColor(color, el) {
             selectedColor = color;
             document.querySelectorAll('#colorOptions button').forEach(b => b.classList.remove('active'));
             if (el) el.classList.add('active');
         }
         
-        // Change quantity
         function changeQuantity(delta) {
             quantity = Math.max(1, Math.min(10, quantity + delta));
             document.getElementById('qtyDisplay').textContent = quantity;
         }
         
-        // Add to cart
         async function addToCart() {
-            if (!currentProduct) return;
-            if (currentProduct.stock <= 0) {
-                showToast('Product is out of stock', 'error');
-                return;
-            }
-            
+            if (!currentProduct || currentProduct.stock <= 0) { showToast('Product is out of stock', 'error'); return; }
             try {
                 await addToCart(currentProduct._id, quantity, selectedSize, selectedColor);
                 showToast(`Added ${quantity} ${currentProduct.name} to cart 🛒`);
                 updateCartBadge();
             } catch (error) {
-                if (error.message.includes('Authentication')) {
-                    window.location.href = 'login.html';
-                }
+                if (error.message.includes('Authentication')) { window.location.href = 'login.html'; }
                 showToast('Please login to add to cart', 'error');
             }
         }
         
-        // Add to wishlist
         async function addToWishlist() {
             if (!currentProduct) return;
             try {
@@ -624,74 +524,58 @@
                 showToast('Added to wishlist ❤️');
                 updateWishlistBadge();
             } catch (error) {
-                if (error.message.includes('Authentication')) {
-                    window.location.href = 'login.html';
-                }
+                if (error.message.includes('Authentication')) { window.location.href = 'login.html'; }
                 showToast('Please login to use wishlist', 'error');
             }
         }
         
-        // Load related products
         async function loadRelatedProducts(category, productId) {
             try {
                 const products = await getProducts({ category, limit: 4 });
                 const related = products.filter(p => p._id !== productId).slice(0, 4);
-                
                 const container = document.getElementById('relatedProducts');
-                
-                if (related.length === 0) {
-                    container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;">No related products found</p>';
-                    return;
-                }
-                
+                if (related.length === 0) { container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-dark);">No related products found</p>'; return; }
                 container.innerHTML = related.map(product => `
                     <div class="product-card" onclick="window.location.href='product.html?id=${product._id}'">
-                        <div class="product-image">
-                            <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/2d1b69/ffffff?text=Uju+Fashion'}" 
-                                 alt="${product.name}" loading="lazy" />
-                            ${product.isBestSeller ? `<span class="product-badge" style="background:#10b981;">Best Seller</span>` : ''}
-                        </div>
+                        <div class="product-image"><img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion'}" alt="${product.name}" loading="lazy" /></div>
                         <div class="product-info">
                             <h3>${product.name}</h3>
                             <p class="category">${product.category}</p>
-                            <div class="product-price">
-                                <span class="current">₦${formatNumber(product.price)}</span>
-                                ${product.originalPrice ? `<span class="original">₦${formatNumber(product.originalPrice)}</span>` : ''}
-                            </div>
+                            <div class="product-price"><span class="current">₦${formatNumber(product.price)}</span>${product.originalPrice ? `<span class="original">₦${formatNumber(product.originalPrice)}</span>` : ''}</div>
                         </div>
                     </div>
                 `).join('');
-            } catch (error) {
-                console.error('Error loading related products:', error);
-            }
+            } catch (error) { console.error('Error loading related products:', error); }
         }
         
-        // Format number
-        function formatNumber(num) {
-            return Number(num).toLocaleString();
+        async function loadReviews(productId) {
+            try {
+                const reviews = await getProductReviews(productId);
+                const container = document.getElementById('productReviews');
+                if (!reviews || reviews.length === 0) { container.innerHTML = '<p style="color:var(--gray-dark);">No reviews yet. Be the first to review!</p>'; return; }
+                container.innerHTML = reviews.map(review => `
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">${review.user?.name || 'Anonymous'}</span>
+                            <span class="review-date">${new Date(review.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                        <p class="review-text">${review.comment}</p>
+                    </div>
+                `).join('');
+            } catch (error) { console.error('Error loading reviews:', error); }
         }
         
-        // Toast
+        function formatNumber(num) { return Number(num).toLocaleString(); }
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#2d1b69' : '#ef4444'};
-                color: white; border-radius: 12px; font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
-                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
-                min-width: 280px;
-            `;
+            toast.style.cssText = `position:fixed;bottom:24px;right:24px;padding:16px 24px;background:${type === 'success' ? '#8B1A4A' : '#ef4444'};color:white;border-radius:12px;font-weight:500;box-shadow:0 10px 40px rgba(0,0,0,0.2);z-index:9999;animation:slideIn 0.4s ease;display:flex;align-items:center;gap:12px;min-width:280px;`;
             toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
             document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
+            setTimeout(() => { toast.style.animation = 'slideOut 0.4s ease forwards'; setTimeout(() => toast.remove(), 400); }, 3000);
         }
         
-        // Initialize
         document.addEventListener('DOMContentLoaded', loadProduct);
     </script>
 </body>
-                                                                </html>
+            </html>
