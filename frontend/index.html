@@ -7,65 +7,23 @@
     <meta name="description" content="Uju Fashion Sales Everywhere - Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more at affordable prices in Nigeria." />
     <meta name="keywords" content="Uju Fashion Sales Everywhere, fashion, jeans, polos, skirts, shorts, Nigeria, Awka, Anambra" />
     <meta name="author" content="Uju Fashion Sales Everywhere" />
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        .whatsapp-order-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #25D366;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            width: 100%;
-            justify-content: center;
-            margin-top: 8px;
-        }
-        .whatsapp-order-btn:hover {
-            background: #128C7E;
-            transform: scale(1.02);
-        }
-        .delivery-info-section { padding: 60px 0; background: var(--gray); }
-        .delivery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 30px; }
-        .delivery-item { background: var(--white); padding: 24px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); transition: var(--transition); }
-        .delivery-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
-        .delivery-item i { font-size: 40px; color: var(--primary); margin-bottom: 12px; }
-        .delivery-item h4 { font-size: 16px; font-weight: 600; }
-        .delivery-item p { font-size: 14px; color: var(--gray-dark); margin-top: 4px; }
-        @media (max-width: 768px) { .delivery-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 480px) { .delivery-grid { grid-template-columns: 1fr; } }
-
-        /* Auth Link Styles */
-        #authLink {
-            cursor: pointer;
-        }
-        #authLink .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        .admin-only { display: none; }
-    </style>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <!-- Top Bar -->
+
+    <!-- ============================================================
+         TOP BAR
+         ============================================================ -->
     <div class="top-bar">
         <div class="container">
             <div class="top-bar-wrapper">
@@ -84,7 +42,9 @@
         </div>
     </div>
 
-    <!-- Navbar -->
+    <!-- ============================================================
+         NAVBAR
+         ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-wrapper">
@@ -94,11 +54,11 @@
                         Uju<span>Fashion</span> Everywhere
                     </a>
                 </div>
-                
                 <div class="nav-center">
                     <ul class="nav-menu">
                         <li><a href="index.html" class="active">Home</a></li>
                         <li><a href="pages/shop.html">Shop</a></li>
+                        <li><a href="pages/blog.html">Blog</a></li>
                         <li><a href="pages/about.html">About</a></li>
                         <li><a href="pages/contact.html">Contact</a></li>
                         <li class="admin-only" style="display:none;">
@@ -106,10 +66,9 @@
                         </li>
                     </ul>
                 </div>
-                
                 <div class="nav-right">
                     <div class="search-box">
-                        <input type="text" placeholder="Search Uju Fashion Sales Everywhere..." id="searchInput" />
+                        <input type="text" placeholder="Search Uju Fashion..." id="searchInput" />
                         <button onclick="handleSearch()"><i class="fas fa-search"></i></button>
                     </div>
                     <a href="pages/wishlist.html" class="nav-icon">
@@ -120,7 +79,6 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span class="badge cart-count">0</span>
                     </a>
-                    <!-- AUTH LINK - Goes to profile if logged in, login if not -->
                     <a href="#" class="nav-icon" id="authLink" onclick="handleAuthClick(event)">
                         <i class="far fa-user" id="authIcon"></i>
                         <span class="badge" id="authBadge" style="display:none;"></span>
@@ -130,362 +88,478 @@
         </div>
     </nav>
 
-    <!-- Hero Banner -->
-    <section class="hero" style="padding:40px 0 60px;background:linear-gradient(135deg,#FDF8F9 0%,#F5EDF0 100%);position:relative;overflow:hidden;">
+    <!-- ============================================================
+         SECTION 1: FULL-SCREEN HERO SLIDER
+         ============================================================ -->
+    <section class="hero-slider" id="heroSlider">
+        <!-- Slide 1 -->
+        <div class="slide active" style="background-image: url('images/banners/slide-1.jpg');">
+            <div class="slide-content animate-in">
+                <span class="tag">🔥 New Collection 2026</span>
+                <h1>Style That <span>Speaks</span></h1>
+                <p>Discover premium-quality fashion that fits your vibe and elevates your everyday style.</p>
+                <div class="btn-group">
+                    <a href="pages/shop.html" class="btn-gold">Shop Now</a>
+                    <a href="pages/shop.html" class="btn-outline">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide" style="background-image: url('images/banners/slide-2.jpg');">
+            <div class="slide-content animate-in">
+                <span class="tag">👗 Premium Quality</span>
+                <h1>Look Good, <span>Feel Confident</span></h1>
+                <p>Premium jeans, polos, skirts, and shorts. Quality that lasts. Style that speaks.</p>
+                <div class="btn-group">
+                    <a href="pages/shop.html" class="btn-gold">Shop Collection</a>
+                    <a href="pages/shop.html" class="btn-outline">View All</a>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide" style="background-image: url('images/banners/slide-3.jpg');">
+            <div class="slide-content animate-in">
+                <span class="tag">🛒 Flash Sale</span>
+                <h1>Up to <span>50% Off</span></h1>
+                <p>Limited time offers on premium fashion. Don't miss out!</p>
+                <div class="btn-group">
+                    <a href="pages/shop.html?filter=sale" class="btn-gold">Shop Flash Sale</a>
+                    <a href="pages/shop.html" class="btn-outline">View All</a>
+                </div>
+            </div>
+        </div>
+        <!-- Controls -->
+        <div class="slider-controls" id="sliderControls">
+            <button class="dot active" data-index="0"></button>
+            <button class="dot" data-index="1"></button>
+            <button class="dot" data-index="2"></button>
+        </div>
+        <button class="slider-arrow prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-arrow next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2: PROMOTIONAL BANNERS
+         ============================================================ -->
+    <section class="promo-banners">
         <div class="container">
-            <div class="hero-wrapper" style="display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;z-index:1;">
-                <div class="hero-content animate-in">
-                    <span style="font-family:var(--font-primary);font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--primary);font-weight:700;display:block;margin-bottom:8px;">Uju Fashion Sales Everywhere</span>
-                    <span style="font-family:var(--font-primary);font-size:20px;font-weight:700;color:var(--primary);letter-spacing:2px;display:block;margin-bottom:12px;">Style That Speaks. Quality That Lasts.</span>
-                    <h1 style="font-family:var(--font-primary);font-size:52px;line-height:1.05;font-weight:800;color:var(--dark);margin-bottom:8px;">TRENDY. <span style="color:var(--primary);position:relative;">STYLISH.</span> YOU.</h1>
-                    <p style="font-size:18px;color:var(--gray-dark);margin:12px 0 16px;line-height:1.7;max-width:480px;">Discover premium quality jeans and jerseys that fit your vibe and elevate your everyday style. <strong>Look good, feel confident!</strong></p>
-                    <div style="display:flex;gap:40px;margin:24px 0 30px;">
-                        <div><h3 style="font-family:var(--font-primary);font-size:28px;color:var(--primary);font-weight:800;">10K+</h3><p style="font-size:13px;color:var(--gray-dark);margin:0;">Happy Customers</p></div>
-                        <div><h3 style="font-family:var(--font-primary);font-size:28px;color:var(--primary);font-weight:800;">500+</h3><p style="font-size:13px;color:var(--gray-dark);margin:0;">Premium Products</p></div>
-                        <div><h3 style="font-family:var(--font-primary);font-size:28px;color:var(--primary);font-weight:800;">4.8★</h3><p style="font-size:13px;color:var(--gray-dark);margin:0;">Average Rating</p></div>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <img src="images/banners/promo-1.jpg" alt="New Arrivals" onerror="this.src='https://via.placeholder.com/400x200/8B1A4A/ffffff?text=New+Arrivals'" />
+                    <div class="overlay">
+                        <span class="tag">New Arrivals</span>
+                        <h3>Fresh Styles</h3>
+                        <p>Shop the latest trends</p>
                     </div>
-                    <div style="display:flex;gap:16px;flex-wrap:wrap;">
-                        <a href="pages/shop.html" class="btn-primary"><i class="fas fa-shopping-bag"></i> Shop Now</a>
-                        <a href="pages/shop.html" class="btn-secondary">Explore Collection</a>
+                </div>
+                <div class="promo-card">
+                    <img src="images/banners/promo-2.jpg" alt="Flash Sale" onerror="this.src='https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Flash+Sale'" />
+                    <div class="overlay">
+                        <span class="tag">Flash Sale</span>
+                        <h3>50% Off</h3>
+                        <p>Limited time only</p>
                     </div>
                 </div>
-                <div class="hero-image animate-in delay-2" style="position:relative;">
-                    <img src="images/banner.png" alt="Uju Fashion Sales Everywhere" style="border-radius:var(--radius);box-shadow:var(--shadow-hover);width:100%;height:480px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/600x480/8B1A4A/ffffff?text=Uju+Fashion+Sales+Everywhere'" />
-                    <div style="position:absolute;background:var(--white);padding:14px 20px;border-radius:var(--radius-sm);box-shadow:var(--shadow-hover);display:flex;align-items:center;gap:10px;top:16px;right:-16px;">
-                        <span style="font-size:28px;">👗</span>
-                        <div><h4 style="font-size:13px;font-weight:700;color:var(--dark);">Premium Quality</h4><p style="font-size:11px;color:var(--gray-dark);margin:0;">Carefully selected fabrics</p></div>
-                    </div>
-                    <div style="position:absolute;background:var(--white);padding:14px 20px;border-radius:var(--radius-sm);box-shadow:var(--shadow-hover);display:flex;align-items:center;gap:10px;bottom:16px;left:-16px;">
-                        <span style="font-size:28px;">🏷️</span>
-                        <div><h4 style="font-size:13px;font-weight:700;color:var(--dark);">Affordable Prices</h4><p style="font-size:11px;color:var(--gray-dark);margin:0;">Look expensive without breaking</p></div>
+                <div class="promo-card">
+                    <img src="images/banners/promo-3.jpg" alt="Free Delivery" onerror="this.src='https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Free+Delivery'" />
+                    <div class="overlay">
+                        <span class="tag">Free Delivery</span>
+                        <h3>On Orders ₦50K+</h3>
+                        <p>Shop with confidence</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Categories -->
-    <section class="categories" style="padding:60px 0;background:var(--white);">
+    <!-- ============================================================
+         SECTION 3: STORE STATISTICS
+         ============================================================ -->
+    <section class="store-stats">
         <div class="container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
-                <div><h2 style="font-family:var(--font-primary);font-size:32px;font-weight:700;color:var(--dark);">Shop by Category</h2><span style="font-size:16px;color:var(--gray-dark);font-weight:400;display:block;margin-top:4px;">Find your perfect style</span></div>
-                <a href="pages/shop.html" style="color:var(--primary);font-weight:600;transition:var(--transition);display:flex;align-items:center;gap:8px;">View All <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
-                <div class="category-card animate-in delay-1" onclick="window.location.href='pages/shop.html?category=Men%27s Wear'" style="background:var(--white);border-radius:var(--radius);padding:30px 20px;text-align:center;box-shadow:var(--shadow);transition:var(--transition);cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;">
-                    <span style="font-size:48px;margin-bottom:12px;display:block;transition:var(--transition);">👔</span>
-                    <h3 style="font-size:18px;font-weight:600;transition:var(--transition);">Men's Wear</h3>
-                    <p style="font-size:14px;color:var(--gray-dark);transition:var(--transition);">Stylish & Trendy</p>
-                    <span style="display:inline-block;background:var(--gray);padding:2px 12px;border-radius:50px;font-size:12px;font-weight:600;color:var(--gray-dark);margin-top:8px;transition:var(--transition);">New Arrivals</span>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 id="statCustomers">10K+</h3>
+                    <p>Happy Customers</p>
                 </div>
-                <div class="category-card animate-in delay-2" onclick="window.location.href='pages/shop.html?category=Women%27s Wear'" style="background:var(--white);border-radius:var(--radius);padding:30px 20px;text-align:center;box-shadow:var(--shadow);transition:var(--transition);cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;">
-                    <span style="font-size:48px;margin-bottom:12px;display:block;transition:var(--transition);">👗</span>
-                    <h3 style="font-size:18px;font-weight:600;transition:var(--transition);">Women's Wear</h3>
-                    <p style="font-size:14px;color:var(--gray-dark);transition:var(--transition);">Elegant & Chic</p>
-                    <span style="display:inline-block;background:var(--gray);padding:2px 12px;border-radius:50px;font-size:12px;font-weight:600;color:var(--gray-dark);margin-top:8px;transition:var(--transition);">New Arrivals</span>
+                <div class="stat-item">
+                    <h3 id="statProducts">500+</h3>
+                    <p>Premium Products</p>
                 </div>
-                <div class="category-card animate-in delay-3" onclick="window.location.href='pages/shop.html?category=Jeans'" style="background:var(--white);border-radius:var(--radius);padding:30px 20px;text-align:center;box-shadow:var(--shadow);transition:var(--transition);cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;">
-                    <span style="font-size:48px;margin-bottom:12px;display:block;transition:var(--transition);">👖</span>
-                    <h3 style="font-size:18px;font-weight:600;transition:var(--transition);">Jeans</h3>
-                    <p style="font-size:14px;color:var(--gray-dark);transition:var(--transition);">Perfect Fit</p>
-                    <span style="display:inline-block;background:var(--gray);padding:2px 12px;border-radius:50px;font-size:12px;font-weight:600;color:var(--gray-dark);margin-top:8px;transition:var(--transition);">New Arrivals</span>
+                <div class="stat-item">
+                    <h3 id="statOrders">2K+</h3>
+                    <p>Orders Delivered</p>
                 </div>
-                <div class="category-card animate-in delay-4" onclick="window.location.href='pages/shop.html?category=Polos'" style="background:var(--white);border-radius:var(--radius);padding:30px 20px;text-align:center;box-shadow:var(--shadow);transition:var(--transition);cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;">
-                    <span style="font-size:48px;margin-bottom:12px;display:block;transition:var(--transition);">👕</span>
-                    <h3 style="font-size:18px;font-weight:600;transition:var(--transition);">Polos</h3>
-                    <p style="font-size:14px;color:var(--gray-dark);transition:var(--transition);">Classic & Premium</p>
-                    <span style="display:inline-block;background:var(--gray);padding:2px 12px;border-radius:50px;font-size:12px;font-weight:600;color:var(--gray-dark);margin-top:8px;transition:var(--transition);">New Arrivals</span>
+                <div class="stat-item">
+                    <h3 id="statRating">4.8★</h3>
+                    <p>Average Rating</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="statBrands">50+</h3>
+                    <p>Trusted Brands</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- New Arrivals -->
-    <section class="products-section" style="padding:60px 0;background:var(--gray);">
+    <!-- ============================================================
+         SECTION 4: CATEGORIES
+         ============================================================ -->
+    <section class="categories">
         <div class="container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
-                <div><h2 style="font-family:var(--font-primary);font-size:32px;font-weight:700;color:var(--dark);">New Arrivals</h2><span style="font-size:16px;color:var(--gray-dark);font-weight:400;display:block;margin-top:4px;">Fresh styles just dropped</span></div>
-                <a href="pages/shop.html" style="color:var(--primary);font-weight:600;transition:var(--transition);display:flex;align-items:center;gap:8px;">View All <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="products-grid" id="newArrivals" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
-                <!-- Products loaded dynamically -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Flash Sale -->
-    <section class="flash-sale" style="padding:60px 0;background:linear-gradient(135deg,var(--primary),var(--primary-dark));position:relative;overflow:hidden;text-align:center;color:var(--white);">
-        <div class="container">
-            <h2 style="font-family:var(--font-primary);font-size:44px;font-weight:800;">🔥 Flash Sale</h2>
-            <p style="font-size:18px;opacity:0.9;margin:8px 0 32px;">Limited time offers up to 50% off on premium fashion</p>
-            <div style="display:flex;justify-content:center;gap:20px;margin-bottom:32px;">
-                <div style="background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);padding:20px 28px;border-radius:var(--radius-sm);min-width:80px;border:1px solid rgba(255,255,255,0.1);"><span id="hours" style="font-size:36px;font-weight:800;display:block;font-family:var(--font-primary);">12</span><span style="font-size:12px;text-transform:uppercase;opacity:0.7;margin-top:4px;font-weight:500;">Hours</span></div>
-                <div style="background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);padding:20px 28px;border-radius:var(--radius-sm);min-width:80px;border:1px solid rgba(255,255,255,0.1);"><span id="minutes" style="font-size:36px;font-weight:800;display:block;font-family:var(--font-primary);">30</span><span style="font-size:12px;text-transform:uppercase;opacity:0.7;margin-top:4px;font-weight:500;">Minutes</span></div>
-                <div style="background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);padding:20px 28px;border-radius:var(--radius-sm);min-width:80px;border:1px solid rgba(255,255,255,0.1);"><span id="seconds" style="font-size:36px;font-weight:800;display:block;font-family:var(--font-primary);">45</span><span style="font-size:12px;text-transform:uppercase;opacity:0.7;margin-top:4px;font-weight:500;">Seconds</span></div>
-            </div>
-            <a href="pages/shop.html?filter=sale" style="display:inline-flex;align-items:center;gap:8px;padding:14px 36px;background:var(--secondary);color:var(--dark);border:none;border-radius:50px;font-weight:600;font-size:16px;cursor:pointer;transition:var(--transition);text-decoration:none;"> <i class="fas fa-bolt"></i> Shop Flash Sale</a>
-        </div>
-    </section>
-
-    <!-- Best Sellers -->
-    <section class="products-section" style="padding:60px 0;background:var(--gray);">
-        <div class="container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
-                <div><h2 style="font-family:var(--font-primary);font-size:32px;font-weight:700;color:var(--dark);">Best Sellers</h2><span style="font-size:16px;color:var(--gray-dark);font-weight:400;display:block;margin-top:4px;">Customer favorites</span></div>
-                <a href="pages/shop.html" style="color:var(--primary);font-weight:600;transition:var(--transition);display:flex;align-items:center;gap:8px;">View All <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="products-grid" id="bestSellers" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
-                <!-- Products loaded dynamically -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer" style="background:var(--dark);color:rgba(255,255,255,0.7);padding:60px 0 24px;">
-        <div class="container">
-            <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:40px;margin-bottom:40px;">
+            <div class="section-header">
                 <div>
-                    <h3 style="font-family:var(--font-primary);color:var(--white);font-size:24px;">Uju<span style="color:var(--secondary);">Fashion</span> Everywhere</h3>
-                    <p style="line-height:1.8;font-size:15px;">Style That Speaks. Quality That Lasts. Everywhere.</p>
-                    <p style="margin-top:10px;font-size:14px;">Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more.</p>
-                    <div style="display:flex;gap:12px;margin-top:16px;">
-                        <a href="#" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(255,255,255,0.06);border-radius:50%;color:var(--white);transition:var(--transition);font-size:18px;"><i class="fab fa-facebook"></i></a>
-                        <a href="#" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(255,255,255,0.06);border-radius:50%;color:var(--white);transition:var(--transition);font-size:18px;"><i class="fab fa-instagram"></i></a>
-                        <a href="#" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(255,255,255,0.06);border-radius:50%;color:var(--white);transition:var(--transition);font-size:18px;"><i class="fab fa-twitter"></i></a>
-                        <a href="https://wa.me/2347035585774" target="_blank" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(255,255,255,0.06);border-radius:50%;color:var(--white);transition:var(--transition);font-size:18px;"><i class="fab fa-whatsapp"></i></a>
+                    <h2>Shop by Category</h2>
+                    <span class="subtitle">Find your perfect style</span>
+                </div>
+                <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Men%27s Wear'">
+                    <span class="category-icon">👔</span>
+                    <h3>Men's Wear</h3>
+                    <p>Stylish & Trendy</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Women%27s Wear'">
+                    <span class="category-icon">👗</span>
+                    <h3>Women's Wear</h3>
+                    <p>Elegant & Chic</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Jeans'">
+                    <span class="category-icon">👖</span>
+                    <h3>Jeans</h3>
+                    <p>Perfect Fit</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Polos'">
+                    <span class="category-icon">👕</span>
+                    <h3>Polos</h3>
+                    <p>Classic & Premium</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Skirts'">
+                    <span class="category-icon">👗</span>
+                    <h3>Skirts</h3>
+                    <p>Stylish & Elegant</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Shorts'">
+                    <span class="category-icon">🩳</span>
+                    <h3>Shorts</h3>
+                    <p>Casual & Cool</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5: NEW ARRIVALS
+         ============================================================ -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2>New Arrivals</h2>
+                    <span class="subtitle">Fresh styles just dropped</span>
+                </div>
+                <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-grid" id="newArrivals">
+                <!-- Products loaded dynamically by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 6: FLASH SALE
+         ============================================================ -->
+    <section class="flash-sale">
+        <div class="container">
+            <h2>🔥 Flash Sale</h2>
+            <p>Limited time offers up to 50% off on premium fashion</p>
+            <div class="countdown">
+                <div>
+                    <span id="hours">12</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div>
+                    <span id="minutes">30</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div>
+                    <span id="seconds">45</span>
+                    <span class="label">Seconds</span>
+                </div>
+            </div>
+            <a href="pages/shop.html?filter=sale" class="btn-gold">
+                <i class="fas fa-bolt"></i> Shop Flash Sale
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 7: BEST SELLERS
+         ============================================================ -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2>Best Sellers</h2>
+                    <span class="subtitle">Customer favorites</span>
+                </div>
+                <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-grid" id="bestSellers">
+                <!-- Products loaded dynamically by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 8: FEATURED COLLECTIONS
+         ============================================================ -->
+    <section class="featured-collections" style="padding:60px 0;background:var(--white);">
+        <div class="container">
+            <div class="section-header" style="justify-content:center;text-align:center;">
+                <div>
+                    <h2>Featured Collections</h2>
+                    <span class="subtitle">Curated just for you</span>
+                </div>
+            </div>
+            <div class="collections-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+                <div class="collection-card" style="background:linear-gradient(135deg,#8B1A4A,#6B0F36);border-radius:var(--radius);padding:40px;text-align:center;color:var(--white);cursor:pointer;transition:var(--transition);" onclick="window.location.href='pages/shop.html?collection=summer'">
+                    <i class="fas fa-sun" style="font-size:48px;color:var(--secondary);margin-bottom:12px;"></i>
+                    <h3 style="font-family:var(--font-primary);font-size:24px;">Summer Collection</h3>
+                    <p style="opacity:0.8;">Light & breezy styles</p>
+                </div>
+                <div class="collection-card" style="background:linear-gradient(135deg,#1A0A0E,#2D151E);border-radius:var(--radius);padding:40px;text-align:center;color:var(--white);cursor:pointer;transition:var(--transition);" onclick="window.location.href='pages/shop.html?collection=premium'">
+                    <i class="fas fa-crown" style="font-size:48px;color:var(--secondary);margin-bottom:12px;"></i>
+                    <h3 style="font-family:var(--font-primary);font-size:24px;">Premium Collection</h3>
+                    <p style="opacity:0.8;">Luxury fashion</p>
+                </div>
+                <div class="collection-card" style="background:linear-gradient(135deg,#E8C87A,#D4A843);border-radius:var(--radius);padding:40px;text-align:center;color:var(--dark);cursor:pointer;transition:var(--transition);" onclick="window.location.href='pages/shop.html?collection=street'">
+                    <i class="fas fa-street-view" style="font-size:48px;color:#8B1A4A;margin-bottom:12px;"></i>
+                    <h3 style="font-family:var(--font-primary);font-size:24px;">Street Style</h3>
+                    <p style="opacity:0.8;">Urban & trendy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 9: BRANDS SECTION
+         ============================================================ -->
+    <section class="brands-section">
+        <div class="container">
+            <div class="section-header" style="justify-content:center;text-align:center;">
+                <div>
+                    <h2>Trusted Brands</h2>
+                    <span class="subtitle">Quality brands you love</span>
+                </div>
+            </div>
+            <div class="brands-grid">
+                <div class="brand-item"><img src="images/brands/brand-1.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
+                <div class="brand-item"><img src="images/brands/brand-2.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
+                <div class="brand-item"><img src="images/brands/brand-3.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
+                <div class="brand-item"><img src="images/brands/brand-4.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
+                <div class="brand-item"><img src="images/brands/brand-5.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
+                <div class="brand-item"><img src="images/brands/brand-6.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 10: BLOG PREVIEW
+         ============================================================ -->
+    <section class="blog-preview">
+        <div class="container">
+            <div class="section-header" style="justify-content:center;text-align:center;">
+                <div>
+                    <h2>Fashion Blog</h2>
+                    <span class="subtitle">Style tips, trends & news</span>
+                </div>
+            </div>
+            <div class="blog-grid" id="blogPreview">
+                <!-- Loaded dynamically by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 11: CUSTOMER REVIEWS
+         ============================================================ -->
+    <section class="reviews" style="padding:60px 0;background:var(--gray);">
+        <div class="container">
+            <div class="section-header" style="justify-content:center;text-align:center;">
+                <div>
+                    <h2>What Our Customers Say</h2>
+                    <span class="subtitle">Real reviews from real customers</span>
+                </div>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card animate-in delay-1">
+                    <div class="stars">★★★★★</div>
+                    <p class="text">"Amazing quality! The jeans fit perfectly. Will definitely order again. Best fashion store in Nigeria!"</p>
+                    <div class="reviewer">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+J&background=8B1A4A&color=fff" alt="Sarah" />
+                        <div class="info">
+                            <h4>Sarah Johnson</h4>
+                            <span>Verified Buyer</span>
+                        </div>
                     </div>
                 </div>
-                <div><h4 style="color:var(--white);font-size:18px;margin-bottom:16px;">Quick Links</h4><ul><li style="margin-bottom:10px;"><a href="pages/shop.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">Shop</a></li><li style="margin-bottom:10px;"><a href="pages/about.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">About Us</a></li><li style="margin-bottom:10px;"><a href="pages/contact.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">Contact</a></li><li style="margin-bottom:10px;"><a href="pages/faq.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">FAQ</a></li></ul></div>
-                <div><h4 style="color:var(--white);font-size:18px;margin-bottom:16px;">Customer Service</h4><ul><li style="margin-bottom:10px;"><a href="pages/shipping.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">Shipping Policy</a></li><li style="margin-bottom:10px;"><a href="pages/returns.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">Return Policy</a></li><li style="margin-bottom:10px;"><a href="pages/privacy.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">Privacy Policy</a></li><li style="margin-bottom:10px;"><a href="pages/terms.html" style="color:rgba(255,255,255,0.6);transition:var(--transition);font-size:15px;">Terms & Conditions</a></li></ul></div>
-                <div><h4 style="color:var(--white);font-size:18px;margin-bottom:16px;">Contact Info</h4><ul><li style="margin-bottom:10px;display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--secondary);width:20px;"></i> 07035585774</li><li style="margin-bottom:10px;display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--secondary);width:20px;"></i> 08157241470</li><li style="margin-bottom:10px;display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--secondary);width:20px;"></i> info@ujufashioneverywhere.com</li><li style="margin-bottom:10px;display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--secondary);width:20px;"></i> Okpuno, Awka, Anambra</li></ul></div>
+                <div class="review-card animate-in delay-2">
+                    <div class="stars">★★★★★</div>
+                    <p class="text">"Fast delivery and great customer service. The polos are premium quality. Highly recommend Uju Fashion Sales Everywhere!"</p>
+                    <div class="reviewer">
+                        <img src="https://ui-avatars.com/api/?name=Michael+C&background=8B1A4A&color=fff" alt="Michael" />
+                        <div class="info">
+                            <h4>Michael Chen</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card animate-in delay-3">
+                    <div class="stars">★★★★★</div>
+                    <p class="text">"Love the new collection. The quality is premium and prices are fair. My go-to fashion store in Awka!"</p>
+                    <div class="reviewer">
+                        <img src="https://ui-avatars.com/api/?name=Emma+D&background=8B1A4A&color=fff" alt="Emma" />
+                        <div class="info">
+                            <h4>Emma Davis</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;text-align:center;font-size:14px;color:rgba(255,255,255,0.4);">
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 12: INSTAGRAM FEED
+         ============================================================ -->
+    <section class="instagram-feed">
+        <div class="container">
+            <div class="section-header" style="justify-content:center;text-align:center;">
+                <div>
+                    <h2><i class="fab fa-instagram" style="color:#E4405F;"></i> Follow Us</h2>
+                    <span class="subtitle">@ujufashioneverywhere</span>
+                </div>
+            </div>
+            <div class="instagram-grid">
+                <div class="insta-item">
+                    <img src="images/instagram/insta-1.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
+                    <div class="overlay"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="images/instagram/insta-2.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
+                    <div class="overlay"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="images/instagram/insta-3.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
+                    <div class="overlay"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="images/instagram/insta-4.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
+                    <div class="overlay"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="images/instagram/insta-5.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
+                    <div class="overlay"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="images/instagram/insta-6.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
+                    <div class="overlay"><i class="fab fa-instagram"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 13: NEWSLETTER
+         ============================================================ -->
+    <section class="newsletter-section">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get 10% off on your first order and stay updated with latest trends</p>
+            <form id="newsletterForm">
+                <input type="email" placeholder="Enter your email" required />
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 14: LIVE WHATSAPP CHAT
+         ============================================================ -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/2347035585774" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            <span>Chat with us</span>
+        </a>
+    </div>
+
+    <!-- ============================================================
+         SECTION 15: FOOTER
+         ============================================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
+                    <p style="margin-top:10px;font-size:14px;">Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="pages/shop.html">Shop</a></li>
+                        <li><a href="pages/blog.html">Blog</a></li>
+                        <li><a href="pages/about.html">About Us</a></li>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="pages/shipping.html">Shipping Policy</a></li>
+                        <li><a href="pages/returns.html">Return Policy</a></li>
+                        <li><a href="pages/privacy.html">Privacy Policy</a></li>
+                        <li><a href="pages/terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 07035585774</li>
+                        <li><i class="fas fa-phone"></i> 08157241470</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
                 <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
 
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/auth.js"></script>
-    
-    <script>
-        // ====================
-        // AUTH LINK HANDLER - FIXED
-        // ====================
-        
-        function handleAuthClick(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            const token = localStorage.getItem('token');
-            const user = JSON.parse(localStorage.getItem('user') || 'null');
-            
-            console.log('🔑 Auth clicked - Token:', !!token, 'User:', user?.name);
-            
-            if (token && user) {
-                // If logged in, go to profile
-                console.log('✅ Logged in, going to profile');
-                window.location.href = 'pages/profile.html';
-            } else {
-                // If not logged in, go to login
-                console.log('❌ Not logged in, going to login');
-                window.location.href = 'pages/login.html';
-            }
-        }
-        
-        // ====================
-        // UPDATE AUTH LINK UI
-        // ====================
-        
-        function updateAuthLink() {
-            const token = localStorage.getItem('token');
-            const user = JSON.parse(localStorage.getItem('user') || 'null');
-            const authIcon = document.getElementById('authIcon');
-            const authBadge = document.getElementById('authBadge');
-            
-            if (token && user) {
-                // User is logged in - show user icon with badge
-                authIcon.className = 'fas fa-user-circle';
-                authBadge.style.display = 'block';
-                authBadge.textContent = '👤';
-                authBadge.style.fontSize = '12px';
-                authBadge.style.background = 'var(--secondary)';
-                authBadge.style.color = 'var(--dark)';
-                
-                // Show admin link if admin
-                const adminLinks = document.querySelectorAll('.admin-only');
-                if (user.role === 'admin') {
-                    adminLinks.forEach(el => el.style.display = 'block');
-                }
-            } else {
-                // User is not logged in
-                authIcon.className = 'far fa-user';
-                authBadge.style.display = 'none';
-                
-                // Hide admin links
-                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
-            }
-        }
-        
-        // ====================
-        // SEARCH FUNCTION
-        // ====================
-        
-        function handleSearch() {
-            const query = document.getElementById('searchInput').value.trim();
-            if (query) {
-                window.location.href = `pages/shop.html?search=${encodeURIComponent(query)}`;
-            }
-        }
-        
-        // ====================
-        // COUNTDOWN TIMER
-        // ====================
-        
-        function startCountdown() {
-            let hours = 12, minutes = 30, seconds = 45;
-            setInterval(() => {
-                seconds--;
-                if (seconds < 0) { seconds = 59; minutes--; }
-                if (minutes < 0) { minutes = 59; hours--; }
-                if (hours < 0) { hours = 12; minutes = 30; seconds = 45; }
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-            }, 1000);
-        }
-        
-        // ====================
-        // LOAD PRODUCTS
-        // ====================
-        
-        async function loadProducts() {
-            try {
-                // Load new arrivals
-                const newArrivals = await getNewArrivals();
-                const newContainer = document.getElementById('newArrivals');
-                if (newContainer && newArrivals.length > 0) {
-                    newContainer.innerHTML = newArrivals.slice(0, 4).map(product => `
-                        <div class="product-card" onclick="window.location.href='pages/product.html?id=${product._id}'" style="background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:var(--transition);position:relative;cursor:pointer;">
-                            <div class="product-image" style="position:relative;overflow:hidden;height:320px;background:var(--gray);">
-                                <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion+Everywhere'}" alt="${product.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:var(--transition);" />
-                                ${product.discount ? `<span style="position:absolute;top:12px;left:12px;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;background:var(--accent);color:var(--white);">-${product.discount}%</span>` : ''}
-                                ${product.isBestSeller ? `<span style="position:absolute;top:12px;left:12px;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;background:var(--secondary);color:var(--dark);">Best Seller</span>` : ''}
-                            </div>
-                            <div style="padding:20px;">
-                                <h3 style="font-size:16px;font-weight:600;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${product.name}</h3>
-                                <p style="font-size:13px;color:var(--gray-dark);">${product.category}</p>
-                                <div style="display:flex;align-items:center;gap:12px;margin-top:8px;">
-                                    <span style="font-size:20px;font-weight:700;color:var(--primary);">₦${formatNumber(product.price)}</span>
-                                    ${product.originalPrice ? `<span style="font-size:16px;color:var(--gray-dark);text-decoration:line-through;">₦${formatNumber(product.originalPrice)}</span>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-                
-                // Load best sellers
-                const bestSellers = await getBestSellers();
-                const bestContainer = document.getElementById('bestSellers');
-                if (bestContainer && bestSellers.length > 0) {
-                    bestContainer.innerHTML = bestSellers.slice(0, 4).map(product => `
-                        <div class="product-card" onclick="window.location.href='pages/product.html?id=${product._id}'" style="background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:var(--transition);position:relative;cursor:pointer;">
-                            <div class="product-image" style="position:relative;overflow:hidden;height:320px;background:var(--gray);">
-                                <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion+Everywhere'}" alt="${product.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:var(--transition);" />
-                                ${product.discount ? `<span style="position:absolute;top:12px;left:12px;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;background:var(--accent);color:var(--white);">-${product.discount}%</span>` : ''}
-                                ${product.isBestSeller ? `<span style="position:absolute;top:12px;left:12px;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;background:var(--secondary);color:var(--dark);">Best Seller</span>` : ''}
-                            </div>
-                            <div style="padding:20px;">
-                                <h3 style="font-size:16px;font-weight:600;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${product.name}</h3>
-                                <p style="font-size:13px;color:var(--gray-dark);">${product.category}</p>
-                                <div style="display:flex;align-items:center;gap:12px;margin-top:8px;">
-                                    <span style="font-size:20px;font-weight:700;color:var(--primary);">₦${formatNumber(product.price)}</span>
-                                    ${product.originalPrice ? `<span style="font-size:16px;color:var(--gray-dark);text-decoration:line-through;">₦${formatNumber(product.originalPrice)}</span>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            } catch (error) {
-                console.error('Error loading products:', error);
-            }
-        }
-        
-        function formatNumber(num) {
-            return Number(num).toLocaleString();
-        }
-        
-        // ====================
-        // INITIALIZE
-        // ====================
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 Home page loaded');
-            
-            // Update auth link
-            updateAuthLink();
-            
-            // Update cart badge
-            updateCartBadge();
-            
-            // Update wishlist badge
-            updateWishlistBadge();
-            
-            // Start countdown
-            startCountdown();
-            
-            // Load products
-            loadProducts();
-            
-            // Search on enter
-            document.getElementById('searchInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSearch();
-                }
-            });
-            
-            // Newsletter
-            document.getElementById('newsletterForm')?.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = this.querySelector('input').value;
-                showToast('✅ Subscribed! Welcome to Uju Fashion Sales Everywhere.');
-                this.reset();
-            });
-            
-            // Listen for storage changes (login/logout in other tabs)
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'token' || e.key === 'user') {
-                    updateAuthLink();
-                    updateCartBadge();
-                    updateWishlistBadge();
-                }
-            });
-        });
-        
-        // ====================
-        // TOAST NOTIFICATION
-        // ====================
-        
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
-                color: white; border-radius: 12px; font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
-                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
-                min-width: 280px;
-            `;
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
-        }
-    </script>
+    <script src="js/slider.js"></script>
+    <script src="js/home.js"></script>
 </body>
     </html>
