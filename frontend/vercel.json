@@ -1,8 +1,18 @@
 {
   "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
   "builds": [
     {
-      "src": "**/*.html",
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "pages/**/*.html",
       "use": "@vercel/static"
     },
     {
@@ -18,22 +28,56 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
+  "headers": [
     {
-      "src": "/",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
     },
     {
-      "src": "/pages/(.*)",
-      "dest": "/pages/$1"
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
-      "src": "/admin/(.*)",
-      "dest": "/pages/admin/$1"
+      "source": "/css/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/js/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
-  ]
-}
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+    }
