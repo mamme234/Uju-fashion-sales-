@@ -4,66 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wishlist - Uju Fashion Sales Everywhere</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <style>
-        .wishlist-container {
-            padding: 40px 0;
-        }
-        
-        .wishlist-container h1 {
-            font-family: var(--font-primary);
-            font-size: 32px;
-            margin-bottom: 30px;
-        }
-        
+        .wishlist-container { padding: 40px 0; }
+        .wishlist-container h1 { font-family: var(--font-primary); font-size: 32px; margin-bottom: 30px; }
         .empty-wishlist {
-            text-align: center;
-            padding: 60px 20px;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            text-align: center; padding: 60px 20px; background: var(--white);
+            border-radius: var(--radius); box-shadow: var(--shadow);
         }
-        
-        .empty-wishlist i {
-            font-size: 64px;
-            color: #ddd;
-            margin-bottom: 16px;
-        }
-        
-        .empty-wishlist h3 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-        
-        .empty-wishlist p {
-            color: var(--gray-dark);
-            margin-bottom: 20px;
-        }
-        
+        .empty-wishlist i { font-size: 64px; color: #ddd; margin-bottom: 16px; }
+        .empty-wishlist h3 { font-size: 24px; margin-bottom: 8px; }
+        .empty-wishlist p { color: var(--gray-dark); margin-bottom: 20px; }
         .whatsapp-order-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: #25D366;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            width: 100%;
-            justify-content: center;
-            margin-top: 6px;
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
+            background: #25D366; color: white; border: none; border-radius: 50px;
+            font-weight: 600; font-size: 13px; cursor: pointer; transition: var(--transition);
+            text-decoration: none; width: 100%; justify-content: center; margin-top: 6px;
         }
-        
-        .whatsapp-order-btn:hover {
-            background: #128C7E;
-            transform: scale(1.02);
-        }
+        .whatsapp-order-btn:hover { background: #128C7E; transform: scale(1.02); }
     </style>
 </head>
 <body>
@@ -73,14 +35,12 @@
             <div class="top-bar-wrapper">
                 <div class="top-bar-left">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
                     <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
-                    <a href="https://wa.me/2347035585774" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
+                    <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -91,12 +51,13 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="nav-left">
-                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span> Everywhere</a>
                 </div>
                 <div class="nav-center">
                     <ul class="nav-menu">
                         <li><a href="../index.html">Home</a></li>
                         <li><a href="shop.html">Shop</a></li>
+                        <li><a href="blog.html">Blog</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
@@ -110,9 +71,7 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span class="badge cart-count">0</span>
                     </a>
-                    <a href="login.html" class="nav-icon" id="authLink">
-                        <i class="far fa-user"></i>
-                    </a>
+                    <a href="login.html" class="nav-icon"><i class="far fa-user"></i></a>
                 </div>
             </div>
         </div>
@@ -133,8 +92,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Uju<span>Fashion</span></h3>
-                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -146,9 +105,9 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="shop.html">Shop</a></li>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -165,13 +124,13 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 07035585774</li>
                         <li><i class="fas fa-phone"></i> 08157241470</li>
-                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
                         <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
@@ -180,119 +139,56 @@
     <script src="../js/app.js"></script>
     <script src="../js/cart.js"></script>
     <script src="../js/auth.js"></script>
-    
     <script>
-        // ====================
-        // WISHLIST PAGE
-        // ====================
-        
         async function loadWishlist() {
             const container = document.getElementById('wishlistGrid');
-            
             try {
                 const wishlist = await getWishlist();
-                
                 if (!wishlist || wishlist.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-wishlist" style="grid-column:1/-1;">
-                            <i class="far fa-heart"></i>
-                            <h3>Your wishlist is empty</h3>
-                            <p>Browse our collection and save items you love ❤️</p>
-                            <a href="shop.html" class="btn-primary">Start Shopping</a>
-                        </div>
-                    `;
+                    container.innerHTML = `<div class="empty-wishlist" style="grid-column:1/-1;"><i class="far fa-heart"></i><h3>Your wishlist is empty</h3><p>Browse our collection and save items you love ❤️</p><a href="shop.html" class="btn-primary">Start Shopping</a></div>`;
                     return;
                 }
-                
                 container.innerHTML = wishlist.map(item => `
                     <div class="product-card" data-id="${item._id}">
                         <div class="product-image">
-                            <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju'}" 
-                                 alt="${item.name}" loading="lazy" />
-                            <button class="product-wishlist" onclick="removeFromWishlist('${item._id}')" 
-                                    style="background:var(--secondary);color:white;">
-                                <i class="fas fa-heart"></i>
-                            </button>
+                            <img src="${item.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion+Everywhere'}" alt="${item.name}" loading="lazy" />
+                            <button class="product-wishlist" onclick="removeFromWishlist('${item._id}')" style="background:var(--secondary);color:white;"><i class="fas fa-heart"></i></button>
                         </div>
                         <div class="product-info">
                             <h3>${item.name}</h3>
                             <p class="category">${item.category}</p>
                             <div class="product-rating">★ ${item.rating || 0}</div>
-                            <div class="product-price">
-                                <span class="current">₦${formatNumber(item.price)}</span>
-                                ${item.originalPrice ? `<span class="original">₦${formatNumber(item.originalPrice)}</span>` : ''}
-                            </div>
+                            <div class="product-price"><span class="current">₦${formatNumber(item.price)}</span>${item.originalPrice ? `<span class="original">₦${formatNumber(item.originalPrice)}</span>` : ''}</div>
                             <button class="add-to-cart-btn" onclick="addToCart('${item._id}')">Add to Cart</button>
-                            <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(item.name)}%20from%20Uju%20Fashion%20Sales%20-%20Price%3A%20₦${formatNumber(item.price)}" 
-                               target="_blank" class="whatsapp-order-btn">
-                                <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                            </a>
+                            <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(item.name)}%20from%20Uju%20Fashion%20Sales%20Everywhere" target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
                         </div>
                     </div>
                 `).join('');
-                
                 updateWishlistBadge();
             } catch (error) {
                 console.error('Error loading wishlist:', error);
-                if (error.message.includes('Authentication')) {
-                    window.location.href = 'login.html';
-                }
-                container.innerHTML = `
-                    <div class="empty-wishlist" style="grid-column:1/-1;">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <h3>Error loading wishlist</h3>
-                        <p>${error.message || 'Please try again later'}</p>
-                        <a href="login.html" class="btn-primary">Login</a>
-                    </div>
-                `;
+                if (error.message.includes('Authentication')) { window.location.href = 'login.html'; }
+                container.innerHTML = `<div class="empty-wishlist" style="grid-column:1/-1;"><i class="fas fa-exclamation-circle"></i><h3>Error loading wishlist</h3><p>${error.message || 'Please try again later'}</p><a href="login.html" class="btn-primary">Login</a></div>`;
             }
         }
         
         async function removeFromWishlist(productId) {
-            try {
-                await removeFromWishlist(productId);
-                showToast('Removed from wishlist');
-                loadWishlist();
-                updateWishlistBadge();
-            } catch (error) {
-                console.error('Error removing from wishlist:', error);
-                showToast('Error removing from wishlist', 'error');
-            }
+            try { await removeFromWishlist(productId); showToast('Removed from wishlist'); loadWishlist(); updateWishlistBadge(); } 
+            catch (error) { console.error('Error removing from wishlist:', error); showToast('Error removing from wishlist', 'error'); }
         }
         
         async function addToCart(productId) {
-            try {
-                await addToCart(productId);
-                showToast('Added to cart 🛒');
-                updateCartBadge();
-            } catch (error) {
-                if (error.message.includes('Authentication')) {
-                    window.location.href = 'login.html';
-                }
-                showToast('Please login to add to cart', 'error');
-            }
+            try { await addToCart(productId); showToast('Added to cart 🛒'); updateCartBadge(); } 
+            catch (error) { if (error.message.includes('Authentication')) { window.location.href = 'login.html'; } showToast('Please login to add to cart', 'error'); }
         }
         
-        function formatNumber(num) {
-            return Number(num).toLocaleString();
-        }
-        
+        function formatNumber(num) { return Number(num).toLocaleString(); }
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
-                color: white; border-radius: 12px; font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
-                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
-                min-width: 280px;
-            `;
+            toast.style.cssText = `position:fixed;bottom:24px;right:24px;padding:16px 24px;background:${type === 'success' ? '#8B1A4A' : '#ef4444'};color:white;border-radius:12px;font-weight:500;box-shadow:0 10px 40px rgba(0,0,0,0.2);z-index:9999;animation:slideIn 0.4s ease;display:flex;align-items:center;gap:12px;min-width:280px;`;
             toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
             document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
+            setTimeout(() => { toast.style.animation = 'slideOut 0.4s ease forwards'; setTimeout(() => toast.remove(), 400); }, 3000);
         }
         
         document.addEventListener('DOMContentLoaded', loadWishlist);
