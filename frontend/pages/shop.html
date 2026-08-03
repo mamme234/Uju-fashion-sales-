@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shop - Uju Fashion Sales Everywhere</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <style>
         .shop-container {
             display: grid;
@@ -13,7 +16,6 @@
             gap: 30px;
             padding: 30px 0;
         }
-        
         .filter-sidebar {
             background: var(--white);
             padding: 24px;
@@ -23,7 +25,6 @@
             top: 100px;
             height: fit-content;
         }
-        
         .filter-sidebar h3 {
             font-size: 18px;
             margin-bottom: 16px;
@@ -31,18 +32,13 @@
             border-bottom: 2px solid var(--gray);
             font-family: var(--font-primary);
         }
-        
-        .filter-group {
-            margin-bottom: 20px;
-        }
-        
+        .filter-group { margin-bottom: 20px; }
         .filter-group label {
             display: block;
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 14px;
         }
-        
         .filter-group select,
         .filter-group input[type="range"] {
             width: 100%;
@@ -51,29 +47,22 @@
             border-radius: 8px;
             font-size: 14px;
         }
-        
         .filter-group .price-range {
             display: flex;
             gap: 12px;
             align-items: center;
         }
-        
-        .filter-group .price-range input {
-            width: 100%;
-        }
-        
+        .filter-group .price-range input { width: 100%; }
         .filter-group .price-range span {
             font-size: 14px;
             font-weight: 600;
             color: var(--primary);
         }
-        
         .filter-options {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
-        
         .filter-options label {
             display: flex;
             align-items: center;
@@ -86,21 +75,15 @@
             border-radius: 50px;
             transition: var(--transition);
         }
-        
         .filter-options label:hover {
             background: var(--primary);
             color: var(--white);
         }
-        
-        .filter-options input[type="checkbox"] {
-            display: none;
-        }
-        
+        .filter-options input[type="checkbox"] { display: none; }
         .filter-options label:has(input:checked) {
             background: var(--primary);
             color: var(--white);
         }
-        
         .shop-header {
             display: flex;
             justify-content: space-between;
@@ -109,44 +92,83 @@
             flex-wrap: wrap;
             gap: 12px;
         }
-        
         .shop-header h1 {
             font-size: 28px;
             font-family: var(--font-primary);
         }
-        
         .shop-header .sort-options {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        
         .shop-header .sort-options select {
             padding: 8px 16px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 14px;
         }
-        
         .shop-header .results-count {
             color: var(--gray-dark);
             font-size: 14px;
         }
-        
-        .no-products {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray-dark);
-            grid-column: 1/-1;
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
         }
-        
-        .no-products i {
-            font-size: 64px;
-            color: #ddd;
-            margin-bottom: 16px;
+        .pagination button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
         }
-        
-        /* WhatsApp Order Button */
+        .pagination button:hover,
+        .pagination button.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        .quick-view-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .quick-view-modal.active { display: flex; }
+        .quick-view-content {
+            background: var(--white);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: var(--radius);
+            padding: 30px;
+            position: relative;
+        }
+        .quick-view-content .close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+        .quick-view-content .close:hover { color: #333; }
+        .quick-view-content .quick-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .quick-view-content .quick-grid img {
+            width: 100%;
+            border-radius: var(--radius-sm);
+        }
         .whatsapp-order-btn {
             display: inline-flex;
             align-items: center;
@@ -165,20 +187,14 @@
             justify-content: center;
             margin-top: 6px;
         }
-        
         .whatsapp-order-btn:hover {
             background: #128C7E;
             transform: scale(1.02);
         }
-        
         @media (max-width: 768px) {
-            .shop-container {
-                grid-template-columns: 1fr;
-            }
-            .filter-sidebar {
-                position: relative;
-                top: 0;
-            }
+            .shop-container { grid-template-columns: 1fr; }
+            .filter-sidebar { position: relative; top: 0; }
+            .quick-view-content .quick-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -189,14 +205,12 @@
             <div class="top-bar-wrapper">
                 <div class="top-bar-left">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Okpuno, Awka, Anambra State, Nigeria</span>
+                    <span>Uju Fashion Sales Everywhere - Okpuno, Awka, Anambra State, Nigeria</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
                     <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
-                    <a href="https://wa.me/2347035585774" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
+                    <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -207,20 +221,21 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="nav-left">
-                    <a href="../index.html" class="logo">Uju<span>Fashion</span></a>
+                    <a href="../index.html" class="logo">Uju<span>Fashion</span> Everywhere</a>
                 </div>
                 <div class="nav-center">
                     <ul class="nav-menu">
                         <li><a href="../index.html">Home</a></li>
                         <li><a href="shop.html" class="active">Shop</a></li>
+                        <li><a href="blog.html">Blog</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 <div class="nav-right">
                     <div class="search-box">
-                        <input type="text" placeholder="Search products..." id="searchInput" />
-                        <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+                        <input type="text" placeholder="Search Uju Fashion..." id="searchInput" />
+                        <button onclick="handleSearch()"><i class="fas fa-search"></i></button>
                     </div>
                     <a href="wishlist.html" class="nav-icon">
                         <i class="far fa-heart"></i>
@@ -230,9 +245,7 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span class="badge cart-count">0</span>
                     </a>
-                    <a href="login.html" class="nav-icon" id="authLink">
-                        <i class="far fa-user"></i>
-                    </a>
+                    <a href="login.html" class="nav-icon"><i class="far fa-user"></i></a>
                 </div>
             </div>
         </div>
@@ -245,20 +258,22 @@
                 <!-- Filters -->
                 <aside class="filter-sidebar">
                     <h3><i class="fas fa-filter"></i> Filters</h3>
-                    
                     <div class="filter-group">
                         <label>Category</label>
                         <select id="categoryFilter" onchange="applyFilters()">
                             <option value="">All Categories</option>
-                            <option value="Men's Wear">Men's Wear</option>
-                            <option value="Women's Wear">Women's Wear</option>
+                            <option value="Men's Fashion">Men's Fashion</option>
+                            <option value="Women's Fashion">Women's Fashion</option>
                             <option value="Jeans">Jeans</option>
-                            <option value="Polos">Polos</option>
-                            <option value="Skirts">Skirts</option>
+                            <option value="Tops">Tops</option>
+                            <option value="Polo Shirts">Polo Shirts</option>
                             <option value="Shorts">Shorts</option>
+                            <option value="Skirts">Skirts</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="New Arrivals">New Arrivals</option>
+                            <option value="Sale">Sale</option>
                         </select>
                     </div>
-                    
                     <div class="filter-group">
                         <label>Price Range (₦)</label>
                         <div class="price-range">
@@ -269,7 +284,6 @@
                             <span id="priceDisplay">₦200,000</span>
                         </div>
                     </div>
-                    
                     <div class="filter-group">
                         <label>Sizes</label>
                         <div class="filter-options" id="sizeFilter">
@@ -280,7 +294,6 @@
                             <label><input type="checkbox" value="XXL" onchange="applyFilters()" /> <span>XXL</span></label>
                         </div>
                     </div>
-                    
                     <div class="filter-group">
                         <label>Colors</label>
                         <div class="filter-options" id="colorFilter">
@@ -291,7 +304,6 @@
                             <label><input type="checkbox" value="Green" onchange="applyFilters()" /> <span>🟢 Green</span></label>
                         </div>
                     </div>
-                    
                     <button class="btn-primary" style="width:100%;" onclick="resetFilters()">
                         <i class="fas fa-undo"></i> Reset Filters
                     </button>
@@ -301,7 +313,7 @@
                 <main>
                     <div class="shop-header">
                         <div>
-                            <h1>Shop</h1>
+                            <h1>Shop Uju Fashion</h1>
                             <span class="results-count" id="resultsCount">Loading products...</span>
                         </div>
                         <div class="sort-options">
@@ -314,22 +326,34 @@
                             </select>
                         </div>
                     </div>
-                    
                     <div class="products-grid" id="shopProducts">
-                        <!-- Products loaded dynamically -->
+                        <!-- Loaded dynamically -->
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <!-- Loaded dynamically -->
                     </div>
                 </main>
             </div>
         </div>
     </section>
 
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal" id="quickViewModal">
+        <div class="quick-view-content">
+            <span class="close" onclick="closeQuickView()">&times;</span>
+            <div class="quick-grid" id="quickViewContent">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Uju<span>Fashion</span></h3>
-                    <p>Style That Speaks. Quality That Lasts.</p>
+                    <h3>Uju<span>Fashion</span> Everywhere</h3>
+                    <p>Style That Speaks. Quality That Lasts. Everywhere.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -341,9 +365,9 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="shop.html">Shop</a></li>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -360,13 +384,13 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 07035585774</li>
                         <li><i class="fas fa-phone"></i> 08157241470</li>
-                        <li><i class="fas fa-envelope"></i> info@ujufashion.com</li>
+                        <li><i class="fas fa-envelope"></i> info@ujufashioneverywhere.com</li>
                         <li><i class="fas fa-map-marker-alt"></i> Okpuno, Awka, Anambra</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Uju Fashion Sales. All rights reserved. | Style That Speaks. Quality That Lasts.</p>
+                <p>&copy; 2026 Uju Fashion Sales Everywhere. All rights reserved. | Style That Speaks. Quality That Lasts. Everywhere.</p>
             </div>
         </div>
     </footer>
@@ -375,16 +399,13 @@
     <script src="../js/app.js"></script>
     <script src="../js/cart.js"></script>
     <script src="../js/auth.js"></script>
-    
     <script>
-        // ====================
-        // SHOP LOGIC WITH WHATSAPP BUTTON
-        // ====================
-        
+        // Shop JavaScript
         let allProducts = [];
         let filteredProducts = [];
+        let currentPage = 1;
+        const itemsPerPage = 12;
         
-        // Load products
         async function loadShopProducts() {
             try {
                 const products = await getProducts();
@@ -392,89 +413,56 @@
                 applyFilters();
             } catch (error) {
                 console.error('Error loading products:', error);
-                document.getElementById('shopProducts').innerHTML = `
-                    <div class="no-products">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <h3>Error loading products</h3>
-                        <p>Please try again later</p>
-                    </div>
-                `;
             }
         }
         
-        // Apply filters
         function applyFilters() {
             const category = document.getElementById('categoryFilter').value;
             const maxPrice = parseInt(document.getElementById('priceRange').value);
             const sortBy = document.getElementById('sortBy').value;
-            
-            const sizeCheckboxes = document.querySelectorAll('#sizeFilter input:checked');
-            const selectedSizes = Array.from(sizeCheckboxes).map(cb => cb.value);
-            
-            const colorCheckboxes = document.querySelectorAll('#colorFilter input:checked');
-            const selectedColors = Array.from(colorCheckboxes).map(cb => cb.value);
+            const selectedSizes = Array.from(document.querySelectorAll('#sizeFilter input:checked')).map(cb => cb.value);
+            const selectedColors = Array.from(document.querySelectorAll('#colorFilter input:checked')).map(cb => cb.value);
             
             filteredProducts = allProducts.filter(product => {
                 if (category && product.category !== category) return false;
                 if (product.price > maxPrice) return false;
-                if (selectedSizes.length > 0) {
-                    if (!product.sizes || !product.sizes.some(s => selectedSizes.includes(s))) return false;
-                }
-                if (selectedColors.length > 0) {
-                    if (!product.colors || !product.colors.some(c => selectedColors.includes(c))) return false;
-                }
+                if (selectedSizes.length > 0 && !product.sizes?.some(s => selectedSizes.includes(s))) return false;
+                if (selectedColors.length > 0 && !product.colors?.some(c => selectedColors.includes(c))) return false;
                 return true;
             });
             
             switch(sortBy) {
-                case 'newest':
-                    filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                    break;
-                case 'price-low':
-                    filteredProducts.sort((a, b) => a.price - b.price);
-                    break;
-                case 'price-high':
-                    filteredProducts.sort((a, b) => b.price - a.price);
-                    break;
-                case 'popular':
-                    filteredProducts.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-                    break;
+                case 'newest': filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); break;
+                case 'price-low': filteredProducts.sort((a, b) => a.price - b.price); break;
+                case 'price-high': filteredProducts.sort((a, b) => b.price - a.price); break;
+                case 'popular': filteredProducts.sort((a, b) => (b.rating || 0) - (a.rating || 0)); break;
             }
             
+            currentPage = 1;
             renderShopProducts();
         }
         
-        // Render products with WhatsApp button
         function renderShopProducts() {
             const container = document.getElementById('shopProducts');
             const countEl = document.getElementById('resultsCount');
-            
-            if (!container) return;
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = filteredProducts.slice(start, end);
             
             countEl.textContent = `${filteredProducts.length} products found`;
             
             if (filteredProducts.length === 0) {
-                container.innerHTML = `
-                    <div class="no-products">
-                        <i class="fas fa-search"></i>
-                        <h3>No products found</h3>
-                        <p>Try adjusting your filters</p>
-                        <button class="btn-secondary" onclick="resetFilters()" style="margin-top:12px;">Reset Filters</button>
-                    </div>
-                `;
+                container.innerHTML = `<div class="no-products" style="grid-column:1/-1;text-align:center;padding:60px;color:var(--gray-dark);"><i class="fas fa-search" style="font-size:48px;color:#ddd;margin-bottom:16px;"></i><h3>No products found</h3><p>Try adjusting your filters</p></div>`;
                 return;
             }
             
-            container.innerHTML = filteredProducts.map(product => `
+            container.innerHTML = pageItems.map(product => `
                 <div class="product-card" data-id="${product._id}">
                     <div class="product-image">
-                        <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion'}" 
-                             alt="${product.name}" loading="lazy" />
+                        <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion'}" alt="${product.name}" loading="lazy" />
                         ${product.discount ? `<span class="product-badge sale">-${product.discount}%</span>` : ''}
                         ${product.isBestSeller ? `<span class="product-badge best">Best Seller</span>` : ''}
-                        <button class="product-wishlist" onclick="toggleWishlist('${product._id}')">
-                            <i class="far fa-heart"></i>
-                        </button>
+                        <button class="product-wishlist" onclick="toggleWishlist('${product._id}')"><i class="far fa-heart"></i></button>
                     </div>
                     <div class="product-info">
                         <h3>${product.name}</h3>
@@ -484,21 +472,41 @@
                             <span class="current">₦${formatNumber(product.price)}</span>
                             ${product.originalPrice ? `<span class="original">₦${formatNumber(product.originalPrice)}</span>` : ''}
                         </div>
-                        <button class="add-to-cart-btn" onclick="addToCart('${product._id}')" 
-                            ${product.stock <= 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
-                            ${product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
-                        </button>
-                        <!-- WhatsApp Order Button -->
-                        <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(product.name)}%20from%20Uju%20Fashion%20Sales%20-%20Price%3A%20₦${formatNumber(product.price)}" 
-                           target="_blank" class="whatsapp-order-btn">
-                            <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                        </a>
+                        <button class="add-to-cart-btn" onclick="addToCart('${product._id}')" ${product.stock <= 0 ? 'disabled style="opacity:0.5;"' : ''}>${product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}</button>
+                        <button class="btn-secondary" style="width:100%;padding:6px;font-size:12px;margin-top:4px;" onclick="quickView('${product._id}')">Quick View</button>
+                        <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(product.name)}%20from%20Uju%20Fashion%20Sales%20Everywhere" target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
                     </div>
                 </div>
             `).join('');
+            
+            renderPagination();
         }
         
-        // Reset filters
+        function renderPagination() {
+            const container = document.getElementById('pagination');
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            if (totalPages <= 1) { container.innerHTML = ''; return; }
+            let html = `<button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button onclick="goToPage(${i})" class="${i === currentPage ? 'active' : ''}">${i}</button>`;
+            }
+            html += `<button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+            container.innerHTML = html;
+        }
+        
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderShopProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function updatePriceDisplay() {
+            const val = document.getElementById('priceRange').value;
+            document.getElementById('priceDisplay').textContent = `₦${formatNumber(parseInt(val))}`;
+        }
+        
         function resetFilters() {
             document.getElementById('categoryFilter').value = '';
             document.getElementById('priceRange').value = 200000;
@@ -509,93 +517,53 @@
             applyFilters();
         }
         
-        function updatePriceDisplay() {
-            const val = document.getElementById('priceRange').value;
-            document.getElementById('priceDisplay').textContent = `₦${formatNumber(parseInt(val))}`;
-        }
+        function formatNumber(num) { return Number(num).toLocaleString(); }
         
-        function formatNumber(num) {
-            return Number(num).toLocaleString();
-        }
-        
-        // Search
-        function searchProducts() {
+        function handleSearch() {
             const query = document.getElementById('searchInput').value.trim();
-            if (!query) {
-                loadShopProducts();
-                return;
-            }
-            const filtered = allProducts.filter(p => 
-                p.name.toLowerCase().includes(query.toLowerCase()) ||
-                p.category.toLowerCase().includes(query.toLowerCase())
-            );
-            filteredProducts = filtered;
-            renderShopProducts();
+            if (query) {
+                const filtered = allProducts.filter(p => 
+                    p.name.toLowerCase().includes(query.toLowerCase()) ||
+                    p.category.toLowerCase().includes(query.toLowerCase())
+                );
+                filteredProducts = filtered;
+                renderShopProducts();
+            } else { applyFilters(); }
         }
         
-        // Enter key for search
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') searchProducts();
-                });
+        async function quickView(productId) {
+            try {
+                const product = await getProductById(productId);
+                const modal = document.getElementById('quickViewModal');
+                const content = document.getElementById('quickViewContent');
+                content.innerHTML = `
+                    <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/8B1A4A/ffffff?text=Uju+Fashion'}" alt="${product.name}" />
+                    <div>
+                        <h3 style="font-family:var(--font-primary);font-size:24px;">${product.name}</h3>
+                        <p style="color:var(--gray-dark);">${product.category}</p>
+                        <div style="font-size:24px;font-weight:700;color:var(--primary);margin:8px 0;">₦${formatNumber(product.price)}</div>
+                        <p style="color:var(--text);line-height:1.8;">${product.description?.substring(0, 100)}...</p>
+                        <div style="margin-top:12px;">
+                            <button class="btn-primary" onclick="addToCart('${product._id}')">Add to Cart</button>
+                            <a href="https://wa.me/2347035585774?text=I%20want%20to%20order%20${encodeURIComponent(product.name)}" target="_blank" class="whatsapp-order-btn" style="margin-top:8px;"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            <a href="product.html?id=${product._id}" class="btn-secondary" style="margin-top:8px;display:block;text-align:center;">View Details</a>
+                        </div>
+                    </div>
+                `;
+                modal.classList.add('active');
+            } catch (error) {
+                console.error('Error loading product:', error);
             }
-            loadShopProducts();
+        }
+        
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.remove('active');
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadShopProducts);
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); handleSearch(); }
         });
-        
-        // Wishlist
-        async function toggleWishlist(productId) {
-            try {
-                const wishlist = await getWishlist();
-                const exists = wishlist.some(item => item._id === productId);
-                if (exists) {
-                    await removeFromWishlist(productId);
-                    showToast('Removed from wishlist');
-                } else {
-                    await addToWishlist(productId);
-                    showToast('Added to wishlist ❤️');
-                }
-                updateWishlistBadge();
-            } catch (error) {
-                if (error.message.includes('Authentication')) {
-                    window.location.href = 'login.html';
-                }
-                showToast('Please login to use wishlist', 'error');
-            }
-        }
-        
-        // Add to cart
-        async function addToCart(productId) {
-            try {
-                await addToCart(productId);
-                showToast('Added to cart 🛒');
-                updateCartBadge();
-            } catch (error) {
-                if (error.message.includes('Authentication')) {
-                    window.location.href = 'login.html';
-                }
-                showToast('Please login to add to cart', 'error');
-            }
-        }
-        
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
-                color: white; border-radius: 12px; font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
-                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
-                min-width: 280px;
-            `;
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
-        }
     </script>
 </body>
-                                                               </html>
+                                                     </html>
