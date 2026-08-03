@@ -5,18 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Uju Fashion Sales Everywhere – Premium Jeans, Jerseys, Polos, Skirts & Shorts</title>
     <meta name="description" content="Uju Fashion Sales Everywhere - Premium-quality fashion wears including boyfriend jeans, straight jeans, baggy jeans, polos, jerseys, skirts, shorts, and more at affordable prices in Nigeria." />
-    <meta name="keywords" content="Uju Fashion Sales Everywhere, fashion, jeans, polos, skirts, shorts, Nigeria, Awka, Anambra" />
-    <meta name="author" content="Uju Fashion Sales Everywhere" />
-    
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    
-    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -34,16 +26,14 @@
                 <div class="top-bar-right">
                     <a href="tel:07035585774"><i class="fas fa-phone"></i> 07035585774</a>
                     <a href="tel:08157241470"><i class="fas fa-phone"></i> 08157241470</a>
-                    <a href="https://wa.me/2347035585774" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
+                    <a href="https://wa.me/2347035585774" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ============================================================
-         NAVBAR
+         NAVIGATION BAR
          ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="container">
@@ -61,9 +51,7 @@
                         <li><a href="pages/blog.html">Blog</a></li>
                         <li><a href="pages/about.html">About</a></li>
                         <li><a href="pages/contact.html">Contact</a></li>
-                        <li class="admin-only" style="display:none;">
-                            <a href="pages/admin/index.html">Admin</a>
-                        </li>
+                        <li class="admin-only"><a href="pages/admin/index.html">Admin</a></li>
                     </ul>
                 </div>
                 <div class="nav-right">
@@ -79,7 +67,7 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span class="badge cart-count">0</span>
                     </a>
-                    <a href="#" class="nav-icon" id="authLink" onclick="handleAuthClick(event)">
+                    <a href="pages/login.html" class="nav-icon" id="authLink">
                         <i class="far fa-user" id="authIcon"></i>
                         <span class="badge" id="authBadge" style="display:none;"></span>
                     </a>
@@ -89,121 +77,55 @@
     </nav>
 
     <!-- ============================================================
-         SECTION 1: FULL-SCREEN HERO SLIDER
+         HERO BANNER
          ============================================================ -->
-    <section class="hero-slider" id="heroSlider">
-        <!-- Slide 1 -->
-        <div class="slide active" style="background-image: url('images/banners/slide-1.jpg');">
-            <div class="slide-content animate-in">
-                <span class="tag">🔥 New Collection 2026</span>
-                <h1>Style That <span>Speaks</span></h1>
-                <p>Discover premium-quality fashion that fits your vibe and elevates your everyday style.</p>
-                <div class="btn-group">
-                    <a href="pages/shop.html" class="btn-gold">Shop Now</a>
-                    <a href="pages/shop.html" class="btn-outline">Explore Collection</a>
-                </div>
-            </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="slide" style="background-image: url('images/banners/slide-2.jpg');">
-            <div class="slide-content animate-in">
-                <span class="tag">👗 Premium Quality</span>
-                <h1>Look Good, <span>Feel Confident</span></h1>
-                <p>Premium jeans, polos, skirts, and shorts. Quality that lasts. Style that speaks.</p>
-                <div class="btn-group">
-                    <a href="pages/shop.html" class="btn-gold">Shop Collection</a>
-                    <a href="pages/shop.html" class="btn-outline">View All</a>
-                </div>
-            </div>
-        </div>
-        <!-- Slide 3 -->
-        <div class="slide" style="background-image: url('images/banners/slide-3.jpg');">
-            <div class="slide-content animate-in">
-                <span class="tag">🛒 Flash Sale</span>
-                <h1>Up to <span>50% Off</span></h1>
-                <p>Limited time offers on premium fashion. Don't miss out!</p>
-                <div class="btn-group">
-                    <a href="pages/shop.html?filter=sale" class="btn-gold">Shop Flash Sale</a>
-                    <a href="pages/shop.html" class="btn-outline">View All</a>
-                </div>
-            </div>
-        </div>
-        <!-- Controls -->
-        <div class="slider-controls" id="sliderControls">
-            <button class="dot active" data-index="0"></button>
-            <button class="dot" data-index="1"></button>
-            <button class="dot" data-index="2"></button>
-        </div>
-        <button class="slider-arrow prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
-        <button class="slider-arrow next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
-    </section>
-
-    <!-- ============================================================
-         SECTION 2: PROMOTIONAL BANNERS
-         ============================================================ -->
-    <section class="promo-banners">
-        <div class="container">
-            <div class="promo-grid">
-                <div class="promo-card">
-                    <img src="images/banners/promo-1.jpg" alt="New Arrivals" onerror="this.src='https://via.placeholder.com/400x200/8B1A4A/ffffff?text=New+Arrivals'" />
-                    <div class="overlay">
-                        <span class="tag">New Arrivals</span>
-                        <h3>Fresh Styles</h3>
-                        <p>Shop the latest trends</p>
-                    </div>
-                </div>
-                <div class="promo-card">
-                    <img src="images/banners/promo-2.jpg" alt="Flash Sale" onerror="this.src='https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Flash+Sale'" />
-                    <div class="overlay">
-                        <span class="tag">Flash Sale</span>
-                        <h3>50% Off</h3>
-                        <p>Limited time only</p>
-                    </div>
-                </div>
-                <div class="promo-card">
-                    <img src="images/banners/promo-3.jpg" alt="Free Delivery" onerror="this.src='https://via.placeholder.com/400x200/8B1A4A/ffffff?text=Free+Delivery'" />
-                    <div class="overlay">
-                        <span class="tag">Free Delivery</span>
-                        <h3>On Orders ₦50K+</h3>
-                        <p>Shop with confidence</p>
+    <section class="hero">
+        <div class="hero-slider" id="heroSlider">
+            <div class="slide active" style="background-image: url('images/banners/slide-1.jpg');">
+                <div class="slide-content">
+                    <span class="tag">🔥 New Collection 2026</span>
+                    <h1>Style That <span>Speaks</span></h1>
+                    <p>Discover premium-quality fashion that fits your vibe and elevates your everyday style.</p>
+                    <div class="btn-group">
+                        <a href="pages/shop.html" class="btn-gold">Shop Now</a>
+                        <a href="pages/shop.html" class="btn-outline">Explore</a>
                     </div>
                 </div>
             </div>
+            <div class="slide" style="background-image: url('images/banners/slide-2.jpg');">
+                <div class="slide-content">
+                    <span class="tag">👗 Premium Quality</span>
+                    <h1>Look Good, <span>Feel Confident</span></h1>
+                    <p>Premium jeans, polos, skirts, and shorts. Quality that lasts. Style that speaks.</p>
+                    <div class="btn-group">
+                        <a href="pages/shop.html" class="btn-gold">Shop Collection</a>
+                        <a href="pages/shop.html" class="btn-outline">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/banners/slide-3.jpg');">
+                <div class="slide-content">
+                    <span class="tag">🛒 Flash Sale</span>
+                    <h1>Up to <span>50% Off</span></h1>
+                    <p>Limited time offers on premium fashion. Don't miss out!</p>
+                    <div class="btn-group">
+                        <a href="pages/shop.html?filter=sale" class="btn-gold">Shop Flash Sale</a>
+                        <a href="pages/shop.html" class="btn-outline">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button class="dot active" data-index="0"></button>
+                <button class="dot" data-index="1"></button>
+                <button class="dot" data-index="2"></button>
+            </div>
+            <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
 
     <!-- ============================================================
-         SECTION 3: STORE STATISTICS
-         ============================================================ -->
-    <section class="store-stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3 id="statCustomers">10K+</h3>
-                    <p>Happy Customers</p>
-                </div>
-                <div class="stat-item">
-                    <h3 id="statProducts">500+</h3>
-                    <p>Premium Products</p>
-                </div>
-                <div class="stat-item">
-                    <h3 id="statOrders">2K+</h3>
-                    <p>Orders Delivered</p>
-                </div>
-                <div class="stat-item">
-                    <h3 id="statRating">4.8★</h3>
-                    <p>Average Rating</p>
-                </div>
-                <div class="stat-item">
-                    <h3 id="statBrands">50+</h3>
-                    <p>Trusted Brands</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 4: CATEGORIES
+         CATEGORIES
          ============================================================ -->
     <section class="categories">
         <div class="container">
@@ -215,15 +137,15 @@
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="categories-grid">
-                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Men%27s Wear'">
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Men%27s Fashion'">
                     <span class="category-icon">👔</span>
-                    <h3>Men's Wear</h3>
+                    <h3>Men's Fashion</h3>
                     <p>Stylish & Trendy</p>
                     <span class="count">New Arrivals</span>
                 </div>
-                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Women%27s Wear'">
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Women%27s Fashion'">
                     <span class="category-icon">👗</span>
-                    <h3>Women's Wear</h3>
+                    <h3>Women's Fashion</h3>
                     <p>Elegant & Chic</p>
                     <span class="count">New Arrivals</span>
                 </div>
@@ -233,16 +155,16 @@
                     <p>Perfect Fit</p>
                     <span class="count">New Arrivals</span>
                 </div>
-                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Polos'">
-                    <span class="category-icon">👕</span>
-                    <h3>Polos</h3>
-                    <p>Classic & Premium</p>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Tops'">
+                    <span class="category-icon">👚</span>
+                    <h3>Tops</h3>
+                    <p>Trendy & Chic</p>
                     <span class="count">New Arrivals</span>
                 </div>
-                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Skirts'">
-                    <span class="category-icon">👗</span>
-                    <h3>Skirts</h3>
-                    <p>Stylish & Elegant</p>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Polo Shirts'">
+                    <span class="category-icon">👕</span>
+                    <h3>Polo Shirts</h3>
+                    <p>Classic & Premium</p>
                     <span class="count">New Arrivals</span>
                 </div>
                 <div class="category-card" onclick="window.location.href='pages/shop.html?category=Shorts'">
@@ -251,12 +173,36 @@
                     <p>Casual & Cool</p>
                     <span class="count">New Arrivals</span>
                 </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Skirts'">
+                    <span class="category-icon">👗</span>
+                    <h3>Skirts</h3>
+                    <p>Stylish & Elegant</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Accessories'">
+                    <span class="category-icon">👜</span>
+                    <h3>Accessories</h3>
+                    <p>Complete your look</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=New Arrivals'">
+                    <span class="category-icon">✨</span>
+                    <h3>New Arrivals</h3>
+                    <p>Fresh styles</p>
+                    <span class="count">New Arrivals</span>
+                </div>
+                <div class="category-card" onclick="window.location.href='pages/shop.html?category=Sale'">
+                    <span class="category-icon">🏷️</span>
+                    <h3>Sale</h3>
+                    <p>Best deals</p>
+                    <span class="count">New Arrivals</span>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-         SECTION 5: NEW ARRIVALS
+         NEW ARRIVALS
          ============================================================ -->
     <section class="products-section">
         <div class="container">
@@ -268,40 +214,29 @@
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="products-grid" id="newArrivals">
-                <!-- Products loaded dynamically by JavaScript -->
+                <!-- Loaded dynamically -->
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-         SECTION 6: FLASH SALE
+         FLASH SALE
          ============================================================ -->
     <section class="flash-sale">
         <div class="container">
             <h2>🔥 Flash Sale</h2>
             <p>Limited time offers up to 50% off on premium fashion</p>
             <div class="countdown">
-                <div>
-                    <span id="hours">12</span>
-                    <span class="label">Hours</span>
-                </div>
-                <div>
-                    <span id="minutes">30</span>
-                    <span class="label">Minutes</span>
-                </div>
-                <div>
-                    <span id="seconds">45</span>
-                    <span class="label">Seconds</span>
-                </div>
+                <div><span id="hours">12</span><span class="label">Hours</span></div>
+                <div><span id="minutes">30</span><span class="label">Minutes</span></div>
+                <div><span id="seconds">45</span><span class="label">Seconds</span></div>
             </div>
-            <a href="pages/shop.html?filter=sale" class="btn-gold">
-                <i class="fas fa-bolt"></i> Shop Flash Sale
-            </a>
+            <a href="pages/shop.html?filter=sale" class="btn-gold"><i class="fas fa-bolt"></i> Shop Flash Sale</a>
         </div>
     </section>
 
     <!-- ============================================================
-         SECTION 7: BEST SELLERS
+         BEST SELLERS
          ============================================================ -->
     <section class="products-section">
         <div class="container">
@@ -313,85 +248,33 @@
                 <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="products-grid" id="bestSellers">
-                <!-- Products loaded dynamically by JavaScript -->
+                <!-- Loaded dynamically -->
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-         SECTION 8: FEATURED COLLECTIONS
+         TRENDING PRODUCTS
          ============================================================ -->
-    <section class="featured-collections" style="padding:60px 0;background:var(--white);">
+    <section class="products-section" style="background:var(--white);">
         <div class="container">
-            <div class="section-header" style="justify-content:center;text-align:center;">
+            <div class="section-header">
                 <div>
-                    <h2>Featured Collections</h2>
-                    <span class="subtitle">Curated just for you</span>
+                    <h2>Trending Products</h2>
+                    <span class="subtitle">What's hot right now</span>
                 </div>
+                <a href="pages/shop.html">View All <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="collections-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
-                <div class="collection-card" style="background:linear-gradient(135deg,#8B1A4A,#6B0F36);border-radius:var(--radius);padding:40px;text-align:center;color:var(--white);cursor:pointer;transition:var(--transition);" onclick="window.location.href='pages/shop.html?collection=summer'">
-                    <i class="fas fa-sun" style="font-size:48px;color:var(--secondary);margin-bottom:12px;"></i>
-                    <h3 style="font-family:var(--font-primary);font-size:24px;">Summer Collection</h3>
-                    <p style="opacity:0.8;">Light & breezy styles</p>
-                </div>
-                <div class="collection-card" style="background:linear-gradient(135deg,#1A0A0E,#2D151E);border-radius:var(--radius);padding:40px;text-align:center;color:var(--white);cursor:pointer;transition:var(--transition);" onclick="window.location.href='pages/shop.html?collection=premium'">
-                    <i class="fas fa-crown" style="font-size:48px;color:var(--secondary);margin-bottom:12px;"></i>
-                    <h3 style="font-family:var(--font-primary);font-size:24px;">Premium Collection</h3>
-                    <p style="opacity:0.8;">Luxury fashion</p>
-                </div>
-                <div class="collection-card" style="background:linear-gradient(135deg,#E8C87A,#D4A843);border-radius:var(--radius);padding:40px;text-align:center;color:var(--dark);cursor:pointer;transition:var(--transition);" onclick="window.location.href='pages/shop.html?collection=street'">
-                    <i class="fas fa-street-view" style="font-size:48px;color:#8B1A4A;margin-bottom:12px;"></i>
-                    <h3 style="font-family:var(--font-primary);font-size:24px;">Street Style</h3>
-                    <p style="opacity:0.8;">Urban & trendy</p>
-                </div>
+            <div class="products-grid" id="trendingProducts">
+                <!-- Loaded dynamically -->
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-         SECTION 9: BRANDS SECTION
+         CUSTOMER REVIEWS
          ============================================================ -->
-    <section class="brands-section">
-        <div class="container">
-            <div class="section-header" style="justify-content:center;text-align:center;">
-                <div>
-                    <h2>Trusted Brands</h2>
-                    <span class="subtitle">Quality brands you love</span>
-                </div>
-            </div>
-            <div class="brands-grid">
-                <div class="brand-item"><img src="images/brands/brand-1.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
-                <div class="brand-item"><img src="images/brands/brand-2.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
-                <div class="brand-item"><img src="images/brands/brand-3.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
-                <div class="brand-item"><img src="images/brands/brand-4.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
-                <div class="brand-item"><img src="images/brands/brand-5.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
-                <div class="brand-item"><img src="images/brands/brand-6.png" alt="Brand" onerror="this.src='https://via.placeholder.com/100x50/8B1A4A/ffffff?text=Brand'" /></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 10: BLOG PREVIEW
-         ============================================================ -->
-    <section class="blog-preview">
-        <div class="container">
-            <div class="section-header" style="justify-content:center;text-align:center;">
-                <div>
-                    <h2>Fashion Blog</h2>
-                    <span class="subtitle">Style tips, trends & news</span>
-                </div>
-            </div>
-            <div class="blog-grid" id="blogPreview">
-                <!-- Loaded dynamically by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 11: CUSTOMER REVIEWS
-         ============================================================ -->
-    <section class="reviews" style="padding:60px 0;background:var(--gray);">
+    <section class="reviews">
         <div class="container">
             <div class="section-header" style="justify-content:center;text-align:center;">
                 <div>
@@ -400,37 +283,28 @@
                 </div>
             </div>
             <div class="reviews-grid">
-                <div class="review-card animate-in delay-1">
+                <div class="review-card">
                     <div class="stars">★★★★★</div>
                     <p class="text">"Amazing quality! The jeans fit perfectly. Will definitely order again. Best fashion store in Nigeria!"</p>
                     <div class="reviewer">
                         <img src="https://ui-avatars.com/api/?name=Sarah+J&background=8B1A4A&color=fff" alt="Sarah" />
-                        <div class="info">
-                            <h4>Sarah Johnson</h4>
-                            <span>Verified Buyer</span>
-                        </div>
+                        <div class="info"><h4>Sarah Johnson</h4><span>Verified Buyer</span></div>
                     </div>
                 </div>
-                <div class="review-card animate-in delay-2">
+                <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <p class="text">"Fast delivery and great customer service. The polos are premium quality. Highly recommend Uju Fashion Sales Everywhere!"</p>
+                    <p class="text">"Fast delivery and great customer service. The polos are premium quality. Highly recommend Uju Fashion!"</p>
                     <div class="reviewer">
                         <img src="https://ui-avatars.com/api/?name=Michael+C&background=8B1A4A&color=fff" alt="Michael" />
-                        <div class="info">
-                            <h4>Michael Chen</h4>
-                            <span>Verified Buyer</span>
-                        </div>
+                        <div class="info"><h4>Michael Chen</h4><span>Verified Buyer</span></div>
                     </div>
                 </div>
-                <div class="review-card animate-in delay-3">
+                <div class="review-card">
                     <div class="stars">★★★★★</div>
                     <p class="text">"Love the new collection. The quality is premium and prices are fair. My go-to fashion store in Awka!"</p>
                     <div class="reviewer">
                         <img src="https://ui-avatars.com/api/?name=Emma+D&background=8B1A4A&color=fff" alt="Emma" />
-                        <div class="info">
-                            <h4>Emma Davis</h4>
-                            <span>Verified Buyer</span>
-                        </div>
+                        <div class="info"><h4>Emma Davis</h4><span>Verified Buyer</span></div>
                     </div>
                 </div>
             </div>
@@ -438,7 +312,7 @@
     </section>
 
     <!-- ============================================================
-         SECTION 12: INSTAGRAM FEED
+         INSTAGRAM GALLERY
          ============================================================ -->
     <section class="instagram-feed">
         <div class="container">
@@ -449,36 +323,18 @@
                 </div>
             </div>
             <div class="instagram-grid">
-                <div class="insta-item">
-                    <img src="images/instagram/insta-1.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
-                    <div class="overlay"><i class="fab fa-instagram"></i></div>
-                </div>
-                <div class="insta-item">
-                    <img src="images/instagram/insta-2.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
-                    <div class="overlay"><i class="fab fa-instagram"></i></div>
-                </div>
-                <div class="insta-item">
-                    <img src="images/instagram/insta-3.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
-                    <div class="overlay"><i class="fab fa-instagram"></i></div>
-                </div>
-                <div class="insta-item">
-                    <img src="images/instagram/insta-4.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
-                    <div class="overlay"><i class="fab fa-instagram"></i></div>
-                </div>
-                <div class="insta-item">
-                    <img src="images/instagram/insta-5.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
-                    <div class="overlay"><i class="fab fa-instagram"></i></div>
-                </div>
-                <div class="insta-item">
-                    <img src="images/instagram/insta-6.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" />
-                    <div class="overlay"><i class="fab fa-instagram"></i></div>
-                </div>
+                <div class="insta-item"><img src="images/instagram/insta-1.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" /><div class="overlay"><i class="fab fa-instagram"></i></div></div>
+                <div class="insta-item"><img src="images/instagram/insta-2.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" /><div class="overlay"><i class="fab fa-instagram"></i></div></div>
+                <div class="insta-item"><img src="images/instagram/insta-3.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" /><div class="overlay"><i class="fab fa-instagram"></i></div></div>
+                <div class="insta-item"><img src="images/instagram/insta-4.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" /><div class="overlay"><i class="fab fa-instagram"></i></div></div>
+                <div class="insta-item"><img src="images/instagram/insta-5.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" /><div class="overlay"><i class="fab fa-instagram"></i></div></div>
+                <div class="insta-item"><img src="images/instagram/insta-6.jpg" alt="Instagram" onerror="this.src='https://via.placeholder.com/200x200/8B1A4A/ffffff?text=@ujufashion'" /><div class="overlay"><i class="fab fa-instagram"></i></div></div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-         SECTION 13: NEWSLETTER
+         NEWSLETTER
          ============================================================ -->
     <section class="newsletter-section">
         <div class="container">
@@ -492,7 +348,7 @@
     </section>
 
     <!-- ============================================================
-         SECTION 14: LIVE WHATSAPP CHAT
+         WHATSAPP CHAT
          ============================================================ -->
     <div class="whatsapp-float">
         <a href="https://wa.me/2347035585774" target="_blank">
@@ -502,7 +358,7 @@
     </div>
 
     <!-- ============================================================
-         SECTION 15: FOOTER
+         FOOTER
          ============================================================ -->
     <footer class="footer">
         <div class="container">
@@ -523,8 +379,9 @@
                     <ul>
                         <li><a href="pages/shop.html">Shop</a></li>
                         <li><a href="pages/blog.html">Blog</a></li>
-                        <li><a href="pages/about.html">About Us</a></li>
+                        <li><a href="pages/about.html">About</a></li>
                         <li><a href="pages/contact.html">Contact</a></li>
+                        <li><a href="pages/faq.html">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -552,14 +409,10 @@
         </div>
     </footer>
 
-    <!-- ============================================================
-         SCRIPTS
-         ============================================================ -->
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/slider.js"></script>
-    <script src="js/home.js"></script>
 </body>
-    </html>
+                    </html>
