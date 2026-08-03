@@ -3,438 +3,168 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard - Uju Fashion Sales</title>
-    <link rel="stylesheet" href="../../css/style.css" />
+    <title>Admin Dashboard - Uju Fashion Sales Everywhere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
     <style>
         /* Admin Layout */
-        .admin-container {
-            display: flex;
-            min-height: 100vh;
-            background: #f8f5f6;
-        }
-        
+        .admin-container { display: flex; min-height: 100vh; background: #f8f5f6; }
         .admin-sidebar {
-            width: 280px;
-            background: linear-gradient(180deg, #1A0A0E 0%, #2D151E 100%);
-            color: rgba(255, 255, 255, 0.8);
-            padding: 30px 20px;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            transition: all 0.3s ease;
+            width: 280px; background: linear-gradient(180deg, #1A0A0E 0%, #2D151E 100%);
+            color: rgba(255,255,255,0.8); padding: 30px 20px; position: fixed;
+            height: 100vh; overflow-y: auto; z-index: 1000; transition: all 0.3s ease;
         }
-        
-        .admin-sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-        
-        .admin-sidebar::-webkit-scrollbar-thumb {
-            background: var(--secondary);
-            border-radius: 10px;
-        }
-        
+        .admin-sidebar::-webkit-scrollbar { width: 4px; }
+        .admin-sidebar::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; }
         .admin-sidebar .logo {
-            font-family: var(--font-primary);
-            font-size: 26px;
-            font-weight: 800;
-            margin-bottom: 30px;
-            display: block;
-            color: var(--white);
-            text-align: center;
+            font-family: var(--font-primary); font-size: 26px; font-weight: 800;
+            margin-bottom: 30px; display: block; color: var(--white); text-align: center;
         }
-        
-        .admin-sidebar .logo span {
-            color: var(--secondary);
-        }
-        
+        .admin-sidebar .logo span { color: var(--secondary); }
         .admin-sidebar .admin-profile {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 20px;
+            text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px;
         }
-        
         .admin-sidebar .admin-profile img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid var(--secondary);
-            margin-bottom: 10px;
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--secondary);
+            margin-bottom: 10px; object-fit: cover;
         }
-        
-        .admin-sidebar .admin-profile h4 {
-            color: var(--white);
-            font-size: 16px;
-        }
-        
-        .admin-sidebar .admin-profile p {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
+        .admin-sidebar .admin-profile h4 { color: var(--white); font-size: 16px; }
+        .admin-sidebar .admin-profile p { font-size: 13px; color: rgba(255,255,255,0.5); }
         .admin-sidebar .menu-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.3);
-            margin: 20px 0 10px;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-            padding-left: 12px;
+            font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.3);
+            margin: 20px 0 10px; letter-spacing: 1.5px; font-weight: 600; padding-left: 12px;
         }
-        
         .admin-sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            color: rgba(255, 255, 255, 0.6);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            margin-bottom: 2px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
+            display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+            color: rgba(255,255,255,0.6); border-radius: 10px; transition: all 0.3s ease;
+            margin-bottom: 2px; text-decoration: none; font-size: 14px; font-weight: 500;
         }
+        .admin-sidebar a:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+        .admin-sidebar a.active { background: rgba(232,200,122,0.12); color: var(--secondary); }
+        .admin-sidebar a i { width: 22px; text-align: center; font-size: 18px; }
+        .admin-sidebar .logout-btn { margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px; }
+        .admin-sidebar .logout-btn a { color: #ef4444; }
+        .admin-sidebar .logout-btn a:hover { background: rgba(239,68,68,0.1); }
         
-        .admin-sidebar a:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--white);
-        }
-        
-        .admin-sidebar a.active {
-            background: rgba(232, 200, 122, 0.12);
-            color: var(--secondary);
-        }
-        
-        .admin-sidebar a i {
-            width: 22px;
-            text-align: center;
-            font-size: 18px;
-        }
-        
-        .admin-sidebar .logout-btn {
-            margin-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 20px;
-        }
-        
-        .admin-sidebar .logout-btn a {
-            color: #ef4444;
-        }
-        
-        .admin-sidebar .logout-btn a:hover {
-            background: rgba(239, 68, 68, 0.1);
-        }
-        
-        /* Main Content */
-        .admin-main {
-            margin-left: 280px;
-            flex: 1;
-            padding: 30px;
-        }
-        
+        .admin-main { margin-left: 280px; flex: 1; padding: 30px; }
         .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--white);
-            padding: 20px 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--white); padding: 20px 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow); margin-bottom: 30px;
         }
-        
-        .admin-header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            font-family: var(--font-primary);
-        }
-        
-        .admin-header .admin-user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
+        .admin-header h1 { font-size: 24px; font-weight: 700; font-family: var(--font-primary); }
+        .admin-header .admin-user { display: flex; align-items: center; gap: 12px; }
         .admin-header .admin-user img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
         }
-        
-        .admin-header .admin-user span {
-            font-weight: 600;
-        }
-        
+        .admin-header .admin-user span { font-weight: 600; }
+
         /* Stats Grid */
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;
         }
-        
         .stat-card {
-            background: var(--white);
-            padding: 24px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background: var(--white); padding: 24px; border-radius: var(--radius);
+            box-shadow: var(--shadow); transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-        
         .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary);
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--primary);
         }
-        
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .stat-card .stat-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-            display: inline-block;
-        }
-        
+        .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .stat-card .stat-icon { font-size: 32px; margin-bottom: 8px; display: inline-block; }
         .stat-card .stat-number {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--dark);
-            font-family: var(--font-primary);
+            font-size: 32px; font-weight: 800; color: var(--dark); font-family: var(--font-primary);
         }
-        
-        .stat-card .stat-label {
-            color: var(--gray-dark);
-            font-size: 14px;
-        }
-        
-        .stat-card .stat-change {
-            font-size: 13px;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-        
+        .stat-card .stat-label { color: var(--gray-dark); font-size: 14px; }
+        .stat-card .stat-change { font-size: 13px; font-weight: 600; margin-top: 8px; }
         .stat-card .stat-change.positive { color: #10b981; }
         .stat-card .stat-change.negative { color: #ef4444; }
-        
         .stat-card.purple .stat-icon { color: var(--primary); }
         .stat-card.blue .stat-icon { color: #3b82f6; }
         .stat-card.green .stat-icon { color: #10b981; }
         .stat-card.orange .stat-icon { color: #f59e0b; }
         .stat-card.pink .stat-icon { color: var(--accent); }
         .stat-card.red .stat-icon { color: #ef4444; }
-        
+
         /* Dashboard Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-        }
-        
-        .dashboard-card {
-            background: var(--white);
-            padding: 24px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-        
-        .dashboard-card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            font-family: var(--font-primary);
-        }
-        
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+        .dashboard-card { background: var(--white); padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .dashboard-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; font-family: var(--font-primary); }
+
         /* Recent Orders */
         .recent-order-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid #f0f0f0;
         }
-        
-        .recent-order-item:last-child {
-            border-bottom: none;
-        }
-        
-        .recent-order-item .order-info {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .recent-order-item .order-info .order-id {
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        .recent-order-item .order-info .order-date {
-            font-size: 12px;
-            color: var(--gray-dark);
-        }
-        
+        .recent-order-item:last-child { border-bottom: none; }
+        .recent-order-item .order-info { display: flex; flex-direction: column; }
+        .recent-order-item .order-info .order-id { font-weight: 600; font-size: 14px; }
+        .recent-order-item .order-info .order-date { font-size: 12px; color: var(--gray-dark); }
         .order-status {
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
+            padding: 4px 14px; border-radius: 50px; font-size: 12px; font-weight: 600; border: none;
         }
-        
         .order-status.pending { background: #fef3c7; color: #d97706; }
         .order-status.accepted { background: #dbeafe; color: #2563eb; }
         .order-status.processing { background: #e0e7ff; color: #4f46e5; }
         .order-status.shipped { background: #d1fae5; color: #059669; }
         .order-status.delivered { background: #d1fae5; color: #059669; }
         .order-status.cancelled { background: #fee2e2; color: #dc2626; }
-        
+
         /* Low Stock */
         .low-stock-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid #f0f0f0;
         }
-        
-        .low-stock-item:last-child {
-            border-bottom: none;
-        }
-        
+        .low-stock-item:last-child { border-bottom: none; }
         .low-stock-item .stock-bar {
-            width: 100px;
-            height: 6px;
-            background: #e5e7eb;
-            border-radius: 10px;
-            overflow: hidden;
+            width: 100px; height: 6px; background: #e5e7eb; border-radius: 10px; overflow: hidden;
         }
-        
-        .low-stock-item .stock-bar .fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.6s ease;
-        }
-        
+        .low-stock-item .stock-bar .fill { height: 100%; border-radius: 10px; transition: width 0.6s ease; }
         .low-stock-item .stock-bar .fill.critical { background: #ef4444; }
         .low-stock-item .stock-bar .fill.low { background: #f59e0b; }
         .low-stock-item .stock-bar .fill.medium { background: #3b82f6; }
-        
+
         /* Quick Actions */
         .quick-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 12px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;
         }
-        
         .quick-action-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 16px;
-            background: var(--gray);
-            border-radius: var(--radius-sm);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: var(--font-secondary);
-            font-weight: 500;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            padding: 16px; background: var(--gray); border-radius: var(--radius-sm);
+            border: none; cursor: pointer; transition: all 0.3s ease;
+            font-family: var(--font-secondary); font-weight: 500;
         }
-        
-        .quick-action-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-        
-        .quick-action-btn i {
-            font-size: 24px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .admin-sidebar {
-                width: 220px;
-                transform: translateX(-100%);
-            }
-            .admin-sidebar.open {
-                transform: translateX(0);
-            }
-            .admin-main {
-                margin-left: 0;
-                padding: 20px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .admin-header {
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
-            }
-            .quick-actions {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .admin-sidebar {
-                width: 100%;
-                transform: translateX(-100%);
-            }
-        }
-        
-        /* Mobile Toggle */
+        .quick-action-btn:hover { background: var(--primary); color: var(--white); transform: translateY(-2px); }
+        .quick-action-btn i { font-size: 24px; }
+
         .menu-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 999;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 20px;
-            cursor: pointer;
+            display: none; position: fixed; top: 20px; left: 20px; z-index: 999;
+            background: var(--primary); color: white; border: none; padding: 12px;
+            border-radius: 8px; font-size: 20px; cursor: pointer;
         }
-        
+
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
+            .admin-sidebar { width: 220px; transform: translateX(-100%); }
+            .admin-sidebar.open { transform: translateX(0); }
+            .admin-main { margin-left: 0; padding: 20px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .admin-header { flex-direction: column; gap: 12px; text-align: center; }
+            .quick-actions { grid-template-columns: 1fr; }
+            .menu-toggle { display: block; }
         }
+        @media (max-width: 480px) { .admin-sidebar { width: 100%; transform: translateX(-100%); } }
     </style>
 </head>
 <body>
     <!-- Mobile Menu Toggle -->
-    <button class="menu-toggle" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-    </button>
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     
     <div class="admin-container">
         <!-- Sidebar -->
@@ -442,268 +172,138 @@
             <a href="index.html" class="logo">Uju<span>Fashion</span></a>
             
             <div class="admin-profile">
-                <img src="https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff" alt="Admin" />
+                <!-- Admin photo from images/admin.png -->
+                <img src="../../images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
                 <h4 id="adminName">Admin</h4>
                 <p>Administrator</p>
             </div>
             
             <div class="menu-label">Main Menu</div>
-            <a href="index.html" class="active">
-                <i class="fas fa-chart-pie"></i> Dashboard
-            </a>
-            <a href="products.html">
-                <i class="fas fa-box"></i> Products
-            </a>
-            <a href="orders.html">
-                <i class="fas fa-shopping-cart"></i> Orders
-            </a>
-            <a href="customers.html">
-                <i class="fas fa-users"></i> Customers
-            </a>
+            <a href="index.html" class="active"><i class="fas fa-chart-pie"></i> Dashboard</a>
+            <a href="products.html"><i class="fas fa-box"></i> Products</a>
+            <a href="orders.html"><i class="fas fa-shopping-cart"></i> Orders</a>
+            <a href="customers.html"><i class="fas fa-users"></i> Customers</a>
+            <a href="categories.html"><i class="fas fa-tags"></i> Categories</a>
+            <a href="reviews.html"><i class="fas fa-star"></i> Reviews</a>
             
             <div class="menu-label">Marketing</div>
-            <a href="coupons.html">
-                <i class="fas fa-ticket"></i> Coupons
-            </a>
-            <a href="banners.html">
-                <i class="fas fa-image"></i> Banners
-            </a>
+            <a href="coupons.html"><i class="fas fa-ticket"></i> Coupons</a>
+            <a href="banners.html"><i class="fas fa-image"></i> Banners</a>
             
             <div class="menu-label">Content</div>
-            <a href="reviews.html">
-                <i class="fas fa-star"></i> Reviews
-            </a>
-            <a href="reports.html">
-                <i class="fas fa-chart-bar"></i> Reports
-            </a>
+            <a href="blog.html"><i class="fas fa-blog"></i> Blog Manager</a>
+            <a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a>
+            
+            <div class="menu-label">System</div>
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
             
             <div class="logout-btn">
-                <a href="#" onclick="logoutUser()">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
+                <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </aside>
         
         <!-- Main Content -->
         <main class="admin-main">
-            <!-- Header -->
             <div class="admin-header">
                 <h1>📊 Dashboard</h1>
                 <div class="admin-user">
                     <span id="adminNameHeader">Admin</span>
-                    <img src="https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff" alt="Admin" />
+                    <img src="../../images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
                 </div>
             </div>
             
             <!-- Stats -->
             <div class="stats-grid" id="statsGrid">
-                <!-- Loaded dynamically -->
+                <div class="stat-card purple"><div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div><div class="stat-number">₦0</div><div class="stat-label">Revenue</div></div>
+                <div class="stat-card blue"><div class="stat-icon"><i class="fas fa-shopping-bag"></i></div><div class="stat-number">0</div><div class="stat-label">Orders</div></div>
+                <div class="stat-card green"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-number">0</div><div class="stat-label">Customers</div></div>
+                <div class="stat-card orange"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-number">0</div><div class="stat-label">Products</div></div>
             </div>
             
             <!-- Quick Actions -->
             <div class="dashboard-card" style="margin-bottom:24px;">
                 <h3>⚡ Quick Actions</h3>
                 <div class="quick-actions">
-                    <button class="quick-action-btn" onclick="window.location.href='products.html'">
-                        <i class="fas fa-plus-circle"></i>
-                        Add Product
-                    </button>
-                    <button class="quick-action-btn" onclick="window.location.href='orders.html'">
-                        <i class="fas fa-eye"></i>
-                        View Orders
-                    </button>
-                    <button class="quick-action-btn" onclick="window.location.href='coupons.html'">
-                        <i class="fas fa-ticket"></i>
-                        Create Coupon
-                    </button>
-                    <button class="quick-action-btn" onclick="window.location.href='banners.html'">
-                        <i class="fas fa-image"></i>
-                        Manage Banners
-                    </button>
+                    <button class="quick-action-btn" onclick="window.location.href='products.html'"><i class="fas fa-plus-circle"></i>Add Product</button>
+                    <button class="quick-action-btn" onclick="window.location.href='orders.html'"><i class="fas fa-eye"></i>View Orders</button>
+                    <button class="quick-action-btn" onclick="window.location.href='coupons.html'"><i class="fas fa-ticket"></i>Create Coupon</button>
+                    <button class="quick-action-btn" onclick="window.location.href='banners.html'"><i class="fas fa-image"></i>Manage Banners</button>
                 </div>
             </div>
             
             <!-- Dashboard Grid -->
             <div class="dashboard-grid">
-                <!-- Recent Orders -->
                 <div class="dashboard-card">
                     <h3>🛒 Recent Orders</h3>
-                    <div id="recentOrders">
-                        <!-- Loaded dynamically -->
-                    </div>
+                    <div id="recentOrders"><p style="color:#888;text-align:center;padding:20px;">No recent orders</p></div>
                 </div>
-                
-                <!-- Low Stock Alerts -->
                 <div class="dashboard-card">
                     <h3>⚠️ Low Stock Alerts</h3>
-                    <div id="lowStock">
-                        <!-- Loaded dynamically -->
-                    </div>
+                    <div id="lowStock"><p style="color:#10b981;text-align:center;padding:20px;">✅ All products are well stocked</p></div>
                 </div>
             </div>
         </main>
     </div>
-    
+
     <script src="../../js/api.js"></script>
     <script src="../../js/auth.js"></script>
     <script>
-        // ====================
-        // ADMIN DASHBOARD LOGIC
-        // ====================
-        
-        // Toggle sidebar on mobile
         function toggleSidebar() {
             document.getElementById('adminSidebar').classList.toggle('open');
         }
-        
-        // Check admin access
-        async function checkAdminAccess() {
-            const user = getCurrentUser();
-            if (!user) {
+
+        function logoutUser() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
                 window.location.href = '../login.html';
-                return false;
             }
-            if (user.role !== 'admin') {
-                window.location.href = '../../index.html';
-                return false;
-            }
-            return true;
         }
-        
-        // Load Dashboard
+
+        // Load dashboard data
         async function loadDashboard() {
             try {
-                // Check if admin is logged in
-                const hasAccess = await checkAdminAccess();
-                if (!hasAccess) return;
+                const token = localStorage.getItem('token');
+                if (!token) { window.location.href = '../login.html'; return; }
                 
-                // Get stats
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                if (user.role !== 'admin') { window.location.href = '../../index.html'; return; }
+                
+                document.getElementById('adminName').textContent = user.name || 'Admin';
+                document.getElementById('adminNameHeader').textContent = user.name || 'Admin';
+                
+                // Fetch dashboard stats
                 const stats = await getDashboardStats();
-                renderStats(stats);
-                renderRecentOrders(stats.recentOrders || []);
-                renderLowStock(stats.lowStock || []);
                 
-                // Update admin name
-                const user = getCurrentUser();
-                if (user) {
-                    const name = user.name || 'Admin';
-                    document.getElementById('adminName').textContent = name;
-                    document.getElementById('adminNameHeader').textContent = name;
+                document.querySelector('.stat-card.purple .stat-number').textContent = `₦${formatNumber(stats.totalRevenue || 0)}`;
+                document.querySelector('.stat-card.blue .stat-number').textContent = stats.totalOrders || 0;
+                document.querySelector('.stat-card.green .stat-number').textContent = stats.totalCustomers || 0;
+                document.querySelector('.stat-card.orange .stat-number').textContent = stats.totalProducts || 0;
+                
+                // Recent orders
+                if (stats.recentOrders && stats.recentOrders.length > 0) {
+                    const container = document.getElementById('recentOrders');
+                    container.innerHTML = stats.recentOrders.map(order => `
+                        <div class="recent-order-item">
+                            <div class="order-info">
+                                <span class="order-id">#${order._id?.slice(-6) || 'N/A'}</span>
+                                <span class="order-date">${new Date(order.createdAt).toLocaleDateString()}</span>
+                            </div>
+                            <span class="order-status ${order.orderStatus || 'pending'}">${order.orderStatus || 'Pending'}</span>
+                            <span style="font-weight:600;">₦${formatNumber(order.total || 0)}</span>
+                        </div>
+                    `).join('');
                 }
             } catch (error) {
                 console.error('Error loading dashboard:', error);
-                showToast('Error loading dashboard data', 'error');
             }
         }
-        
-        // Render Stats
-        function renderStats(stats) {
-            const container = document.getElementById('statsGrid');
-            if (!container) return;
-            
-            const statCards = [
-                { icon: 'fa-money-bill-wave', number: `₦${formatNumber(stats.totalRevenue || 0)}`, label: 'Total Revenue', color: 'purple' },
-                { icon: 'fa-shopping-bag', number: stats.totalOrders || 0, label: 'Total Orders', color: 'blue' },
-                { icon: 'fa-users', number: stats.totalCustomers || 0, label: 'Total Customers', color: 'green' },
-                { icon: 'fa-box', number: stats.totalProducts || 0, label: 'Total Products', color: 'orange' },
-            ];
-            
-            container.innerHTML = statCards.map(card => `
-                <div class="stat-card ${card.color}">
-                    <div class="stat-icon"><i class="fas ${card.icon}"></i></div>
-                    <div class="stat-number">${card.number}</div>
-                    <div class="stat-label">${card.label}</div>
-                </div>
-            `).join('');
-        }
-        
-        // Render Recent Orders
-        function renderRecentOrders(orders) {
-            const container = document.getElementById('recentOrders');
-            if (!container) return;
-            
-            if (!orders || orders.length === 0) {
-                container.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">No recent orders</p>';
-                return;
-            }
-            
-            container.innerHTML = orders.slice(0, 5).map(order => `
-                <div class="recent-order-item">
-                    <div class="order-info">
-                        <span class="order-id">#${order._id?.slice(-6) || 'N/A'}</span>
-                        <span class="order-date">${new Date(order.createdAt).toLocaleDateString()}</span>
-                    </div>
-                    <span class="order-status ${order.orderStatus || 'pending'}">${order.orderStatus || 'Pending'}</span>
-                    <span style="font-weight:600;">₦${formatNumber(order.total || 0)}</span>
-                </div>
-            `).join('');
-        }
-        
-        // Render Low Stock
-        function renderLowStock(products) {
-            const container = document.getElementById('lowStock');
-            if (!container) return;
-            
-            if (!products || products.length === 0) {
-                container.innerHTML = '<p style="color:#10b981;text-align:center;padding:20px;">✅ All products are well stocked</p>';
-                return;
-            }
-            
-            container.innerHTML = products.map(product => {
-                const stockPercent = (product.stock / 20) * 100;
-                const status = stockPercent <= 25 ? 'critical' : stockPercent <= 50 ? 'low' : 'medium';
-                const statusLabel = stockPercent <= 25 ? 'Critical' : stockPercent <= 50 ? 'Low' : 'Medium';
-                
-                return `
-                    <div class="low-stock-item">
-                        <span>${product.name}</span>
-                        <div style="display:flex;align-items:center;gap:12px;">
-                            <span style="font-weight:600;color:${status === 'critical' ? '#ef4444' : status === 'low' ? '#f59e0b' : '#3b82f6'};">
-                                ${product.stock} left
-                            </span>
-                            <div class="stock-bar">
-                                <div class="fill ${status}" style="width:${Math.min(stockPercent, 100)}%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        // Format number
+
         function formatNumber(num) {
             if (!num) return '0';
             return Number(num).toLocaleString();
         }
-        
-        // Logout
-        function logoutUser() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = '../login.html';
-        }
-        
-        // Toast notification
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; bottom: 24px; right: 24px; padding: 16px 24px;
-                background: ${type === 'success' ? '#8B1A4A' : '#ef4444'};
-                color: white; border-radius: 12px; font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 9999;
-                animation: slideIn 0.4s ease; display: flex; align-items: center; gap: 12px;
-                min-width: 280px;
-            `;
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
-        }
-        
-        // Initialize
+
         document.addEventListener('DOMContentLoaded', loadDashboard);
     </script>
 </body>
-    </html>
+                        </html>
