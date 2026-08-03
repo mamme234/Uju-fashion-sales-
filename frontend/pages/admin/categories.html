@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Categories - Admin | Uju Fashion Sales Everywhere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <style>
+        /* Admin Layout */
+        .admin-container { display: flex; min-height: 100vh; background: #f8f5f6; }
+        .admin-sidebar {
+            width: 280px; background: linear-gradient(180deg, #1A0A0E 0%, #2D151E 100%);
+            color: rgba(255,255,255,0.8); padding: 30px 20px; position: fixed;
+            height: 100vh; overflow-y: auto; z-index: 1000; transition: all 0.3s ease;
+        }
+        .admin-sidebar::-webkit-scrollbar { width: 4px; }
+        .admin-sidebar::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; }
+        .admin-sidebar .logo {
+            font-family: var(--font-primary); font-size: 26px; font-weight: 800;
+            margin-bottom: 30px; display: block; color: var(--white); text-align: center;
+        }
+        .admin-sidebar .logo span { color: var(--secondary); }
+        .admin-sidebar .admin-profile {
+            text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px;
+        }
+        .admin-sidebar .admin-profile img {
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--secondary);
+            margin-bottom: 10px; object-fit: cover;
+        }
+        .admin-sidebar .admin-profile h4 { color: var(--white); font-size: 16px; }
+        .admin-sidebar .admin-profile p { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .admin-sidebar .menu-label {
+            font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.3);
+            margin: 20px 0 10px; letter-spacing: 1.5px; font-weight: 600; padding-left: 12px;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+            color: rgba(255,255,255,0.6); border-radius: 10px; transition: all 0.3s ease;
+            margin-bottom: 2px; text-decoration: none; font-size: 14px; font-weight: 500;
+        }
+        .admin-sidebar a:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+        .admin-sidebar a.active { background: rgba(232,200,122,0.12); color: var(--secondary); }
+        .admin-sidebar a i { width: 22px; text-align: center; font-size: 18px; }
+        .admin-sidebar .logout-btn { margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px; }
+        .admin-sidebar .logout-btn a { color: #ef4444; }
+        .admin-sidebar .logout-btn a:hover { background: rgba(239,68,68,0.1); }
+        
+        .admin-main { margin-left: 280px; flex: 1; padding: 30px; }
+        .admin-header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--white); padding: 20px 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow); margin-bottom: 30px;
+        }
+        .admin-header h1 { font-size: 24px; font-weight: 700; font-family: var(--font-primary); }
+        .admin-header .admin-user { display: flex; align-items: center; gap: 12px; }
+        .admin-header .admin-user img {
+            width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+        }
+        .admin-header .admin-user span { font-weight: 600; }
+
+        .table-container { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+        .table-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 24px; border-bottom: 1px solid #f0f0f0; flex-wrap: wrap; gap: 12px;
+        }
+        .table-header .btn-primary { padding: 10px 24px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 14px 20px; background: #f8f5f6; font-weight: 600; font-size: 13px; color: var(--gray-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 14px 20px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+        tr:hover { background: #fafafa; }
+
+        /* Modal */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--white); padding: 40px; border-radius: var(--radius);
+            max-width: 500px; width: 95%; max-height: 90vh; overflow-y: auto; position: relative;
+        }
+        .modal-content .close {
+            position: absolute; top: 16px; right: 20px; font-size: 24px; cursor: pointer; color: #888;
+        }
+        .modal-content .close:hover { color: #333; }
+        .modal-content h2 { margin-bottom: 24px; font-family: var(--font-primary); }
+        .modal-content .form-group { margin-bottom: 16px; }
+        .modal-content .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 14px; }
+        .modal-content .form-group input, .modal-content .form-group select {
+            width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;
+        }
+        .modal-content .form-group input:focus, .modal-content .form-group select:focus {
+            border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(139,26,74,0.1);
+        }
+        .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+        .modal-actions .btn-secondary { padding: 10px 24px; }
+        .modal-actions .btn-primary { padding: 10px 24px; }
+
+        .menu-toggle {
+            display: none; position: fixed; top: 20px; left: 20px; z-index: 999;
+            background: var(--primary); color: white; border: none; padding: 12px;
+            border-radius: 8px; font-size: 20px; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar { width: 220px; transform: translateX(-100%); }
+            .admin-sidebar.open { transform: translateX(0); }
+            .admin-main { margin-left: 0; padding: 20px; }
+            .table-header { flex-direction: column; align-items: stretch; }
+            .menu-toggle { display: block; }
+            .modal-content { padding: 24px; }
+        }
+        @media (max-width: 480px) { .admin-sidebar { width: 100%; transform: translateX(-100%); } }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <a href="/pages/admin/index.html" class="logo">Uju<span>Fashion</span></a>
+            <div class="admin-profile">
+                <img src="/images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
+                <h4 id="adminName">Admin</h4>
+                <p>Administrator</p>
+            </div>
+            <div class="menu-label">Main Menu</div>
+            <a href="/pages/admin/index.html"><i class="fas fa-chart-pie"></i> Dashboard</a>
+            <a href="/pages/admin/products.html"><i class="fas fa-box"></i> Products</a>
+            <a href="/pages/admin/orders.html"><i class="fas fa-shopping-cart"></i> Orders</a>
+            <a href="/pages/admin/customers.html"><i class="fas fa-users"></i> Customers</a>
+            <a href="/pages/admin/categories.html" class="active"><i class="fas fa-tags"></i> Categories</a>
+            <a href="/pages/admin/reviews.html"><i class="fas fa-star"></i> Reviews</a>
+            <div class="menu-label">Marketing</div>
+            <a href="/pages/admin/coupons.html"><i class="fas fa-ticket"></i> Coupons</a>
+            <a href="/pages/admin/banners.html"><i class="fas fa-image"></i> Banners</a>
+            <div class="menu-label">Content</div>
+            <a href="/pages/admin/blog.html"><i class="fas fa-blog"></i> Blog Manager</a>
+            <a href="/pages/admin/reports.html"><i class="fas fa-chart-bar"></i> Reports</a>
+            <div class="menu-label">System</div>
+            <a href="/pages/admin/settings.html"><i class="fas fa-cog"></i> Settings</a>
+            <div class="logout-btn">
+                <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>🏷️ Categories</h1>
+                <div class="admin-user">
+                    <span id="adminNameHeader">Admin</span>
+                    <img src="/images/admin.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=8B1A4A&color=fff'" />
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>All Categories</h3>
+                    <button class="btn-primary" onclick="openAddCategoryModal()">
+                        <i class="fas fa-plus"></i> Add Category
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category Name</th>
+                            <th>Slug</th>
+                            <th>Product Count</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoryTable">
+                        <tr>
+                            <td>1</td>
+                            <td>Men's Wear</td>
+                            <td>mens-wear</td>
+                            <td>12</td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Women's Wear</td>
+                            <td>womens-wear</td>
+                            <td>15</td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Jeans</td>
+                            <td>jeans</td>
+                            <td>20</td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Polos</td>
+                            <td>polos</td>
+                            <td>8</td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Skirts</td>
+                            <td>skirts</td>
+                            <td>6</td>
+                            <td>
+                                <button class="btn-secondary" style="padding:6px 12px;font-size:12px;margin-right:6px;"><i class="fas fa-edit"></i></button>
+                                <button class="btn-primary" style="padding:6px 12px;font-size:12px;background:#ef4444;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Category Modal -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('categoryModal')">&times;</span>
+            <h2 id="modalTitle">Add Category</h2>
+            <form id="categoryForm" onsubmit="saveCategory(event)">
+                <input type="hidden" id="categoryId" />
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input type="text" id="categoryName" required placeholder="Enter category name" />
+                </div>
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input type="text" id="categorySlug" placeholder="auto-generated" />
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('categoryModal')">Cancel</button>
+                    <button type="submit" class="btn-primary" id="saveCategoryBtn">Save Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('open');
+        }
+
+        function logoutUser() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '/pages/login.html';
+            }
+        }
+
+        function openAddCategoryModal() {
+            document.getElementById('modalTitle').textContent = 'Add Category';
+            document.getElementById('categoryForm').reset();
+            document.getElementById('categoryId').value = '';
+            document.getElementById('saveCategoryBtn').textContent = 'Save Category';
+            document.getElementById('categoryModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function saveCategory(event) {
+            event.preventDefault();
+            const name = document.getElementById('categoryName').value.trim();
+            const slug = document.getElementById('categorySlug').value.trim() || name.toLowerCase().replace(/\s+/g, '-');
+            alert(`Category "${name}" saved with slug "${slug}"`);
+            closeModal('categoryModal');
+        }
+
+        // Check admin access
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (!token) { window.location.href = '/pages/login.html'; return; }
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.role !== 'admin') { window.location.href = '/index.html'; return; }
+            document.getElementById('adminName').textContent = user.name || 'Admin';
+            document.getElementById('adminNameHeader').textContent = user.name || 'Admin';
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+              </html>
