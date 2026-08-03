@@ -262,4 +262,61 @@
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" onclick="closeModal('couponModal')">Cancel</button>
-                    <button type="submit" class="btn-primary" id="save
+                    <button type="submit" class="btn-primary" id="saveCouponBtn">Create Coupon</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('open');
+        }
+
+        function logoutUser() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '/pages/login.html';
+            }
+        }
+
+        function openAddCouponModal() {
+            document.getElementById('modalTitle').textContent = 'Create Coupon';
+            document.getElementById('couponForm').reset();
+            document.getElementById('couponId').value = '';
+            document.getElementById('saveCouponBtn').textContent = 'Create Coupon';
+            document.getElementById('couponModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function saveCoupon(event) {
+            event.preventDefault();
+            const code = document.getElementById('couponCode').value.trim();
+            const discountType = document.getElementById('discountType').value;
+            const discountValue = document.getElementById('discountValue').value;
+            alert(`Coupon "${code}" created with ${discountValue}${discountType === 'percentage' ? '%' : '₦'} discount`);
+            closeModal('couponModal');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (!token) { window.location.href = '/pages/login.html'; return; }
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.role !== 'admin') { window.location.href = '/index.html'; return; }
+            document.getElementById('adminName').textContent = user.name || 'Admin';
+            document.getElementById('adminNameHeader').textContent = user.name || 'Admin';
+        });
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
